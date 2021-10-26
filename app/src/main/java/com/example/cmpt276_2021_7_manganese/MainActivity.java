@@ -37,9 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //////////////////////////////////////////////////////////////////////////////////////////
         this.setTitle("Main Menu");
-
 
 
 
@@ -50,11 +48,65 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(addChild);
         });
 
-
-
-
+        btnChildManager = findViewById(R.id.btn_childManager);
+        btnFlipCoin = findViewById(R.id.btn_flipCoin);
+        btnTimer = findViewById(R.id.btn_timer);
+        setListeners();
 
     }
+
+
+
+    private void setListeners() {
+        OnClick onClick = new OnClick();
+        btnChildManager.setOnClickListener(onClick);
+        btnFlipCoin.setOnClickListener(onClick);
+        btnTimer.setOnClickListener(onClick);
+    }
+
+
+    private class OnClick implements View.OnClickListener {
+
+        Intent intent = null;
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+
+                /**
+                 * need to create childrenManager class, FlipCoin class, Timer class
+                 * this will direct to those class from MainActivity
+                 */
+//                case R.id.btn_childManager:
+//                    intent = new Intent(MainActivity.this, ChildrenManager.class);
+//                    break;
+//
+//                case R.id.btn_flipCoin:
+//                    intent = new Intent(MainActivity.this, FlipCoin.class);
+//                    break;
+//
+//                case R.id.btn_timer:
+//                    intent = new Intent(MainActivity.this, Timer.class);
+//                    break;
+
+            }
+            startActivity(intent);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
