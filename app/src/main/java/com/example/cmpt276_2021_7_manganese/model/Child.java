@@ -1,10 +1,8 @@
-package com.example.cmpt276_2021_7_manganese.model;
-
 /**
  * This class is for child
  *
- *
  */
+package com.example.cmpt276_2021_7_manganese.model;
 
 
 public class Child {

@@ -1,7 +1,17 @@
+/**
+ * This class is for ChildManager
+ *
+ *
+ */
+
+
 package com.example.cmpt276_2021_7_manganese.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
+
+
 
 public class ChildManager implements Iterable<Child> {
 
