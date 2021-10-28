@@ -4,22 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import com.example.cmpt276_2021_7_manganese.databinding.ActivityMainBinding;
-
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,8 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private Button btnTimer;
     private Button btnChildManager;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,17 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.setTitle("Main Menu");
+//        this.setTitle("Main Menu");  //TODO: delete - I set this in the manifest and extracted to strings.xml - @Rio Samson
 
-
-
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(view -> {
-                Intent addChild = AddChild.makeLaunchIntent(MainActivity.this, "New Child");
-
-                startActivity(addChild);
-        });
-
+        setupFloatingActionButton();
         btnChildManager = findViewById(R.id.btn_childManager);
         btnFlipCoin = findViewById(R.id.btn_flipCoin);
         btnTimer = findViewById(R.id.btn_timer);
@@ -55,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void setupFloatingActionButton() {
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(view -> {
+                Intent addChild = AddChild.makeLaunchIntent(MainActivity.this, "New Child");
+
+                startActivity(addChild);
+        });
+    }
 
 
     private void setListeners() {
@@ -73,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
 
+                //TODO: look at how intent is made for btn_timeout - do this for all, apparently its better. TY
                 /**
                  * need to create childrenManager class, FlipCoin class, Timer class
                  * this will direct to those class from MainActivity
@@ -85,10 +75,9 @@ public class MainActivity extends AppCompatActivity {
 //                    intent = new Intent(MainActivity.this, FlipCoin.class);
 //                    break;
 //
-//                case R.id.btn_timer:
-//                    intent = new Intent(MainActivity.this, Timer.class);
-//                    break;
-
+                case R.id.btn_timer:
+                    intent = TimeoutTimer.makeLaunchIntent(MainActivity.this);
+                    break;
             }
             startActivity(intent);
         }
