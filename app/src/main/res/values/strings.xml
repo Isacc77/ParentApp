@@ -17,4 +17,5 @@
     <string name="backup">BackUp</string>
     <string name="input_name">Please, input name here.</string>
     <string name="name">Name:</string>
+    <string name="add_child_title">Add your child</string>
 </resources>

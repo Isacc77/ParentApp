@@ -24,10 +24,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        this.setTitle("Main Menu");  //TODO: delete - I set this in the manifest and extracted to strings.xml - @Rio Samson
+
 
         setupFloatingActionButton();
         btnChildManager = findViewById(R.id.btn_childManager);
@@ -36,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setListeners();
 
     }
+
 
     private void setupFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
@@ -62,11 +62,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
 
-                //TODO: look at how intent is made for btn_timeout - do this for all, apparently its better. TY
-                /**
-                 * need to create childrenManager class, FlipCoin class, Timer class
-                 * this will direct to those class from MainActivity
-                 */
+
 //                case R.id.btn_childManager:
 //                    intent = new Intent(MainActivity.this, ChildrenManager.class);
 //                    break;
@@ -91,13 +87,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-
-
-
-
-
-
 
 
 
