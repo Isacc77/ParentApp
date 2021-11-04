@@ -7,6 +7,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.Menu;
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view -> {
                 Intent addChild = AddChild.makeLaunchIntent(MainActivity.this, "New Child");
-
                 startActivity(addChild);
         });
     }
@@ -86,7 +86,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
 
 
