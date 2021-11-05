@@ -14,4 +14,6 @@
     <string name="timer">Timer</string>
     <string name="timeout_timer">Timeout Timer</string>
     <string name="main_menu">Main Menu</string>
+    <string name="minutes">Minutes</string>
+    <string name="start">START</string>
 </resources>
