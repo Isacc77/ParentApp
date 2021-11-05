@@ -16,4 +16,6 @@
     <string name="main_menu">Main Menu</string>
     <string name="minutes">Minutes</string>
     <string name="start">START</string>
+    <string name="set">SET</string>
+    <string name="reset">RESET</string>
 </resources>
