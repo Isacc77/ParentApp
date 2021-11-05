@@ -26,12 +26,13 @@ public class TimeoutTimer extends AppCompatActivity {
     static private final String SAVE_TIMER_KEY = "Different timer settings";
     private final int MIN_TO_MS_FACTOR = 60000;
     private final int MIN_TO_S_FACTOR = 60;
-    private long timerTime;
-    private boolean isTimerRunning;
     private final int ONE_SECOND_IN_MILLI = 1000;
+    private long timerStartTime;
+    private boolean isTimerRunning;
     private long timeLeft;
     private TextView timerClock;
     private CountDownTimer countDownTimer;
+    private Button startPauseTimer;
 
 
     @Override
@@ -40,14 +41,15 @@ public class TimeoutTimer extends AppCompatActivity {
         setContentView(R.layout.activity_timeout_timer);
 
         timerClock = findViewById(R.id.timerClock);
-        timerTime = (long) loadSavedData() * MIN_TO_MS_FACTOR;
-        timeLeft = timerTime;
+        startPauseTimer = findViewById(R.id.startBtn);
+        timerStartTime = (long) loadSavedData() * MIN_TO_MS_FACTOR;
+        timeLeft = timerStartTime;
 
-        setupTimerSettings();
-        setupTimerClock();
+        setupPreMadeTimerSettings();
+        setupTimerClockWithButtons();
     }
 
-    private void setupTimerSettings() {
+    private void setupPreMadeTimerSettings() {
         RadioGroup radioGroup = findViewById(R.id.timeRadioGroup);
         int[] timerSettings = getResources().getIntArray(R.array.times);
 
@@ -58,9 +60,11 @@ public class TimeoutTimer extends AppCompatActivity {
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view) { //TODO what if clicked while running?
+                    timerStartTime = (long) setting * MIN_TO_MS_FACTOR;
+                    timeLeft = timerStartTime;
+                    updateClock();
                     saveTimeSettings(setting);
-                    timerTime = setting;
                 }
             });
             radioGroup.addView(button);
@@ -71,16 +75,22 @@ public class TimeoutTimer extends AppCompatActivity {
         }
     }
 
-    private void setupTimerClock() {
+    private void setupTimerClockWithButtons() {
         Button resetTimer = findViewById(R.id.resetBtn);
-        Button startPauseTimer = findViewById(R.id.startBtn);
         updateClock();
 
         startPauseTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startTimer();
-                startPauseTimer.setText("PAUSE");
+                if (isTimerRunning) {
+                    countDownTimer.cancel();
+                    startPauseTimer.setText("RESUME");
+                    isTimerRunning = false;
+                } else {
+                    startTimer();
+                    startPauseTimer.setText("PAUSE");
+                    isTimerRunning = true;
+                }
             }
         });
 
@@ -88,9 +98,10 @@ public class TimeoutTimer extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 countDownTimer.cancel();
-                timeLeft = timerTime;
+                timeLeft = timerStartTime;
                 updateClock();
                 startPauseTimer.setText("START");
+                isTimerRunning = false;
             }
         });
 
@@ -106,6 +117,9 @@ public class TimeoutTimer extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                timeLeft = timerStartTime;
+                updateClock();
+                startPauseTimer.setText("START");
                 isTimerRunning = false;
             }
         }.start();
