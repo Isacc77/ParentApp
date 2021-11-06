@@ -48,6 +48,22 @@ public class ChildManager implements Iterable<Child> {
     }
 
 
+    public  static  ChildManager getInstance(ChildManager Manager) {
+        if(instance == null) {
+            instance = Manager;
+        }
+        return instance;
+    }
+
+
+
+
+
+
+
+
+
+
     public void add(Child child) {
         manager.add(child);
     }
