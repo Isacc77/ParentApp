@@ -35,9 +35,7 @@ public class TimeoutTimer extends AppCompatActivity {
     private final int MIN_TO_S_FACTOR = 60;
     private final int ONE_SECOND_IN_MILLI = 1000;
     private final int MILLI_TO_HOUR_FACTOR = 3600000;
-//    private final int MILLI_TO_SEC_FACTOR = 1000;
     private final int SEC_TO_HOUR_FACTOR = 3600;
-//    private final int MIN_TO_HOUR_FACTOR = 60;
 
     private long timerStartTime;
     private boolean isTimerRunning;
@@ -140,7 +138,6 @@ public class TimeoutTimer extends AppCompatActivity {
                 isTimerRunning = false;
             }
         });
-
     }
 
     private void startTimer() {
