@@ -63,14 +63,14 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId()) {
 
 
-//                case R.id.btn_childManager:
-//                    intent = new Intent(MainActivity.this, ChildrenManager.class);
-//                    break;
+                case R.id.btn_childManager:
+                    intent = ManagingMyChildrenData.makeLaunchIntent(MainActivity.this);
+                    break;
 
 //                case R.id.btn_flipCoin:
 //                    intent = new Intent(MainActivity.this, FlipCoin.class);
 //                    break;
-//
+
                 case R.id.btn_timer:
                     intent = TimeoutTimer.makeLaunchIntent(MainActivity.this);
                     break;

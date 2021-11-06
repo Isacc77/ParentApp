@@ -10,13 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CMPT276_2021_7_manganese">
         <activity
-            android:name=".TimeoutTimer"
-            android:label="@string/timeout_timer"
+            android:name=".ManagingMyChildrenData"
             android:exported="true" />
+        <activity
+            android:name=".TimeoutTimer"
+            android:exported="true"
+            android:label="@string/timeout_timer" />
         <activity
             android:name=".AddChild"
             android:exported="true"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
