@@ -95,27 +95,15 @@ public class ChildManager implements Iterable<Child> {
     }
 
 
-    public void save(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences("games", Context.MODE_PRIVATE);
-        // LocalDateTime cannot covert to json if do not  registerTypeAdapter
-        // https://www.javaguides.net/2019/11/gson-localdatetime-localdate.html
-        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (src, typeOfSrc, context1) -> new JsonPrimitive(src.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))).create();
-        String json = gson.toJson(manager);
-        preferences.edit().clear().putString("games", json).commit();
 
-    }
+    public Child getByIndex(int index) {
 
-    public void load(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences("games", Context.MODE_PRIVATE);
-        // https://www.javaguides.net/2019/11/gson-localdatetime-localdate.html
-        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, type, jsonDeserializationContext) -> {
-            String datetime = json.getAsJsonPrimitive().getAsString();
-            return LocalDateTime.parse(datetime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        }).create();
-        manager = gson.fromJson(preferences.getString("games", "[]"), new TypeToken<ArrayList<Child>>() {
-        }.getType());
+        if(index > manager.size() || index < 0) {
+            System.out.println("PROBLEM: in getByIndex, i should be [0, " + manager.size() + ").");
+            return new Child("");
+        }
 
-
+        return manager.get(index);
     }
 
 

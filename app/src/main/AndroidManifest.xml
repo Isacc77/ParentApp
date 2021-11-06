@@ -15,7 +15,6 @@
             android:exported="true" />
         <activity
             android:name=".AddChild"
-            android:label="@string/add_child_title"
             android:exported="true"
             android:parentActivityName=".MainActivity"/>
         <activity

@@ -5,6 +5,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,14 +20,16 @@ import android.widget.Toast;
 import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 
+
 public class AddChild extends AppCompatActivity {
+
+    public static final String EXTRA_MESSAGE = "Child";
+    private static int indexForSwitchActivity = -1;
 
     private boolean isSaved = false;
 
     private EditText inputName;
     private String name;
-    ChildManager Manager;
-
 
 
     @Override
@@ -34,14 +38,19 @@ public class AddChild extends AppCompatActivity {
         setContentView(R.layout.activity_add_child);
 
 
-        Manager = ChildManager.getInstance();
         Toolbar toolbar = findViewById(R.id.add_child_toolbar);
         setSupportActionBar(toolbar);
+        this.setTitle("Add your child");
+
+        Intent i = getIntent();
+        String message = i.getStringExtra(EXTRA_MESSAGE);
 
 
         // set up for UP bottom
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+
+        indexForSwitchActivity = getIntent().getIntExtra(EXTRA_MESSAGE, -1);
 
 
         setTextWatcher();
@@ -87,7 +96,6 @@ public class AddChild extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -97,8 +105,11 @@ public class AddChild extends AppCompatActivity {
 
                     name = inputName.getText().toString();
 
-                    Manager.add(new Child(name));
-
+                    if (indexForSwitchActivity < 0) {
+                        addChildToManager();
+                    } else {
+                        editChildInManager();
+                    }
 
                 } else {
 
@@ -114,16 +125,51 @@ public class AddChild extends AppCompatActivity {
     }
 
 
-
     public static Intent makeLaunchIntent(Context c, String message) {
-
         Intent intent = new Intent(c, AddChild.class);
-
+        intent.putExtra(EXTRA_MESSAGE, message);
         return intent;
     }
 
 
-    // connecting menu_add_lens.xml for tool bar
+    public static Intent makeLaunchIntent(Context c, String message, int position) {
+        Intent intent = new Intent(c, AddChild.class);
+        intent.putExtra(EXTRA_MESSAGE, message);
+        indexForSwitchActivity = position;
+        return intent;
+    }
+
+
+    // add a child to the exist manager object, when indexForSwitchActivity < 0
+    private void addChildToManager() {
+        ChildManager manager = ChildManager.getInstance();
+        manager.add(new Child(name));
+    }
+
+
+    // edit a child, when indexForSwitchActivity >= 0
+    private void editChildInManager() {
+        ChildManager manager = ChildManager.getInstance();
+
+        manager.getByIndex(indexForSwitchActivity).setName(name);
+
+    }
+
+    // a static function to set indexForSwitchActivity in onDestroy()
+    private static void setIndex(int position) {
+        indexForSwitchActivity = position;
+    }
+
+    @Override
+    protected void onDestroy() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        super.onDestroy();
+        setIndex(-1);
+        this.finish();
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -132,16 +178,6 @@ public class AddChild extends AppCompatActivity {
         return true;
 
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }
