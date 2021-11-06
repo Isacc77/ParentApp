@@ -29,6 +29,7 @@ public class AddChild extends AppCompatActivity {
     private boolean isSaved = false;
 
     private EditText inputName;
+
     private String name;
 
 
@@ -50,50 +51,38 @@ public class AddChild extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        indexForSwitchActivity = getIntent().getIntExtra(EXTRA_MESSAGE, -1);
-
-
-        setTextWatcher();
-
-
-    }
-
-    private void setTextWatcher() {
 
         inputName = findViewById(R.id.et_name);
-        inputName.addTextChangedListener(getInputFromUser());
+        inputName.addTextChangedListener(tw);
 
 
     }
 
 
-    private TextWatcher getInputFromUser() {
+    private TextWatcher tw = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
 
-        TextWatcher tw = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            String strName = inputName.getText().toString().trim();
+
+            if (strName.length() <= 0) {
+                isSaved = false;
+                return;
             }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                String strName = inputName.getText().toString().trim();
+            isSaved = true;
 
 
-                if (strName.length() > 0) {
-                    isSaved = true;
-                    return;
-                }
+        }
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        };
-
-        return tw;
-    }
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
 
 
     @Override
