@@ -14,8 +14,26 @@
     <string name="timer">Timer</string>
     <string name="timeout_timer">Timeout Timer</string>
     <string name="main_menu">Main Menu</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
     <string name="backup">BackUp</string>
     <string name="input_name">Please, input name here.</string>
     <string name="name">Name:</string>
     <string name="add_child_title">Add your child</string>
+
+
+
+
+
 </resources>
