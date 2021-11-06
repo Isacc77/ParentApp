@@ -33,10 +33,11 @@ public class AddChild extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
 
+
         Manager = ChildManager.getInstance();
         Toolbar toolbar = findViewById(R.id.add_child_toolbar);
-
         setSupportActionBar(toolbar);
+
 
         // set up for UP bottom
         ActionBar ab = getSupportActionBar();
