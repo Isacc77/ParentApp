@@ -3,6 +3,7 @@ package com.example.cmpt276_2021_7_manganese;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +13,10 @@ import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
 
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,13 +24,15 @@ public class MainActivity extends AppCompatActivity {
     private Button btnTimer;
     private Button btnChildManager;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         setupFloatingActionButton();
         btnChildManager = findViewById(R.id.btn_childManager);
@@ -37,10 +43,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+
     private void setupFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view -> {
-                Intent addChild = AddChild.makeLaunchIntent(MainActivity.this, "New Child");
+                Intent addChild = AddChild.makeLaunchIntent(MainActivity.this, "New Child or update child info");
                 startActivity(addChild);
         });
     }

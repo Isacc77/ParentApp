@@ -1,31 +1,38 @@
 package com.example.cmpt276_2021_7_manganese;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.Locale;
+
 public class ManagingMyChildrenData extends AppCompatActivity {
 
+    public static final String EXTRA_MESSAGE = "Child";
+
+
+    private static int index = 0; // get child by index in manager
 
     private ChildManager manager;
 
@@ -36,7 +43,10 @@ public class ManagingMyChildrenData extends AppCompatActivity {
     private TextView emptyListInfo;
     private ListView lv_child_data;
 
-    private final int GO_TO_CHILD_INFO = 1;
+    private final int REQUEST_CODE_AddCHILD = 1;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +56,8 @@ public class ManagingMyChildrenData extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.tb_manage_child);
         setSupportActionBar(toolbar);
-        this.setTitle("Manage your children");
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
 
 
         tv_notice = findViewById(R.id.tv_manage_child_info);
@@ -57,18 +68,14 @@ public class ManagingMyChildrenData extends AppCompatActivity {
 
         populateListView();
         registerClick();
-        // check and load the data to manager
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         loadDataBeforeLaunch();
 
-        // check if manager is empty, and if yes, show info
         emptyInfo();
 
 
     }
-
-
 
 
     private void saveDataBeforeTerminate() {
@@ -105,8 +112,7 @@ public class ManagingMyChildrenData extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = AddChild.makeLaunchIntent(ManagingMyChildrenData.this, "edit children", position);
-
-                startActivityForResult(intent, GO_TO_CHILD_INFO);
+                startActivityForResult(intent, REQUEST_CODE_AddCHILD);
             }
         });
     }
@@ -116,7 +122,7 @@ public class ManagingMyChildrenData extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == GO_TO_CHILD_INFO) { }
+        if(requestCode == REQUEST_CODE_AddCHILD) { }
         populateListView();
         emptyInfo();
     }
@@ -131,7 +137,6 @@ public class ManagingMyChildrenData extends AppCompatActivity {
 
 
         ArrayAdapter<Child> adapter = new ArrayAdapter<Child>(this, R.layout.da_item, manager.getManager());
-
         lv_child_data.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -156,6 +161,19 @@ public class ManagingMyChildrenData extends AppCompatActivity {
     public static Intent makeLaunchIntent(Context c) {
         return new Intent(c, ManagingMyChildrenData.class);
     }
+
+
+    public static Intent makeLaunchIntent(Context c, String message, int position) {
+        index = position;
+        Intent intent = new Intent(c, AddChild.class);
+        intent.putExtra("Child", message);
+        return intent;
+    }
+
+
+
+
+
 
     public void onDestroy() {
         saveDataBeforeTerminate();

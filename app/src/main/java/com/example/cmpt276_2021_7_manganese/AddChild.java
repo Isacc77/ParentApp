@@ -24,6 +24,12 @@ import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 public class AddChild extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "Child";
+
+    private static final int REQUEST_CODE_AddChild = 5;
+
+    private static int index = 0;
+
+
     private static int indexForSwitchActivity = -1;
 
     private boolean isSaved = false;
@@ -87,9 +93,13 @@ public class AddChild extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
         switch (item.getItemId()) {
+
             case R.id.action_backup:
+
                 if (isSaved) {
+
                     Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
 
                     name = inputName.getText().toString();
