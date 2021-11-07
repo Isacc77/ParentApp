@@ -27,6 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".FlipCoinActivity"
+            android:label="@string/flip_coin"
+            android:exported="true" />
+        <activity android:name=".RecordListActivity" />
     </application>
 
 </manifest>

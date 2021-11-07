@@ -11,6 +11,16 @@
         <entry key="..\:/CMPT/CMPT_276/Project/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/CMPT/CMPT_276/Project/app/src/main/res/layout/content_main.xml" value="0.17806484295845998" />
         <entry key="..\:/Users/User/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_timeout_timer.xml" value="0.24010416666666667" />
+        <entry key="app/src/main/res/drawable-v24/back_btn.xml" value="0.18385416666666668" />
+        <entry key="app/src/main/res/drawable-v24/grey_conner.xml" value="0.18385416666666668" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.18385416666666668" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.18385416666666668" />
+        <entry key="app/src/main/res/layout/activity_add_child.xml" value="0.1490036231884058" />
+        <entry key="app/src/main/res/layout/activity_flip_coin.xml" value="0.1490036231884058" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1490036231884058" />
+        <entry key="app/src/main/res/layout/activity_record.xml" value="0.1490036231884058" />
+        <entry key="app/src/main/res/layout/item_choice.xml" value="0.1490036231884058" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2078125" />
       </map>
     </option>
   </component>

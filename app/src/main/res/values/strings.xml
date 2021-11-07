@@ -11,6 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="children_manager">Children Manager</string>
     <string name="flip_a_coin">Flip a Coin</string>
+    <string name="flip_coin">Flip Coin</string>
     <string name="timer">Timer</string>
     <string name="timeout_timer">Timeout Timer</string>
     <string name="main_menu">Main Menu</string>
