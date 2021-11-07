@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -31,18 +32,24 @@ import java.util.Locale;
 public class TimeoutTimer extends AppCompatActivity {
     static private final String PREFS_TAG = "Time Settings";
     static private final String SAVE_TIMER_KEY = "Different timer settings";
+    private final String INTENT_IS_RUNNING_KEY = "runningTimer";
+    private final String INTENT_TIME_LEFT_KEY = "timeRemaining";
+    static private final String INTENT_IS_FINISHED_KEY = "timerDone";
+    private final int DEFAULT_TIME_LEFT_INTENT = 0;
     private final int MIN_TO_MS_FACTOR = 60000;
     private final int MIN_TO_S_FACTOR = 60;
     private final int ONE_SECOND_IN_MILLI = 1000;
     private final int MILLI_TO_HOUR_FACTOR = 3600000;
     private final int SEC_TO_HOUR_FACTOR = 3600;
 
-    private long timerStartTime;
+    static private long timerStartTime;
     private boolean isTimerRunning;
-    private long timeLeft;
+    static private long timeLeft;
     private TextView timerClock;
     private CountDownTimer countDownTimer;
     private Button startPauseTimer;
+    private Intent serviceIntent;
+    static private boolean isResetLastPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +60,26 @@ public class TimeoutTimer extends AppCompatActivity {
         startPauseTimer = findViewById(R.id.startBtn);
         timerStartTime = (long) loadSavedData() * MIN_TO_MS_FACTOR;
         timeLeft = timerStartTime;
+        serviceIntent = TimerService.makeLaunchIntent(TimeoutTimer.this);
 
+        checkRunningStatus();
         setupPreMadeTimerSettings();
         setupTimerClockWithButtons();
         setupCustomTimerSettings();
+    }
+
+    private void checkRunningStatus() {
+        Intent statusIntent = TimerService.makeStatusIntent(TimeoutTimer.this);
+        boolean serviceDone = statusIntent.getBooleanExtra(INTENT_IS_FINISHED_KEY, true);
+
+        if (!serviceDone) {
+            isTimerRunning = statusIntent.getBooleanExtra(INTENT_IS_RUNNING_KEY, false);
+            timeLeft = statusIntent.getLongExtra(INTENT_TIME_LEFT_KEY, DEFAULT_TIME_LEFT_INTENT);
+            if (isTimerRunning) {
+                startTimer();
+                startPauseTimer.setText(R.string.pause);
+            }
+        }
     }
 
     private void setupCustomTimerSettings() {
@@ -75,7 +98,7 @@ public class TimeoutTimer extends AppCompatActivity {
                         timeLeft = timerStartTime;
                     }
                     updateClock();
-                    startPauseTimer.setText("START");
+                    startPauseTimer.setText(R.string.start);
                     isTimerRunning = false;
                     inputTime.setText("");
                 }
@@ -95,7 +118,8 @@ public class TimeoutTimer extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { //TODO what if clicked while running?
-                    timerStartTime = (long) setting * MIN_TO_MS_FACTOR;
+//                    timerStartTime = (long) setting * MIN_TO_MS_FACTOR;
+                    timerStartTime = (long) 10000;
                     timeLeft = timerStartTime;
                     updateClock();
                     saveTimeSettings(setting);
@@ -118,11 +142,16 @@ public class TimeoutTimer extends AppCompatActivity {
             public void onClick(View view) {
                 if (isTimerRunning) {
                     countDownTimer.cancel();
-                    startPauseTimer.setText("RESUME");
+                    isResetLastPressed = false;
+                    stopService(serviceIntent);
+                    startPauseTimer.setText(R.string.resume);
                     isTimerRunning = false;
                 } else {
                     startTimer();
-                    startPauseTimer.setText("PAUSE");
+                    serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
+                    startService(serviceIntent);
+                    startPauseTimer.setText(R.string.pause);
+                    isResetLastPressed = false;
                     isTimerRunning = true;
                 }
             }
@@ -131,10 +160,19 @@ public class TimeoutTimer extends AppCompatActivity {
         resetTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                countDownTimer.cancel();
+                if (countDownTimer != null) {
+                    countDownTimer.cancel();
+                }
                 timeLeft = timerStartTime;
+                isResetLastPressed = true;
+                if(isTimerRunning) {
+                    stopService(serviceIntent);
+                } else {
+                    startService(serviceIntent);
+                    stopService(serviceIntent);
+                }
                 updateClock();
-                startPauseTimer.setText("START");
+                startPauseTimer.setText(R.string.start);
                 isTimerRunning = false;
             }
         });
@@ -152,7 +190,7 @@ public class TimeoutTimer extends AppCompatActivity {
             public void onFinish() {
                 timeLeft = timerStartTime;
                 updateClock();
-                startPauseTimer.setText("START");
+                startPauseTimer.setText(R.string.start);
                 isTimerRunning = false;
             }
         }.start();
@@ -188,5 +226,12 @@ public class TimeoutTimer extends AppCompatActivity {
 
     public static Intent makeLaunchIntent(Context c) {
         return new Intent(c, TimeoutTimer.class);
+    }
+
+    public static Intent makeResetIntentForService(Context c) {
+        Intent intent =  new Intent(c, TimeoutTimer.class);
+//        intent.putExtra("hasBeenReset", (timeLeft == timerStartTime));
+        intent.putExtra("hasBeenReset", isResetLastPressed);
+        return intent;
     }
 }

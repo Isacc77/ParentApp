@@ -18,4 +18,6 @@
     <string name="start">START</string>
     <string name="set">SET</string>
     <string name="reset">RESET</string>
+    <string name="pause">PAUSE</string>
+    <string name="resume">RESUME</string>
 </resources>
