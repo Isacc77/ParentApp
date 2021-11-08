@@ -10,4 +10,11 @@ import com.example.cmpt276_2021_7_manganese.model.CoinResult;
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract CoinResultDao coinDao();
+
 }
+
+
+
+
+
+

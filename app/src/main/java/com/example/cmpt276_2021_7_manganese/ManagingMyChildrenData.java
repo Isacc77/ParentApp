@@ -21,10 +21,9 @@ import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.google.gson.Gson;
 import com.example.cmpt276_2021_7_manganese.databinding.ActivityManagingMyChildrenDataBinding;
 
+import java.util.ArrayList;
+
 public class ManagingMyChildrenData extends AppCompatActivity {
-
-    public static final String EXTRA_MESSAGE = "Child";
-
 
     private static int index = 0; // get child by index in manager
 
@@ -40,8 +39,6 @@ public class ManagingMyChildrenData extends AppCompatActivity {
     private ListView lv_child_data;
 
     private final int REQUEST_CODE_AddCHILD = 1;
-
-
 
 
     @Override
@@ -62,7 +59,7 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         tv_notice.setSelected(true);
 
 
-        lv_child_data =  findViewById(R.id.lv_manage_child);
+        lv_child_data = findViewById(R.id.lv_manage_child);
 
         populateListView();
         registerClick();
@@ -95,22 +92,17 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         String strObject = preferences.getString("child_manager", "");
         if (strObject == null || strObject.equals("") || strObject.length() <= 0) {
             manager = ChildManager.getInstance();
+
         } else {
             manager = ChildManager.getInstance(gson.fromJson(strObject, ChildManager.class));
         }
     }
 
 
-
-
-
     private void registerClick() {
-
-
         lv_child_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Intent intent = AddChild.makeLaunchIntent(ManagingMyChildrenData.this, "edit children", position);
                 startActivityForResult(intent, REQUEST_CODE_AddCHILD);
             }
@@ -118,30 +110,35 @@ public class ManagingMyChildrenData extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_AddCHILD) { }
-        populateListView();
-        emptyInfo();
+        if (requestCode == REQUEST_CODE_AddCHILD) {
+            populateListView();
+            emptyInfo();
+        }
+
     }
-
-
 
 
     private void populateListView() {
-
-
         manager = ChildManager.getInstance();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                R.layout.da_item,
+                manager.StringChildData());
 
-
-        ArrayAdapter<Child> adapter = new ArrayAdapter<Child>(this, R.layout.da_item, manager.getManager());
         lv_child_data.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        lv_child_data.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(this, AddChild.class);
+            intent.putExtra(AddChild.EXTRA_MESSAGE, position);
+            startActivity(intent);
+        });
+
+
     }
-
-
 
 
 
@@ -169,10 +166,6 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         intent.putExtra("Child", message);
         return intent;
     }
-
-
-
-
 
 
     public void onDestroy() {
