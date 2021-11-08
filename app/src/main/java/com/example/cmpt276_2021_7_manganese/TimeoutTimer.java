@@ -1,5 +1,6 @@
 //Resource used: https://www.youtube.com/watch?v=MDuGwI6P-X8
 //more resource taken from: https://codinginflow.com/tutorials/android/countdowntimer/part-2-configuration-changes
+//https://www.youtube.com/watch?v=sOwqYNdi_x8
 package com.example.cmpt276_2021_7_manganese;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -120,8 +121,8 @@ public class TimeoutTimer extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { //TODO what if clicked while running?
-                    timerStartTime = (long) setting * MIN_TO_MS_FACTOR;
-//                    timerStartTime = (long) 10000;
+//                    timerStartTime = (long) setting * MIN_TO_MS_FACTOR;
+                    timerStartTime = (long) 10000;
                     timeLeft = timerStartTime;
                     updateClock();
                     saveTimeSettings(setting);

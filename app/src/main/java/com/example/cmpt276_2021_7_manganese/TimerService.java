@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.IBinder;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,6 +27,8 @@ public class TimerService extends Service {
     private final int ONE_SECOND_IN_MILLI = 1000;
     private final int MILLI_TO_HOUR_FACTOR = 3600000;
     private final int SEC_TO_HOUR_FACTOR = 3600;
+    private long[] vibrationPattern = {0, 1000, 1000};
+    private int indexVibrateRepeat = 1;
 
     private long timerStartTime;
     private static boolean isTimerRunning = false;
@@ -36,6 +40,7 @@ public class TimerService extends Service {
     private static boolean isTimerDone = true;
 
     private MediaPlayer player;
+    private Vibrator vibrator;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -63,9 +68,14 @@ public class TimerService extends Service {
     }
 
     private void alarmBlast() {
+        Toast.makeText(this, "start player", Toast.LENGTH_LONG).show();
         player = MediaPlayer.create(this, Settings.System.DEFAULT_ALARM_ALERT_URI);
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         player.setLooping(true);
         player.start();
+        vibrator.vibrate(VibrationEffect.createOneShot(3000, VibrationEffect.DEFAULT_AMPLITUDE));
+//        vibrator.vibrate(vibrationPattern, indexVibrateRepeat);
+//        vibrator.vibrate(VibrationEffect.createWaveform(vibrationPattern, indexVibrateRepeat));
     }
 
     public static Intent makeLaunchIntent(Context c) {
@@ -97,8 +107,13 @@ public class TimerService extends Service {
 //            Toast.makeText(this, "stop service timer", Toast.LENGTH_LONG).show();
             countDownTimer.cancel();
         }
+
         if (player != null && player.isPlaying()) {
+            Toast.makeText(this, "stop player", Toast.LENGTH_LONG).show();
             player.stop();
+        }
+        if (vibrator != null) {
+            vibrator.cancel();
         }
     }
 
