@@ -10,20 +10,23 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnFlipCoin;
     private Button btnTimer;
     private Button btnChildManager;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        this.setTitle("Main Menu");  //TODO: delete - I set this in the manifest and extracted to strings.xml - @Rio Samson
 
         setupFloatingActionButton();
         btnChildManager = findViewById(R.id.btn_childManager);
@@ -33,11 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+
+
     private void setupFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view -> {
-                Intent addChild = AddChild.makeLaunchIntent(MainActivity.this, "New Child");
-
+                Intent addChild = AddChild.makeLaunchIntent(MainActivity.this, "New Child or update child info");
                 startActivity(addChild);
         });
     }
@@ -83,14 +89,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
 
 

@@ -24,9 +24,7 @@ public class Child {
 
     @Override
     public String toString() {
-        return "Child{" +
-                "name='" + name + '\'' +
-                '}';
+        return "Name: " + name ;
     }
 
 }
