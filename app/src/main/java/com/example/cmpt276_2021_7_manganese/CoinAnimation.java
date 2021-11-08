@@ -5,12 +5,12 @@ import android.graphics.Matrix;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
-public class TossAnimation extends Animation {
+public class CoinAnimation extends Animation {
 
-    public interface TossAnimationListener extends AnimationListener {
+    public interface CoinAnimationListener extends AnimationListener {
 
 
-        void onDrawableChange(int result, TossAnimation animation);
+        void onDrawableChange(int result, CoinAnimation animation);
     }
 
 
@@ -44,7 +44,7 @@ public class TossAnimation extends Animation {
 
 
 
-    public TossAnimation(int circleCount, int xAxisDirection, int yAxisDirection, int zAxisDirection, int result) {
+    public CoinAnimation(int circleCount, int xAxisDirection, int yAxisDirection, int zAxisDirection, int result) {
         this.mCircleCount = circleCount;
         this.mXAxisDirection = xAxisDirection;
         this.mYAxisDirection = yAxisDirection;
@@ -55,11 +55,11 @@ public class TossAnimation extends Animation {
         mCamera = new Camera();
     }
 
-    private TossAnimationListener mTossAnimationListener;
+    private CoinAnimationListener mCoinAnimationListener;
 
-    public void setTossAnimationListener(TossAnimationListener mTossAnimationListener) {
-        this.mTossAnimationListener = mTossAnimationListener;
-        setAnimationListener(mTossAnimationListener);
+    public void setCoinAnimationListener(CoinAnimationListener mCoinAnimationListener) {
+        this.mCoinAnimationListener = mCoinAnimationListener;
+        setAnimationListener(mCoinAnimationListener);
     }
 
     @Override
@@ -80,16 +80,16 @@ public class TossAnimation extends Animation {
             if (mCurrentResult != -mResult) {
                 mCurrentResult = -mResult;
 
-                if (mTossAnimationListener != null) {
-                    mTossAnimationListener.onDrawableChange(mCurrentResult, this);
+                if (mCoinAnimationListener != null) {
+                    mCoinAnimationListener.onDrawableChange(mCurrentResult, this);
                 }
             }
         } else {
             if (mCurrentResult != mResult) {
                 mCurrentResult = mResult;
 
-                if (mTossAnimationListener != null) {
-                    mTossAnimationListener.onDrawableChange(mCurrentResult, this);
+                if (mCoinAnimationListener != null) {
+                    mCoinAnimationListener.onDrawableChange(mCurrentResult, this);
                 }
             }
         }

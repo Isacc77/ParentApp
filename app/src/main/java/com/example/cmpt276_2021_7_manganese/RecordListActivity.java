@@ -53,15 +53,12 @@ public class RecordListActivity extends AppCompatActivity {
 
     private void checkAll(){
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<CoinResult> datas =  db.coinDao().getAll();
-                coinResults.clear();
-                coinResults.addAll(datas);
-                handler.sendEmptyMessage(0);
+        new Thread(() -> {
+            List<CoinResult> datas =  db.coinDao().getAll();
+            coinResults.clear();
+            coinResults.addAll(datas);
+            handler.sendEmptyMessage(0);
 
-            }
         }).start();
 
     }

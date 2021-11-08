@@ -8,31 +8,30 @@
     tools:context=".MainActivity">
 
 
-
     <RelativeLayout
-        android:paddingHorizontal="20dp"
-        android:background="@color/purple_700"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/purple_700"
+        android:paddingHorizontal="20dp">
 
         <TextView
-            android:layout_centerVertical="true"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:text="CoinView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Flip coin"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
 
         <TextView
             android:id="@+id/record_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:textColor="@color/white"
-            android:textSize="16sp"
             android:text="Record"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
@@ -157,7 +156,7 @@
             android:scaleType="fitXY"
             android:src="@mipmap/bg" />
 
-        <com.example.cmpt276_2021_7_manganese.TossImageView
+        <com.example.cmpt276_2021_7_manganese.CoinImageView
             android:id="@+id/tiv"
             android:layout_width="140dp"
             android:layout_height="140dp"
@@ -166,13 +165,13 @@
             android:layout_marginStart="130dp"
             android:layout_marginBottom="-5dp"
             android:src="@mipmap/head"
-            toss:circleCount="@integer/toss_default_circleCount"
-            toss:duration="@integer/toss_default_duration"
-            toss:frontDrawable="@mipmap/head"
+            toss:circleCount="@integer/coin_default_circle_count"
+            toss:durationTime="@integer/coin_default_duration_time"
+            toss:headDrawable="@mipmap/head"
             toss:result="front"
-            toss:reverseDrawable="@mipmap/tail"
-            toss:startOffset="@integer/toss_default_startOffset"
-            toss:xAxisDirection="clockwise" />
+            toss:tailDrawable="@mipmap/tail"
+            toss:startOffset="@integer/coin_default_start_offset"
+            toss:xAxisDir="clockwise" />
 
 
     </RelativeLayout>

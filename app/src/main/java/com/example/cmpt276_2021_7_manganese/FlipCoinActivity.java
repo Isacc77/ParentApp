@@ -1,6 +1,7 @@
 package com.example.cmpt276_2021_7_manganese;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -8,7 +9,6 @@ import android.os.Message;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,7 +40,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     private RadioButton head,tail;
     private Button start;
 
-    private TossImageView mTossImageView;
+    private CoinImageView mCoinImageView;
     private RelativeLayout relativeLayout;
     private RecyclerView recyclerView;
     private int currentItem = 0;
@@ -51,6 +51,9 @@ public class FlipCoinActivity extends AppCompatActivity {
     private String select;
 
     private AppDatabase db;
+
+    private MediaPlayer player;
+
 
 
     private static final String[] m={"Tom","Jerry","Any"};
@@ -79,7 +82,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         tail = findViewById(R.id.tail);
         start = findViewById(R.id.start);
         relativeLayout = findViewById(R.id.relativeLayout);
-        mTossImageView = findViewById(R.id.tiv);
+        mCoinImageView = findViewById(R.id.tiv);
         recyclerView = findViewById(R.id.recycle);
         show_name = findViewById(R.id.show_time);
         start.setOnClickListener(view -> showAnimotion());
@@ -160,28 +163,22 @@ public class FlipCoinActivity extends AppCompatActivity {
     private void showAnimotion(){
 
         result = new Random().nextInt(2);
-        mTossImageView.cleareOtherAnimation();
+        mCoinImageView.clearOtherAnimation();
 
-        TranslateAnimation translateAnimation0 = new TranslateAnimation(0, 0, 0, 0);
-        translateAnimation0.setDuration(3000);
-        TranslateAnimation translateAnimation1 = new TranslateAnimation(0, 0, 0, 0);
-        translateAnimation1.setDuration(3000);
-        translateAnimation1.setStartOffset(3000);
+        if(player == null){
+            player = MediaPlayer.create(this,R.raw.coin_flip);
+        }
+        player.start();
+        mCoinImageView.setInterpolator(new DecelerateInterpolator())
+                .setDuration(5200)
+                .setCircleCount(35)
+                .setXAxisDirection(CoinAnimation.DIRECTION_CLOCKWISE)
+                .setYAxisDirection(CoinAnimation.DIRECTION_NONE)
+                .setResult( result == 0 ? CoinImageView.RESULT_HEAD : CoinImageView.RESULT_TAIL);
 
-        mTossImageView.setInterpolator(new DecelerateInterpolator())
-                .setDuration(6000)
-                .setCircleCount(40)
-                .setXAxisDirection(TossAnimation.DIRECTION_CLOCKWISE)
-                .setYAxisDirection(TossAnimation.DIRECTION_NONE)
-                .setZAxisDirection(TossAnimation.DIRECTION_NONE)
-                .setResult( result == 0 ? TossImageView.RESULT_FRONT : TossImageView.RESULT_REVERSE);
-
-        mTossImageView.addOtherAnimation(translateAnimation0);
-        mTossImageView.addOtherAnimation(translateAnimation1);
-
-        mTossImageView.setTossAnimationListener(new TossAnimation.TossAnimationListener() {
+        mCoinImageView.setCoinAnimationListener(new CoinAnimation.CoinAnimationListener() {
             @Override
-            public void onDrawableChange(int result, TossAnimation animation) {
+            public void onDrawableChange(int result, CoinAnimation animation) {
 
             }
 
@@ -211,7 +208,7 @@ public class FlipCoinActivity extends AppCompatActivity {
             }
         });
 
-        mTossImageView.startToss();
+        mCoinImageView.startFlipCoin();
     }
 
 
