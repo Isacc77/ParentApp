@@ -40,7 +40,7 @@ public class TimerService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         timeLeft = intent.getLongExtra(INTENT_TIME_LEFT_KEY, DEFAULT_TIME_LEFT);
-        Toast.makeText(this, "start service", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "start service", Toast.LENGTH_LONG).show();
         isTimerRunning = true;
         isTimerDone = false;
         countDownTimer = new CountDownTimer(timeLeft, ONE_SECOND_IN_MILLI) {

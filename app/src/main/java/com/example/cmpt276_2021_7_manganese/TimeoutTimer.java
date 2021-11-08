@@ -120,8 +120,8 @@ public class TimeoutTimer extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { //TODO what if clicked while running?
-//                    timerStartTime = (long) setting * MIN_TO_MS_FACTOR;
-                    timerStartTime = (long) 10000;
+                    timerStartTime = (long) setting * MIN_TO_MS_FACTOR;
+//                    timerStartTime = (long) 10000;
                     timeLeft = timerStartTime;
                     updateClock();
                     saveTimeSettings(setting);
