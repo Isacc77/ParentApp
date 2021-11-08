@@ -73,10 +73,12 @@ public class TimeoutTimer extends AppCompatActivity {
         boolean serviceDone = statusIntent.getBooleanExtra(INTENT_IS_FINISHED_KEY, true);
 
         if (!serviceDone) {
+            startPauseTimer.setText(R.string.resume);
             isTimerRunning = statusIntent.getBooleanExtra(INTENT_IS_RUNNING_KEY, false);
             timeLeft = statusIntent.getLongExtra(INTENT_TIME_LEFT_KEY, DEFAULT_TIME_LEFT_INTENT);
             if (isTimerRunning) {
                 startTimer();
+                isTimerRunning = true;
                 startPauseTimer.setText(R.string.pause);
             }
         }
@@ -230,8 +232,15 @@ public class TimeoutTimer extends AppCompatActivity {
 
     public static Intent makeResetIntentForService(Context c) {
         Intent intent =  new Intent(c, TimeoutTimer.class);
-//        intent.putExtra("hasBeenReset", (timeLeft == timerStartTime));
         intent.putExtra("hasBeenReset", isResetLastPressed);
         return intent;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
     }
 }

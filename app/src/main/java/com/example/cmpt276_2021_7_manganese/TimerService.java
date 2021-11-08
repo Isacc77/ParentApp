@@ -40,6 +40,7 @@ public class TimerService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         timeLeft = intent.getLongExtra(INTENT_TIME_LEFT_KEY, DEFAULT_TIME_LEFT);
+        Toast.makeText(this, "start service", Toast.LENGTH_LONG).show();
         isTimerRunning = true;
         isTimerDone = false;
         countDownTimer = new CountDownTimer(timeLeft, ONE_SECOND_IN_MILLI) {
@@ -84,15 +85,16 @@ public class TimerService extends Service {
         super.onDestroy();
 
         Intent statusIntent = TimeoutTimer.makeResetIntentForService(TimerService.this);
-        Toast.makeText(this, "destroying", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "destroying", Toast.LENGTH_LONG).show();
         if (statusIntent.getBooleanExtra("hasBeenReset", true)) {
             isTimerDone = true;
-            Toast.makeText(this, "TIMER SERVICE DONE", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "TIMER SERVICE DONE", Toast.LENGTH_LONG).show();
         }
 
         isTimerRunning = false;
 
         if (countDownTimer != null) {
+//            Toast.makeText(this, "stop service timer", Toast.LENGTH_LONG).show();
             countDownTimer.cancel();
         }
         if (player != null && player.isPlaying()) {
