@@ -116,16 +116,12 @@ public class FlipCoinActivity extends AppCompatActivity {
             }
         });
 
-        //将可选内容与ArrayAdapter连接起来
         arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,m);
 
-        //设置下拉列表的风格
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        //将adapter 添加到spinner中
         show_name.setAdapter(arrayAdapter);
 
-        //添加事件Spinner事件监听
         show_name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -228,8 +224,6 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     public String getTime(){
-        //创建SimpleDateFormat对象，指定样式    2019-05-13 22:39:30
-        //  SimpleDateFormat sdf1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat sdf1=new SimpleDateFormat("HH:mm:ss");
           Date date=new Date();
           return sdf1.format(date);
@@ -248,7 +242,6 @@ public class FlipCoinActivity extends AppCompatActivity {
                 (dialog, which) -> dialog.dismiss());
         normalDialog.setNegativeButton("cancel",
                 (dialog, which) -> dialog.dismiss());
-        // 显示
         normalDialog.show();
     }
 }

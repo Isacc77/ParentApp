@@ -101,9 +101,6 @@ public class TossImageView extends androidx.appcompat.widget.AppCompatImageView 
         setCoinDrawableIfNecessage();
     }
 
-    /**
-     * 设置mFrontDrawable和mReversetDrawable的值
-     */
     private void setCoinDrawableIfNecessage() {
         if (mFrontDrawable == null) {
             mFrontDrawable = getDrawable();
