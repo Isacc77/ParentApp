@@ -2,19 +2,14 @@ package com.example.cmpt276_2021_7_manganese;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.example.cmpt276_2021_7_manganese.model.ChildManager;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -71,15 +66,19 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
 
-
-                case R.id.btn_childManager:
-                    intent = ManagingMyChildrenData.makeLaunchIntent(MainActivity.this);
-                    break;
-
-//                case R.id.btn_flipCoin:
-//                    intent = new Intent(MainActivity.this, FlipCoin.class);
+                //TODO: look at how intent is made for btn_timeout - do this for all, apparently its better. TY
+                /**
+                 * need to create childrenManager class, FlipCoin class, Timer class
+                 * this will direct to those class from MainActivity
+                 */
+//                case R.id.btn_childManager:
+//                    intent = new Intent(MainActivity.this, ChildrenManager.class);
 //                    break;
-
+//
+                case R.id.btn_flipCoin:
+                    intent = new Intent(MainActivity.this, FlipCoinActivity.class);
+                    break;
+//
                 case R.id.btn_timer:
                     intent = TimeoutTimer.makeLaunchIntent(MainActivity.this);
                     break;
