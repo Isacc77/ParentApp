@@ -71,14 +71,14 @@ public class MainActivity extends AppCompatActivity {
                  * need to create childrenManager class, FlipCoin class, Timer class
                  * this will direct to those class from MainActivity
                  */
-//                case R.id.btn_childManager:
-//                    intent = new Intent(MainActivity.this, ChildrenManager.class);
-//                    break;
-//
+                case R.id.btn_childManager:
+                    intent = new Intent(MainActivity.this, ManagingMyChildrenData.class);
+                    break;
+
                 case R.id.btn_flipCoin:
                     intent = new Intent(MainActivity.this, FlipCoinActivity.class);
                     break;
-//
+
                 case R.id.btn_timer:
                     intent = TimeoutTimer.makeLaunchIntent(MainActivity.this);
                     break;

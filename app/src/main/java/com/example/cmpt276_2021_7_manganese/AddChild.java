@@ -1,11 +1,5 @@
 package com.example.cmpt276_2021_7_manganese;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
@@ -28,7 +27,6 @@ public class AddChild extends AppCompatActivity {
     private static final int REQUEST_CODE_AddChild = 5;
 
     private static int index = 0;
-
 
     private static int indexForSwitchActivity = -1;
 
@@ -101,6 +99,7 @@ public class AddChild extends AppCompatActivity {
                 if (isSaved) {
 
                     Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+
 
                     name = inputName.getText().toString();
 

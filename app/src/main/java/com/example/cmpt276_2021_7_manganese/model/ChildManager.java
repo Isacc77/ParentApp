@@ -10,19 +10,12 @@ package com.example.cmpt276_2021_7_manganese.model;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializer;
-import com.google.gson.reflect.TypeToken;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 
 public class ChildManager implements Iterable<Child> {
@@ -31,6 +24,8 @@ public class ChildManager implements Iterable<Child> {
 
     private static ChildManager instance;
 
+    String json;
+
 
     public ChildManager() {
 
@@ -38,13 +33,9 @@ public class ChildManager implements Iterable<Child> {
 
 
     public static ChildManager getInstance() {
-
         if (instance == null) {
-
             instance = new ChildManager();
-
         }
-
         return instance;
     }
 
@@ -55,14 +46,6 @@ public class ChildManager implements Iterable<Child> {
         }
         return instance;
     }
-
-
-
-
-
-
-
-
 
 
     public void add(Child child) {
@@ -98,6 +81,7 @@ public class ChildManager implements Iterable<Child> {
     }
 
 
+
     @Override
     public Iterator<Child> iterator() {
         return manager.iterator();
@@ -123,6 +107,25 @@ public class ChildManager implements Iterable<Child> {
         return manager.get(index);
     }
 
+    //需要更改因为跟larry的code太相似了
+    public void TransferToDatabase(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("Child", Context.MODE_PRIVATE);
+        Gson getGson = new GsonBuilder().create();
+        json = getGson.toJson(manager);
+        preferences.edit().putString("Child", json).commit();
+    }
+
+    //我不知道为什么typetoken那一直报错
+    public void UseDatabase(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("Child", Context.MODE_PRIVATE);
+        Gson getGson = new GsonBuilder().create();
+        json = getGson.toJson(manager);
+        manager = getGson.fromJson(preferences.getString("Child", "[]"), new TypeToken<ArrayList<Child>>() {
+        }.getType());
+        for (Child child : manager) {
+            manager.add(child);
+        }
+    }
 
 
 

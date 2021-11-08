@@ -1,31 +1,25 @@
 package com.example.cmpt276_2021_7_manganese;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.Locale;
+import com.example.cmpt276_2021_7_manganese.databinding.ActivityManagingMyChildrenDataBinding;
 
 public class ManagingMyChildrenData extends AppCompatActivity {
 
@@ -38,6 +32,8 @@ public class ManagingMyChildrenData extends AppCompatActivity {
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+
+    private ActivityManagingMyChildrenDataBinding binding;
 
     private TextView tv_notice;
     private TextView emptyListInfo;
@@ -53,6 +49,8 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_managing_my_children_data);
 
+        binding = ActivityManagingMyChildrenDataBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         Toolbar toolbar = findViewById(R.id.tb_manage_child);
         setSupportActionBar(toolbar);
@@ -101,6 +99,8 @@ public class ManagingMyChildrenData extends AppCompatActivity {
             manager = ChildManager.getInstance(gson.fromJson(strObject, ChildManager.class));
         }
     }
+
+
 
 
 
