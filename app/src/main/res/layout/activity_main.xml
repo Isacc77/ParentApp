@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/baby_yoda2"
+    android:background="@drawable/baby_yoda4"
     tools:context=".MainActivity">
 
 
@@ -29,7 +29,8 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_white_plus" />
+        app:srcCompat="@drawable/ic_child"
+        android:backgroundTint="@color/yellow2"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_vertical_1"
@@ -61,7 +62,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="150dp"
             android:background="@drawable/btn_background"
-            android:drawableStart="@drawable/ic_child"
+            android:drawableStart="@drawable/ic_edit"
             android:paddingStart="6dp"
             android:paddingEnd="10dp"
             android:text="@string/children_manager"

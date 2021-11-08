@@ -33,6 +33,7 @@ public class ChildManager implements Iterable<Child> {
 
 
     public ChildManager() {
+
     }
 
 
@@ -46,6 +47,22 @@ public class ChildManager implements Iterable<Child> {
 
         return instance;
     }
+
+
+    public  static  ChildManager getInstance(ChildManager Manager) {
+        if(instance == null) {
+            instance = Manager;
+        }
+        return instance;
+    }
+
+
+
+
+
+
+
+
 
 
     public void add(Child child) {

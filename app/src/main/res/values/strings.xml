@@ -21,4 +21,16 @@
     <string name="start">START</string>
     <string name="set">SET</string>
     <string name="reset">RESET</string>
+    <string name="select_a_child_data_to_manage">
+        Select a child data to manage
+        Select a child data to manage
+        Select a child data to manage     </string>
+    <string name="please_add_your_child_info">
+
+        Empty List
+        \nPlease add your child information
+
+    </string>
+    <string name="manage_your_children">Manage your children</string>
+
 </resources>
