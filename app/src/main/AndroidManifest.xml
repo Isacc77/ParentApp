@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cmpt276_2021_7_manganese">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -38,6 +39,7 @@
             android:label="@string/flip_coin"
             android:exported="true" />
         <activity android:name=".RecordListActivity" />
+        <service android:name=".TimerService"/>
     </application>
 
 </manifest>
