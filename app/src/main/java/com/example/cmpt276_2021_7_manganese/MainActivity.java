@@ -2,16 +2,16 @@ package com.example.cmpt276_2021_7_manganese;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-
-import androidx.appcompat.widget.Toolbar;
-
-import android.widget.Button;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,14 +19,15 @@ public class MainActivity extends AppCompatActivity {
     private Button btnTimer;
     private Button btnChildManager;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        this.setTitle("Main Menu");  //TODO: delete - I set this in the manifest and extracted to strings.xml - @Rio Samson
 
         setupFloatingActionButton();
         btnChildManager = findViewById(R.id.btn_childManager);
@@ -36,11 +37,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+
+
     private void setupFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view -> {
-                Intent addChild = AddChild.makeLaunchIntent(MainActivity.this, "New Child");
-
+                Intent addChild = AddChild.makeLaunchIntent(MainActivity.this, "New Child or update child info");
                 startActivity(addChild);
         });
     }
@@ -71,9 +75,9 @@ public class MainActivity extends AppCompatActivity {
 //                    intent = new Intent(MainActivity.this, ChildrenManager.class);
 //                    break;
 //
-//                case R.id.btn_flipCoin:
-//                    intent = new Intent(MainActivity.this, FlipCoin.class);
-//                    break;
+                case R.id.btn_flipCoin:
+                    intent = new Intent(MainActivity.this, FlipCoinActivity.class);
+                    break;
 //
                 case R.id.btn_timer:
                     intent = TimeoutTimer.makeLaunchIntent(MainActivity.this);
@@ -86,14 +90,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
 
 

@@ -7,6 +7,18 @@
 
 package com.example.cmpt276_2021_7_manganese.model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
+import com.google.gson.reflect.TypeToken;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -21,6 +33,7 @@ public class ChildManager implements Iterable<Child> {
 
 
     public ChildManager() {
+
     }
 
 
@@ -36,9 +49,26 @@ public class ChildManager implements Iterable<Child> {
     }
 
 
+    public  static  ChildManager getInstance(ChildManager Manager) {
+        if(instance == null) {
+            instance = Manager;
+        }
+        return instance;
+    }
+
+
+
+
+
+
+
+
+
+
     public void add(Child child) {
         manager.add(child);
     }
+
 
     public void removeChild(int index) {
         if (index < 0 || index > manager.size()) {
@@ -80,6 +110,21 @@ public class ChildManager implements Iterable<Child> {
             System.out.println(cnt++ + ": " + c);
         }
     }
+
+
+
+    public Child getByIndex(int index) {
+
+        if(index > manager.size() || index < 0) {
+            System.out.println("PROBLEM: in getByIndex, i should be [0, " + manager.size() + ").");
+            return new Child("");
+        }
+
+        return manager.get(index);
+    }
+
+
+
 
 
 }
