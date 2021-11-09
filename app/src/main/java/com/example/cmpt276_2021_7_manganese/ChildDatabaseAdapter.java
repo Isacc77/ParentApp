@@ -90,8 +90,8 @@ public class ChildDatabaseAdapter{
     }
 
 
-    public Cursor getRow(long rowId) {
-        String where = KEY_ROWID + "=" + rowId;
+    public Cursor getRow(String name) {
+        String where = KEY_NAME + "=" + name;
         Cursor c = 	db.query(true, DATABASE_TABLE, ALL_KEYS,
                 where, null, null, null, null, null);
         if (c != null) {

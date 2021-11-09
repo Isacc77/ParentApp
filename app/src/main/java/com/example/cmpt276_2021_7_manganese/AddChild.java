@@ -1,4 +1,5 @@
 package com.example.cmpt276_2021_7_manganese;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 
@@ -29,10 +32,13 @@ public class AddChild extends AppCompatActivity {
     private String name;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
+
 
         Toolbar toolbar = findViewById(R.id.add_child_toolbar);
         setSupportActionBar(toolbar);
@@ -100,6 +106,7 @@ public class AddChild extends AppCompatActivity {
                     } else {
                         editChildInManager();
                     }
+
 
                 } else {
 

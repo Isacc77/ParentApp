@@ -3,12 +3,10 @@ package com.example.cmpt276_2021_7_manganese;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,12 +14,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.google.gson.Gson;
-import com.example.cmpt276_2021_7_manganese.databinding.ActivityManagingMyChildrenDataBinding;
-
-import java.util.ArrayList;
 
 public class ManagingMyChildrenData extends AppCompatActivity {
 
@@ -32,13 +26,14 @@ public class ManagingMyChildrenData extends AppCompatActivity {
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
-    private ActivityManagingMyChildrenDataBinding binding;
 
     private TextView tv_notice;
     private TextView emptyListInfo;
-    private ListView lv_child_data;
+    private TextView lv_child_data;
 
     private final int REQUEST_CODE_AddCHILD = 1;
+
+    private ChildDatabaseAdapter DBA;
 
 
     @Override
@@ -46,8 +41,8 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_managing_my_children_data);
 
-        binding = ActivityManagingMyChildrenDataBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        DBA = new ChildDatabaseAdapter(this);
+        DBA.open();
 
         Toolbar toolbar = findViewById(R.id.tb_manage_child);
         setSupportActionBar(toolbar);
@@ -59,10 +54,8 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         tv_notice.setSelected(true);
 
 
-        lv_child_data = findViewById(R.id.lv_manage_child);
+        lv_child_data = findViewById(R.id.tv_child);
 
-        populateListView();
-        registerClick();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         loadDataBeforeLaunch();
@@ -73,16 +66,23 @@ public class ManagingMyChildrenData extends AppCompatActivity {
     }
 
 
+
     private void saveDataBeforeTerminate() {
         Gson gson = new Gson();
         String strObject;
         if (manager.getSize() > 0) {
             strObject = gson.toJson(manager);
+            Cursor cursor = DBA.getRow(strObject);
+            String name = cursor.getString(DBA.COL_NAME);
+            lv_child_data.setText(name + "\n");
         } else {
             strObject = "";
         }
+        /*
         editor.putString("child_manager", strObject);
         editor.commit();
+
+         */
     }
 
 
@@ -99,43 +99,19 @@ public class ManagingMyChildrenData extends AppCompatActivity {
     }
 
 
-    private void registerClick() {
-        lv_child_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = AddChild.makeLaunchIntent(ManagingMyChildrenData.this, "edit children", 5);
-
-                startActivityForResult(intent, REQUEST_CODE_AddCHILD);
-            }
-        });
-    }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_AddCHILD) {
-            populateListView();
             emptyInfo();
         }
 
     }
 
 
-    private void populateListView() {
-        manager = ChildManager.getInstance();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this,
-                R.layout.da_item,
-                manager.StringChildData());
-
-        lv_child_data.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-
-
-    }
 
 
 
@@ -168,6 +144,7 @@ public class ManagingMyChildrenData extends AppCompatActivity {
     public void onDestroy() {
         saveDataBeforeTerminate();
         super.onDestroy();
+        DBA.close();
     }
 
 
