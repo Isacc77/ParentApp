@@ -49,7 +49,7 @@ public class TimeoutTimer extends AppCompatActivity {
     private TextView timerClock;
     private CountDownTimer countDownTimer;
     private Button startPauseTimer;
-    private Intent serviceIntent;
+    static private Intent serviceIntent;
     static private boolean isResetLastPressed;
 
     @Override
@@ -171,6 +171,7 @@ public class TimeoutTimer extends AppCompatActivity {
                 if(isTimerRunning) {
                     stopService(serviceIntent);
                 } else {
+                    stopService(serviceIntent);
                     startService(serviceIntent);
                     stopService(serviceIntent);
                 }
@@ -235,6 +236,10 @@ public class TimeoutTimer extends AppCompatActivity {
         Intent intent =  new Intent(c, TimeoutTimer.class);
         intent.putExtra("hasBeenReset", isResetLastPressed);
         return intent;
+    }
+
+    public static Intent getServiceIntent(Context c) {
+        return serviceIntent;
     }
 
     @Override

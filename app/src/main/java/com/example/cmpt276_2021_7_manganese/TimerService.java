@@ -1,5 +1,8 @@
 package com.example.cmpt276_2021_7_manganese;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +12,14 @@ import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 public class TimerService extends Service {
     static private final String PREFS_TAG = "Time Settings";
@@ -41,6 +47,9 @@ public class TimerService extends Service {
 
     private MediaPlayer player;
     private Vibrator vibrator;
+
+    private NotificationManagerCompat notificationManager;
+    public static final String CHANNEL_1_ID = "TimerDone";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -76,6 +85,36 @@ public class TimerService extends Service {
         vibrator.vibrate(VibrationEffect.createOneShot(3000, VibrationEffect.DEFAULT_AMPLITUDE));
 //        vibrator.vibrate(vibrationPattern, indexVibrateRepeat);
 //        vibrator.vibrate(VibrationEffect.createWaveform(vibrationPattern, indexVibrateRepeat));
+
+//        timeoutNotificationSend(null);
+    }
+
+    public void timeoutNotificationSend(View v) {
+        notificationManager = NotificationManagerCompat.from(this);
+
+        Intent timerDoneIntent = new Intent(this, TimeoutTimer.class);
+        PendingIntent timerPendingIntent = PendingIntent.getActivity(this, 0
+                , timerDoneIntent, 0);
+
+        Intent serviceIntent = TimeoutTimer.getServiceIntent(this);
+        PendingIntent intentForBroadcastPending = PendingIntent.getBroadcast(this, 0
+                , serviceIntent, 0);
+
+//        Intent intentForBroadcast = new Intent(this, TimerService.class);
+//        PendingIntent intentForBroadcastPending = PendingIntent.getBroadcast(this, 0
+//                , intentForBroadcast, 0);
+
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.ic_android_black_24dp)
+                .setContentTitle("Timeout Timer Done").setContentText("Timer has run out.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(timerPendingIntent)
+                .setAutoCancel(true)
+                .addAction(R.mipmap.ic_launcher, "Stop", intentForBroadcastPending)
+                .build();
+
+        notificationManager.notify(1, notification);
+
     }
 
     public static Intent makeLaunchIntent(Context c) {
@@ -94,8 +133,9 @@ public class TimerService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
+//        Toast.makeText(this, "service cancel called", Toast.LENGTH_LONG).show();
+
         Intent statusIntent = TimeoutTimer.makeResetIntentForService(TimerService.this);
-//        Toast.makeText(this, "destroying", Toast.LENGTH_LONG).show();
         if (statusIntent.getBooleanExtra("hasBeenReset", true)) {
             isTimerDone = true;
 //            Toast.makeText(this, "TIMER SERVICE DONE", Toast.LENGTH_LONG).show();
@@ -109,7 +149,7 @@ public class TimerService extends Service {
         }
 
         if (player != null && player.isPlaying()) {
-            Toast.makeText(this, "stop player", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "stop player", Toast.LENGTH_LONG).show();
             player.stop();
         }
         if (vibrator != null) {
