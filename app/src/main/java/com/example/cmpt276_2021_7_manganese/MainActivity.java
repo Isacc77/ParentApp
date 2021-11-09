@@ -60,10 +60,6 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
 
-                /**
-                 * need to create childrenManager class, FlipCoin class, Timer class
-                 * this will direct to those class from MainActivity
-                 */
                 case R.id.btn_childManager:
                     intent = new Intent(MainActivity.this, ManagingMyChildrenData.class);
                     break;

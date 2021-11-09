@@ -103,7 +103,9 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         lv_child_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = AddChild.makeLaunchIntent(ManagingMyChildrenData.this, "edit children", position);
+
+                Intent intent = AddChild.makeLaunchIntent(ManagingMyChildrenData.this, "edit children", 5);
+
                 startActivityForResult(intent, REQUEST_CODE_AddCHILD);
             }
         });
@@ -131,11 +133,6 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         lv_child_data.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        lv_child_data.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(this, AddChild.class);
-            intent.putExtra(AddChild.EXTRA_MESSAGE, position);
-            startActivity(intent);
-        });
 
 
     }

@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.example.cmpt276_2021_7_manganese.model.ChoiceAdapter;
 import com.example.cmpt276_2021_7_manganese.model.CoinResult;
 
@@ -56,7 +57,11 @@ public class FlipCoinActivity extends AppCompatActivity {
 
 
 
-    private static final String[] m={"Tom","Jerry","Any"};
+    private String[] childrenData;
+    private ChildManager manager;
+
+
+
     private Spinner show_name;
     private ArrayAdapter<String> arrayAdapter;
 
@@ -78,6 +83,10 @@ public class FlipCoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin);
+        manager = ChildManager.getInstance();
+
+
+
         head = findViewById(R.id.head);
         tail = findViewById(R.id.tail);
         start = findViewById(R.id.start);
@@ -119,24 +128,34 @@ public class FlipCoinActivity extends AppCompatActivity {
             }
         });
 
-        arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,m);
 
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        show_name.setAdapter(arrayAdapter);
+        childrenData = manager.StringChildData();
 
-        show_name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                select =  m[i];
-            }
+        if (childrenData.length==0){
+/**
+ *
+ *
+ */
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
 
-            }
-        });
-        select =  m[0];
+        }else{
+            arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, childrenData);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            show_name.setAdapter(arrayAdapter);
+            show_name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    select =  childrenData[i];
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+            select =  childrenData[0];
+
+        }
 
 
 
