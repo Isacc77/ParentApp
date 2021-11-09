@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class ChildDatabaseAdapter{
     private static final String TAG = "ChildDBAdapter";
@@ -20,17 +19,17 @@ public class ChildDatabaseAdapter{
     public static final int DATABASE_VERSION = 2;
     private static final String DATABASE_CREATE_SQL =
             "create table if not exists " + DATABASE_TABLE
-                    + " (" + KEY_NAME + " text not null, "
+                    + " (" + KEY_NAME + " text not null "
                     + ");";
 
-    private final Context context;
+    private Context context;
 
     SQLiteOpenHelper myDBHelper;
     private SQLiteDatabase db;
 
     public ChildDatabaseAdapter(Context ctx) {
         this.context = ctx;
-        myDBHelper = new SQLiteOpenHelper(context) {
+        myDBHelper = new SQLiteOpenHelper(context, "ChildTable", null, DATABASE_VERSION) {
             @Override
             public void onCreate(SQLiteDatabase db) {
                 db.execSQL(DATABASE_CREATE_SQL);
