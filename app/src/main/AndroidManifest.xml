@@ -41,7 +41,6 @@
             android:exported="true" />
         <activity android:name=".RecordListActivity" />
         <service android:name=".TimerService"/>
-        <receiver android:name=".NotificationButtonReceiver"/>
     </application>
 
 </manifest>

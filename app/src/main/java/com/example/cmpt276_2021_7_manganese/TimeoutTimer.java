@@ -16,18 +16,14 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Locale;
 
-//QUESTIONS:
-//should the input be limited for  how many minutes? - android:maxLength="4"
-//should the input only be until minute 60? display timer for an hour or more?
-//what about orientation?
-
 /**
  * This TimeoutTimer activity represents the screen containing timeout features.
- * Features such as..
+ * Features such as starting the timer, pausing the timer, resuming the timer, reseting the timer
+ * once done. Plays sound and vibrate once timer is done. Timer runs in background and can use
+ * other applications.
  * @author Rio Samson
  */
 public class TimeoutTimer extends AppCompatActivity {
@@ -36,6 +32,7 @@ public class TimeoutTimer extends AppCompatActivity {
     private final String INTENT_IS_RUNNING_KEY = "runningTimer";
     private final String INTENT_TIME_LEFT_KEY = "timeRemaining";
     static private final String INTENT_IS_FINISHED_KEY = "timerDone";
+    private static final String IS_RESET = "hasBeenReset";
     private final int DEFAULT_TIME_LEFT_INTENT = 0;
     private final int MIN_TO_MS_FACTOR = 60000;
     private final int MIN_TO_S_FACTOR = 60;
@@ -67,6 +64,7 @@ public class TimeoutTimer extends AppCompatActivity {
         setupPreMadeTimerSettings();
         setupTimerClockWithButtons();
         setupCustomTimerSettings();
+
     }
 
     private void checkRunningStatus() {
@@ -121,8 +119,7 @@ public class TimeoutTimer extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { //TODO what if clicked while running?
-//                    timerStartTime = (long) setting * MIN_TO_MS_FACTOR;
-                    timerStartTime = (long) 10000;
+                    timerStartTime = (long) setting * MIN_TO_MS_FACTOR;
                     timeLeft = timerStartTime;
                     updateClock();
                     saveTimeSettings(setting);
@@ -234,7 +231,7 @@ public class TimeoutTimer extends AppCompatActivity {
 
     public static Intent makeResetIntentForService(Context c) {
         Intent intent =  new Intent(c, TimeoutTimer.class);
-        intent.putExtra("hasBeenReset", isResetLastPressed);
+        intent.putExtra(IS_RESET, isResetLastPressed);
         return intent;
     }
 
