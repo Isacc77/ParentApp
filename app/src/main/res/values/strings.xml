@@ -6,6 +6,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="children_manager">Children Manager</string>
@@ -23,6 +24,8 @@
     <string name="start">START</string>
     <string name="set">SET</string>
     <string name="reset">RESET</string>
+    <string name="pause">PAUSE</string>
+    <string name="resume">RESUME</string>
     <string name="select_a_child_data_to_manage">
         Select a child data to manage
         Select a child data to manage
