@@ -1,11 +1,4 @@
 package com.example.cmpt276_2021_7_manganese;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,19 +9,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
-
 
 public class AddChild extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "Child";
-
-    private static final int REQUEST_CODE_AddChild = 5;
-
-    private static int index = 0;
-
 
     private static int indexForSwitchActivity = -1;
 
@@ -44,18 +34,21 @@ public class AddChild extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
 
-
         Toolbar toolbar = findViewById(R.id.add_child_toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("Add your child");
 
-        Intent i = getIntent();
-        String message = i.getStringExtra(EXTRA_MESSAGE);
+
+        indexForSwitchActivity = getIntent().getIntExtra(EXTRA_MESSAGE, -1);
 
 
         // set up for UP bottom
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+
+        //read intent extra,if no extra , show new game screen,else show edit screen
+        indexForSwitchActivity = getIntent().getIntExtra(EXTRA_MESSAGE, -1);
+
 
 
         inputName = findViewById(R.id.et_name);
@@ -99,9 +92,7 @@ public class AddChild extends AppCompatActivity {
             case R.id.action_backup:
 
                 if (isSaved) {
-
                     Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
-
                     name = inputName.getText().toString();
 
                     if (indexForSwitchActivity < 0) {
@@ -172,11 +163,18 @@ public class AddChild extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.add_child, menu);
 
-        return true;
+
+        if (indexForSwitchActivity >= 0) {
+            getMenuInflater().inflate(R.menu.edit_child, menu);
+        }else {
+            getMenuInflater().inflate(R.menu.add_child, menu);
+        }
+
+        return super.onCreateOptionsMenu(menu);
 
     }
+
 
 
 }
