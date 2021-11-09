@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/timer_screen_image"
     tools:context=".TimeoutTimer">
 
     <androidx.constraintlayout.widget.Guideline
@@ -36,6 +37,7 @@
         android:id="@+id/resetBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#3E919C"
         android:text="@string/reset"
         app:layout_constraintBottom_toBottomOf="@+id/startBtn"
         app:layout_constraintEnd_toStartOf="@+id/startBtn"
@@ -49,6 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
+        android:background="#3E919C"
         android:text="@string/start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,6 +90,7 @@
         android:layout_marginBottom="32dp"
         android:ems="10"
         android:hint="@string/minutes"
+        android:textColor="@color/white"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/set_time_btn"
@@ -98,6 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
+        android:background="#578BB5"
         android:text="@string/set"
         app:layout_constraintBottom_toBottomOf="@+id/input_minutes"
         app:layout_constraintEnd_toEndOf="parent"

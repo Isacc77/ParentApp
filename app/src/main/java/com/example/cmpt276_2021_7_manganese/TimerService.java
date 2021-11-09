@@ -1,51 +1,54 @@
 package com.example.cmpt276_2021_7_manganese;
 
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+/**
+ * This TimerService class is used as a method to keep the timer running
+ * in the background so that the user is able to use other apps during the timer
+ * countdown. Also helps to update the timer os screen when coming back to screen
+ * after activity was destroyed.
+ * @author Rio Samson
+ */
 public class TimerService extends Service {
-    static private final String PREFS_TAG = "Time Settings";
-    static private final String SAVE_TIMER_KEY = "Different timer settings";
     static final String INTENT_IS_RUNNING_KEY = "runningTimer";
     static private final String INTENT_TIME_LEFT_KEY = "timeRemaining";
     static private final String INTENT_IS_FINISHED_KEY = "timerDone";
+    private static final String BROADCAST_FTR = "com.example.cmpt276_2021_7_manganese.countdown_broadcast";
+    private final String IS_RESET = "hasBeenReset";
     private final int DEFAULT_TIME_LEFT = 0;
-    private final int MIN_TO_MS_FACTOR = 60000;
-    private final int MIN_TO_S_FACTOR = 60;
     private final int ONE_SECOND_IN_MILLI = 1000;
-    private final int MILLI_TO_HOUR_FACTOR = 3600000;
-    private final int SEC_TO_HOUR_FACTOR = 3600;
     private long[] vibrationPattern = {0, 1000, 1000};
     private int indexVibrateRepeat = 1;
-
     private long timerStartTime;
     private static boolean isTimerRunning = false;
     private static long timeLeft;
-    private TextView timerClock;
     private CountDownTimer countDownTimer;
-    private Button startPauseTimer;
-
     private static boolean isTimerDone = true;
-
     private MediaPlayer player;
     private Vibrator vibrator;
+    private NotificationManagerCompat notificationManager;
+    public static final String CHANNEL_1_ID = "TimerDone";
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        registerReceiver(broadcastReceiver, new IntentFilter(BROADCAST_FTR));
         timeLeft = intent.getLongExtra(INTENT_TIME_LEFT_KEY, DEFAULT_TIME_LEFT);
-//        Toast.makeText(this, "start service", Toast.LENGTH_LONG).show();
         isTimerRunning = true;
         isTimerDone = false;
         countDownTimer = new CountDownTimer(timeLeft, ONE_SECOND_IN_MILLI) {
@@ -67,15 +70,44 @@ public class TimerService extends Service {
         return START_STICKY;
     }
 
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            onDestroy();
+        }
+    };
+
     private void alarmBlast() {
-        Toast.makeText(this, "start player", Toast.LENGTH_LONG).show();
         player = MediaPlayer.create(this, Settings.System.DEFAULT_ALARM_ALERT_URI);
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         player.setLooping(true);
         player.start();
-        vibrator.vibrate(VibrationEffect.createOneShot(3000, VibrationEffect.DEFAULT_AMPLITUDE));
-//        vibrator.vibrate(vibrationPattern, indexVibrateRepeat);
-//        vibrator.vibrate(VibrationEffect.createWaveform(vibrationPattern, indexVibrateRepeat));
+        vibrator.vibrate(VibrationEffect.createWaveform(vibrationPattern, indexVibrateRepeat));
+
+        timeoutNotificationSend(null);
+    }
+
+    public void timeoutNotificationSend(View v) {
+        notificationManager = NotificationManagerCompat.from(this);
+
+        Intent timerDoneIntent = new Intent(this, TimeoutTimer.class);
+        PendingIntent timerPendingIntent = PendingIntent.getActivity(this, 0
+                , timerDoneIntent, 0);
+
+        Intent intentForBroadcast = new Intent(BROADCAST_FTR);
+        PendingIntent intentForBroadcastPending = PendingIntent.getBroadcast(this, 0
+                , intentForBroadcast, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.ic_android_black_24dp)
+                .setContentTitle(getString(R.string.timeout_timer_done)).setContentText(getString(R.string.timer_has_run_out))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(timerPendingIntent)
+                .setAutoCancel(true)
+                .addAction(R.mipmap.ic_launcher, getString(R.string.stop), intentForBroadcastPending);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, builder.build());
     }
 
     public static Intent makeLaunchIntent(Context c) {
@@ -95,21 +127,14 @@ public class TimerService extends Service {
         super.onDestroy();
 
         Intent statusIntent = TimeoutTimer.makeResetIntentForService(TimerService.this);
-//        Toast.makeText(this, "destroying", Toast.LENGTH_LONG).show();
-        if (statusIntent.getBooleanExtra("hasBeenReset", true)) {
+        if (statusIntent.getBooleanExtra(IS_RESET, true)) {
             isTimerDone = true;
-//            Toast.makeText(this, "TIMER SERVICE DONE", Toast.LENGTH_LONG).show();
         }
-
         isTimerRunning = false;
-
         if (countDownTimer != null) {
-//            Toast.makeText(this, "stop service timer", Toast.LENGTH_LONG).show();
             countDownTimer.cancel();
         }
-
         if (player != null && player.isPlaying()) {
-            Toast.makeText(this, "stop player", Toast.LENGTH_LONG).show();
             player.stop();
         }
         if (vibrator != null) {
