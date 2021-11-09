@@ -16,6 +16,18 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 
+
+/**
+ * This class is for add child
+ * user can use this class to add child, by clicking floating button
+ * @author  Shuai Li & Yam
+ */
+
+
+
+
+
+
 public class AddChild extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "Child";
@@ -100,6 +112,7 @@ public class AddChild extends AppCompatActivity {
                     } else {
                         editChildInManager();
                     }
+                    finish();
 
                 } else {
 

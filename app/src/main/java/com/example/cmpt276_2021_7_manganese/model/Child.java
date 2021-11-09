@@ -4,6 +4,11 @@
  */
 package com.example.cmpt276_2021_7_manganese.model;
 
+/**
+ * This class is for Child data
+ * Child's name
+ * @author  Shuai Li
+ */
 
 public class Child {
 
@@ -26,5 +31,7 @@ public class Child {
     public String toString() {
         return "Name: " + name ;
     }
+
+
 
 }

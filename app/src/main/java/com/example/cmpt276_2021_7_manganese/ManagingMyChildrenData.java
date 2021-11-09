@@ -23,6 +23,12 @@ import com.example.cmpt276_2021_7_manganese.databinding.ActivityManagingMyChildr
 
 import java.util.ArrayList;
 
+/**
+ * This class is for Children manager activity
+ * after add children data, user can manage child data at this activity
+ * @author  Shuai Li & Yam
+ */
+
 public class ManagingMyChildrenData extends AppCompatActivity {
 
     private static int index = 0; // get child by index in manager

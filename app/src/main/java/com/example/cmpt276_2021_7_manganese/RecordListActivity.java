@@ -17,6 +17,7 @@ import com.example.cmpt276_2021_7_manganese.model.CoinResult;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class RecordListActivity extends AppCompatActivity {
 
 

@@ -15,6 +15,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * This class is for ChildManager
+ * it use singleton model
+ * we can populate data Children data by this class
+ * @author  Shuai Li
+ */
+
+
+
 
 public class ChildManager implements Iterable<Child> {
 
@@ -116,7 +125,6 @@ public class ChildManager implements Iterable<Child> {
         return manager.get(index);
     }
 
-    //需要更改因为跟larry的code太相似了
     public void TransferToDatabase(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("Child", Context.MODE_PRIVATE);
         Gson getGson = new GsonBuilder().create();
@@ -124,7 +132,7 @@ public class ChildManager implements Iterable<Child> {
         preferences.edit().putString("Child", json).commit();
     }
 
-    //我不知道为什么typetoken那一直报错
+
     public void UseDatabase(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("Child", Context.MODE_PRIVATE);
         Gson getGson = new GsonBuilder().create();

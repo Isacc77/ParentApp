@@ -1,3 +1,8 @@
+/**
+ * This class is for main menu
+ * @author  Shuai Li & Yam & Samson & Larry
+ */
+
 package com.example.cmpt276_2021_7_manganese;
 
 import android.content.Intent;
@@ -74,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             }
             startActivity(intent);
         }
-
     }
 
 

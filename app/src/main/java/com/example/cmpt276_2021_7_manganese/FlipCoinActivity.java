@@ -40,7 +40,6 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private RadioButton head,tail;
     private Button start;
-
     private CoinImageView mCoinImageView;
     private RelativeLayout relativeLayout;
     private RecyclerView recyclerView;
@@ -50,9 +49,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     private ChoiceAdapter adapter;
     private TextView record_btn;
     private String select;
-
     private AppDatabase db;
-
     private MediaPlayer player;
 
 
