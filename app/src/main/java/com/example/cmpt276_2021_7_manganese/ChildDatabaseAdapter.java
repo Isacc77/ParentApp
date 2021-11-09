@@ -1,5 +1,6 @@
 package com.example.cmpt276_2021_7_manganese;
 
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,34 +8,40 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class ChildDatabaseAdapter {
+public class ChildDatabaseAdapter{
     private static final String TAG = "ChildDBAdapter";
 
-    public static final String KEY_ROWID = "_id";
+    public static final String KEY_ROWID = "id";
 
     public static final String KEY_NAME = "name";
-
     public static final int COL_NAME = 1;
-
     public static final String[] ALL_KEYS = new String[] {KEY_NAME};
-
     public static final String DATABASE_TABLE = "ChildTable";
-
     public static final int DATABASE_VERSION = 2;
     private static final String DATABASE_CREATE_SQL =
-            "create table " + DATABASE_TABLE
+            "create table if not exists " + DATABASE_TABLE
                     + " (" + KEY_NAME + " text not null, "
                     + ");";
 
     private final Context context;
 
-    private DatabaseHelper myDBHelper;
+    SQLiteOpenHelper myDBHelper;
     private SQLiteDatabase db;
-
 
     public ChildDatabaseAdapter(Context ctx) {
         this.context = ctx;
-        myDBHelper = new DatabaseHelper(context);
+        myDBHelper = new SQLiteOpenHelper(context) {
+            @Override
+            public void onCreate(SQLiteDatabase db) {
+                db.execSQL(DATABASE_CREATE_SQL);
+            }
+
+            @Override
+            public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+                db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
+                onCreate(db);
+            }
+        };
     }
 
     // Open the database connection.
@@ -43,7 +50,6 @@ public class ChildDatabaseAdapter {
         return this;
     }
 
-.
     public void close() {
         myDBHelper.close();
     }
@@ -100,7 +106,6 @@ public class ChildDatabaseAdapter {
         String where = KEY_ROWID + "=" + rowId;
         ContentValues newValues = new ContentValues();
         newValues.put(KEY_NAME, name);
-
 
         return db.update(DATABASE_TABLE, newValues, where, null) != 0;
     }
