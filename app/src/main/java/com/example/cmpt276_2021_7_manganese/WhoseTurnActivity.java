@@ -15,7 +15,6 @@ import com.example.cmpt276_2021_7_manganese.model.TaskManager;
 public class WhoseTurnActivity extends AppCompatActivity {
 
     private TaskManager t_manager;
-
     private TextView tv_notice;
     private TextView emptyListInfo;
     private ListView lv_task_data;
@@ -32,8 +31,6 @@ public class WhoseTurnActivity extends AppCompatActivity {
 
         setUpToolBar(toolbar);
         tv_notice.setSelected(true);
-
-
     }
 
 
@@ -45,9 +42,6 @@ public class WhoseTurnActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
     }
-
-
-
     public static Intent makeLaunchIntent(Context c) {
         return new Intent(c, WhoseTurnActivity.class);
     }
