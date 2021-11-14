@@ -42,5 +42,10 @@
     <string name="stop">Stop</string>
     <string name="timer_done_channel">Timer Done Channel</string>
     <string name="whose_turn">Whose Turn</string>
+    <string name="info_for_floating_button">
+        Click floating button below for Adding task.
+        Click floating button below for Adding task.
+        Click floating button below for Adding task.
+    </string>
 
 </resources>
