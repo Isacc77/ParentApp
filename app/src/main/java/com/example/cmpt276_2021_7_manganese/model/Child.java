@@ -1,7 +1,3 @@
-/**
- * This class is for child
- *
- */
 package com.example.cmpt276_2021_7_manganese.model;
 
 /**
@@ -9,9 +5,7 @@ package com.example.cmpt276_2021_7_manganese.model;
  * Child's name
  * @author  Shuai Li
  */
-
 public class Child {
-
     String name;
 
     public Child(String name) {
@@ -26,12 +20,8 @@ public class Child {
         this.name = name;
     }
 
-
     @Override
     public String toString() {
         return "Name: " + name ;
     }
-
-
-
 }

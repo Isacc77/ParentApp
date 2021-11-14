@@ -17,11 +17,11 @@
             android:label="@string/manage_your_children"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".TimeoutTimer"
+            android:name=".TimeoutTimerActivity"
             android:exported="true"
             android:label="@string/timeout_timer" />
         <activity
-            android:name=".AddChild"
+            android:name=".AddChildActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity" />
         <activity

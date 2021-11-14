@@ -14,17 +14,13 @@ import android.view.animation.Interpolator;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class CoinImageView extends androidx.appcompat.widget.AppCompatImageView {
-
 
     private Interpolator mInterpolator = new DecelerateInterpolator();
     private Drawable mFrontDrawable;
     private Drawable mReversetDrawable;
     private CoinAnimation.CoinAnimationListener mCoinAnimationListener;
     private Set<Animation> mOtherAnimation = new HashSet<Animation>();
-
-
 
     public static final int RESULT_HEAD = 1; // Head
     public static final int RESULT_TAIL = -1; // Tail
@@ -37,8 +33,6 @@ public class CoinImageView extends androidx.appcompat.widget.AppCompatImageView 
     private int mResult;
     private int mDuration;
     private int mStartOffset;
-
-
 
     public CoinImageView(Context context) {
         super(context);
@@ -122,12 +116,10 @@ public class CoinImageView extends androidx.appcompat.widget.AppCompatImageView 
         setCoinDrawableIfNecessage();
     }
 
-
     public CoinImageView setCircleCount(int circleCount) {
         this.circle_count = circleCount;
         return this;
     }
-
 
     public CoinImageView setXAxisDirection(int xAxisDir) {
         if(Math.abs(xAxisDir) > 1){
@@ -137,7 +129,6 @@ public class CoinImageView extends androidx.appcompat.widget.AppCompatImageView 
         return this;
     }
 
-
     public CoinImageView setYAxisDirection(int yAxisDir) {
         if(Math.abs(yAxisDir) > 1){
             throw new RuntimeException("Math.abs(Direction) must be less than 1");
@@ -145,7 +136,6 @@ public class CoinImageView extends androidx.appcompat.widget.AppCompatImageView 
         this.mYAxisDir = yAxisDir;
         return this;
     }
-
 
     public CoinImageView setResult(int result) {
         if(Math.abs(result) != 1){
@@ -155,33 +145,27 @@ public class CoinImageView extends androidx.appcompat.widget.AppCompatImageView 
         return this;
     }
 
-
     public CoinImageView setDuration(int duration) {
         this.mDuration = duration;
         return this;
     }
-
 
     public CoinImageView setInterpolator(Interpolator interpolator) {
         this.mInterpolator = interpolator;
         return this;
     }
 
-
     public CoinImageView clearOtherAnimation() {
         mOtherAnimation.clear();
         return this;
     }
-
 
     public CoinImageView setCoinAnimationListener(CoinAnimation.CoinAnimationListener coinAnimationListener) {
         this.mCoinAnimationListener = coinAnimationListener;
         return this;
     }
 
-
     public void startFlipCoin() {
-
         clearAnimation();
 
         CoinAnimation CoinAnimation = new CoinAnimation(circle_count, mXAxisDir, mYAxisDir, mZAxisDir, mResult);
@@ -197,12 +181,9 @@ public class CoinImageView extends androidx.appcompat.widget.AppCompatImageView 
             animationSet.addAnimation(animation);
         }
         startAnimation(animationSet);
-
     }
 
-
     public class QTCoinAnimationListener implements CoinAnimation.CoinAnimationListener {
-
         private CoinAnimation.CoinAnimationListener mTossAnimationListener;
 
         public QTCoinAnimationListener(CoinAnimation.CoinAnimationListener tossAnimationListener) {
@@ -236,7 +217,6 @@ public class CoinImageView extends androidx.appcompat.widget.AppCompatImageView 
             if (mTossAnimationListener != null) {
                 mTossAnimationListener.onAnimationEnd(animation);
             }
-
         }
 
         @Override

@@ -1,8 +1,6 @@
 /**
  * This class is for ChildManager
  */
-
-
 package com.example.cmpt276_2021_7_manganese.model;
 
 import android.content.Context;
@@ -21,23 +19,13 @@ import com.google.gson.reflect.TypeToken;
  * we can populate data Children data by this class
  * @author  Shuai Li
  */
-
-
-
-
 public class ChildManager implements Iterable<Child> {
-
     private ArrayList<Child> manager = new ArrayList<>();
-
     private static ChildManager instance;
-
     String json;
 
-
     public ChildManager() {
-
     }
-
 
     public static ChildManager getInstance() {
         if (instance == null) {
@@ -46,7 +34,6 @@ public class ChildManager implements Iterable<Child> {
         return instance;
     }
 
-
     public static ChildManager getInstance(ChildManager Manager) {
         if (instance == null) {
             instance = Manager;
@@ -54,29 +41,21 @@ public class ChildManager implements Iterable<Child> {
         return instance;
     }
 
-
     public void add(Child child) {
         manager.add(child);
     }
 
     public void removeChild(int index) {
         if (index < 0 || index > manager.size()) {
-
             throw new IndexOutOfBoundsException("Index out of range");
-
         } else {
-
             manager.remove(index);
-
         }
-
     }
-
 
     public int getSize() {
         return manager.size();
     }
-
 
     public ArrayList<Child> getManager() {
         return manager;
@@ -86,26 +65,18 @@ public class ChildManager implements Iterable<Child> {
         this.manager = manager;
     }
 
-
     public String[] StringChildData() {
-
         String[] Str = new String[manager.size()];
-
         for (int i = 0; i < manager.size(); i++) {
-
             Str[i] = manager.get(i).getName();
-
         }
-
         return Str;
     }
-
 
     @Override
     public Iterator<Child> iterator() {
         return manager.iterator();
     }
-
 
     public void printAll() {
         int cnt = 0;
@@ -114,14 +85,11 @@ public class ChildManager implements Iterable<Child> {
         }
     }
 
-
     public Child getByIndex(int index) {
-
         if (index > manager.size() || index < 0) {
             System.out.println("PROBLEM: in getByIndex, i should be [0, " + manager.size() + ").");
             return new Child("");
         }
-
         return manager.get(index);
     }
 
@@ -131,7 +99,6 @@ public class ChildManager implements Iterable<Child> {
         json = getGson.toJson(manager);
         preferences.edit().putString("Child", json).commit();
     }
-
 
     public void UseDatabase(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("Child", Context.MODE_PRIVATE);
@@ -143,6 +110,4 @@ public class ChildManager implements Iterable<Child> {
             manager.add(child);
         }
     }
-
-
 }

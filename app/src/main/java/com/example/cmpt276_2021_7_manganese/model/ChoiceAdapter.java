@@ -5,16 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.cmpt276_2021_7_manganese.R;
-
 import java.util.List;
 
 public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.CViewHoleer> {
-
     private Context context;
     private List<CoinResult> coinResults;
 
@@ -38,7 +34,6 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.CViewHolee
         holder.result.setText(result.result);
         holder.choice.setText(result.currentChose);
         holder.user.setText(result.user);
-
     }
 
     @Override

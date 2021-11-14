@@ -16,38 +16,32 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
-
     private Button btnFlipCoin;
     private Button btnTimer;
     private Button btnChildManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         setupFloatingActionButton();
         btnChildManager = findViewById(R.id.btn_childManager);
         btnFlipCoin = findViewById(R.id.btn_flipCoin);
         btnTimer = findViewById(R.id.btn_timer);
         setListeners();
-
     }
-
 
     private void setupFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view -> {
-                Intent addChild = AddChild.makeLaunchIntent(MainActivity.this, "New Child or update child info");
+                Intent addChild = AddChildActivity.makeLaunchIntent(MainActivity.this, "New Child or update child info");
                 startActivity(addChild);
         });
     }
-
 
     private void setListeners() {
         OnClick onClick = new OnClick();
@@ -56,11 +50,8 @@ public class MainActivity extends AppCompatActivity {
         btnTimer.setOnClickListener(onClick);
     }
 
-
     private class OnClick implements View.OnClickListener {
-
         Intent intent = null;
-
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -74,24 +65,16 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.btn_timer:
-                    intent = TimeoutTimer.makeLaunchIntent(MainActivity.this);
+                    intent = TimeoutTimerActivity.makeLaunchIntent(MainActivity.this);
                     break;
             }
             startActivity(intent);
         }
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-
-
-
-
-
 }
