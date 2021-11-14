@@ -17,9 +17,7 @@ import com.example.cmpt276_2021_7_manganese.model.CoinResult;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class RecordListActivity extends AppCompatActivity {
-
 
     private RecyclerView recyclerView;
     private List<CoinResult> coinResults = new ArrayList<>();
@@ -51,7 +49,6 @@ public class RecordListActivity extends AppCompatActivity {
         checkAll();
     }
 
-
     private void checkAll(){
 
         new Thread(() -> {
@@ -59,8 +56,6 @@ public class RecordListActivity extends AppCompatActivity {
             coinResults.clear();
             coinResults.addAll(datas);
             handler.sendEmptyMessage(0);
-
         }).start();
-
     }
 }

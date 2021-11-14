@@ -16,36 +16,25 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.google.gson.Gson;
 import com.example.cmpt276_2021_7_manganese.databinding.ActivityManagingMyChildrenDataBinding;
-
-import java.util.ArrayList;
 
 /**
  * This class is for Children manager activity
  * after add children data, user can manage child data at this activity
  * @author  Shuai Li & Yam
  */
-
 public class ManagingMyChildrenData extends AppCompatActivity {
-
     private static int index = 0; // get child by index in manager
-
     private ChildManager manager;
-
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
-
     private ActivityManagingMyChildrenDataBinding binding;
-
     private TextView tv_notice;
     private TextView emptyListInfo;
     private ListView lv_child_data;
-
     private final int REQUEST_CODE_AddCHILD = 1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +49,8 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-
         tv_notice = findViewById(R.id.tv_manage_child_info);
         tv_notice.setSelected(true);
-
 
         lv_child_data = findViewById(R.id.lv_manage_child);
 
@@ -74,10 +61,7 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         loadDataBeforeLaunch();
 
         emptyInfo();
-
-
     }
-
 
     private void saveDataBeforeTerminate() {
         Gson gson = new Gson();
@@ -91,7 +75,6 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         editor.commit();
     }
 
-
     private void loadDataBeforeLaunch() {
         // to retrieve
         Gson gson = new Gson();
@@ -104,19 +87,17 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         }
     }
 
-
     private void registerClick() {
+
         lv_child_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = AddChild.makeLaunchIntent(ManagingMyChildrenData.this, "edit children", 5);
-
-                startActivityForResult(intent, REQUEST_CODE_AddCHILD);
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                Intent intent = AddChildActivity.makeLaunchIntent(ManagingMyChildrenData.this, "edit children", 5);
+//                startActivityForResult(intent, REQUEST_CODE_AddCHILD);
+                startActivity(intent);
             }
         });
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -125,9 +106,7 @@ public class ManagingMyChildrenData extends AppCompatActivity {
             populateListView();
             emptyInfo();
         }
-
     }
-
 
     private void populateListView() {
         manager = ChildManager.getInstance();
@@ -138,43 +117,30 @@ public class ManagingMyChildrenData extends AppCompatActivity {
 
         lv_child_data.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
-
-
     }
-
-
-
 
     private void emptyInfo() {
         emptyListInfo = findViewById(R.id.tv_emptyList);
-
         if (manager.getSize() <= 0) {
             emptyListInfo.setVisibility(View.VISIBLE);
-
         } else {
             emptyListInfo.setVisibility(View.GONE);
         }
     }
 
-
     public static Intent makeLaunchIntent(Context c) {
         return new Intent(c, ManagingMyChildrenData.class);
     }
 
-
     public static Intent makeLaunchIntent(Context c, String message, int position) {
         index = position;
-        Intent intent = new Intent(c, AddChild.class);
+        Intent intent = new Intent(c, AddChildActivity.class);
         intent.putExtra("Child", message);
         return intent;
     }
-
 
     public void onDestroy() {
         saveDataBeforeTerminate();
         super.onDestroy();
     }
-
-
 }

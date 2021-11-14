@@ -26,7 +26,7 @@ import java.util.Locale;
  * other applications.
  * @author Rio Samson
  */
-public class TimeoutTimer extends AppCompatActivity {
+public class TimeoutTimerActivity extends AppCompatActivity {
     static private final String PREFS_TAG = "Time Settings";
     static private final String SAVE_TIMER_KEY = "Different timer settings";
     private final String INTENT_IS_RUNNING_KEY = "runningTimer";
@@ -58,17 +58,16 @@ public class TimeoutTimer extends AppCompatActivity {
         startPauseTimer = findViewById(R.id.startBtn);
         timerStartTime = (long) loadSavedData() * MIN_TO_MS_FACTOR;
         timeLeft = timerStartTime;
-        serviceIntent = TimerService.makeLaunchIntent(TimeoutTimer.this);
+        serviceIntent = TimerService.makeLaunchIntent(TimeoutTimerActivity.this);
 
         checkRunningStatus();
         setupPreMadeTimerSettings();
         setupTimerClockWithButtons();
         setupCustomTimerSettings();
-
     }
 
     private void checkRunningStatus() {
-        Intent statusIntent = TimerService.makeStatusIntent(TimeoutTimer.this);
+        Intent statusIntent = TimerService.makeStatusIntent(TimeoutTimerActivity.this);
         boolean serviceDone = statusIntent.getBooleanExtra(INTENT_IS_FINISHED_KEY, true);
 
         if (!serviceDone) {
@@ -186,7 +185,6 @@ public class TimeoutTimer extends AppCompatActivity {
                 timeLeft = mSecondsToFinish;
                 updateClock();
             }
-
             @Override
             public void onFinish() {
                 timeLeft = timerStartTime;
@@ -226,11 +224,11 @@ public class TimeoutTimer extends AppCompatActivity {
     }
 
     public static Intent makeLaunchIntent(Context c) {
-        return new Intent(c, TimeoutTimer.class);
+        return new Intent(c, TimeoutTimerActivity.class);
     }
 
     public static Intent makeResetIntentForService(Context c) {
-        Intent intent =  new Intent(c, TimeoutTimer.class);
+        Intent intent =  new Intent(c, TimeoutTimerActivity.class);
         intent.putExtra(IS_RESET, isResetLastPressed);
         return intent;
     }

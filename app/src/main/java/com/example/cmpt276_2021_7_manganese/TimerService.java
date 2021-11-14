@@ -90,7 +90,7 @@ public class TimerService extends Service {
     public void timeoutNotificationSend(View v) {
         notificationManager = NotificationManagerCompat.from(this);
 
-        Intent timerDoneIntent = new Intent(this, TimeoutTimer.class);
+        Intent timerDoneIntent = new Intent(this, TimeoutTimerActivity.class);
         PendingIntent timerPendingIntent = PendingIntent.getActivity(this, 0
                 , timerDoneIntent, 0);
 
@@ -126,7 +126,7 @@ public class TimerService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
-        Intent statusIntent = TimeoutTimer.makeResetIntentForService(TimerService.this);
+        Intent statusIntent = TimeoutTimerActivity.makeResetIntentForService(TimerService.this);
         if (statusIntent.getBooleanExtra(IS_RESET, true)) {
             isTimerDone = true;
         }

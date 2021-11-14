@@ -51,14 +51,8 @@ public class FlipCoinActivity extends AppCompatActivity {
     private String select;
     private AppDatabase db;
     private MediaPlayer player;
-
-
-
     private String[] childrenData;
     private ChildManager manager;
-
-
-
     private Spinner show_name;
     private ArrayAdapter<String> arrayAdapter;
 
@@ -74,15 +68,11 @@ public class FlipCoinActivity extends AppCompatActivity {
         }
     };
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin);
         manager = ChildManager.getInstance();
-
-
 
         head = findViewById(R.id.head);
         tail = findViewById(R.id.tail);
@@ -125,15 +115,10 @@ public class FlipCoinActivity extends AppCompatActivity {
             }
         });
 
-
-
         childrenData = manager.StringChildData();
 
         if (childrenData.length==0){
-/**
- *
- *
- */
+
 
 
         }else{
@@ -153,10 +138,6 @@ public class FlipCoinActivity extends AppCompatActivity {
             select =  childrenData[0];
 
         }
-
-
-
-
     }
 
     private void checkAll(){
@@ -173,8 +154,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         }).start();
 
     }
-
-
 
     private void showAnimotion(){
 
@@ -197,10 +176,8 @@ public class FlipCoinActivity extends AppCompatActivity {
             public void onDrawableChange(int result, CoinAnimation animation) {
 
             }
-
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
@@ -223,11 +200,8 @@ public class FlipCoinActivity extends AppCompatActivity {
 
             }
         });
-
         mCoinImageView.startFlipCoin();
     }
-
-
 
     public  String getUUID() {
         UUID uuid = UUID.randomUUID();
@@ -242,10 +216,7 @@ public class FlipCoinActivity extends AppCompatActivity {
           return sdf1.format(date);
     }
 
-
-
     private void showNormalDialog(String msg){
-
         final AlertDialog.Builder normalDialog =
                 new AlertDialog.Builder(FlipCoinActivity.this);
         normalDialog.setIcon(R.mipmap.msg);

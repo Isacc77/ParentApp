@@ -16,7 +16,6 @@ public class TimeoutNotification extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         createNotification();
     }
 
@@ -26,7 +25,6 @@ public class TimeoutNotification extends Application {
                     CHANNEL_1_ID, getString(R.string.timeout_timer_done), NotificationManager.IMPORTANCE_HIGH
             );
             timerDone.setDescription(getString(R.string.timer_done_channel));
-
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(timerDone);
         }
