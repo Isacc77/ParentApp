@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btnFlipCoin;
     private Button btnTimer;
     private Button btnChildManager;
+    private Button btnWhoseTurn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         btnChildManager = findViewById(R.id.btn_childManager);
         btnFlipCoin = findViewById(R.id.btn_flipCoin);
         btnTimer = findViewById(R.id.btn_timer);
+        btnWhoseTurn = findViewById(R.id.btn_whose_turn);
         setListeners();
     }
 
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         btnChildManager.setOnClickListener(onClick);
         btnFlipCoin.setOnClickListener(onClick);
         btnTimer.setOnClickListener(onClick);
+        btnWhoseTurn.setOnClickListener(onClick);
     }
 
     private class OnClick implements View.OnClickListener {
@@ -66,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.btn_timer:
                     intent = TimeoutTimerActivity.makeLaunchIntent(MainActivity.this);
+                    break;
+
+                case R.id.btn_whose_turn:
+                    intent = WhoseTurnActivity.makeLaunchIntent(MainActivity.this);
                     break;
             }
             startActivity(intent);
