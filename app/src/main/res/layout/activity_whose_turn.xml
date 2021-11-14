@@ -14,11 +14,23 @@
       android:layout_height="wrap_content"
       android:layout_marginEnd="15dp"
       android:layout_marginBottom="15dp"
-      android:backgroundTint="@color/yellow2"
+      android:backgroundTint="@color/deep_blue"
       android:clickable="true"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:srcCompat="@drawable/ic_addtask" />
+
+  <androidx.appcompat.widget.Toolbar
+      android:id="@+id/tb_manage_task"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:background="@color/deep_blue"
+      android:minHeight="?attr/actionBarSize"
+      android:theme="?attr/actionBarTheme"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
 
   <ListView
       android:id="@+id/lv_manage_task"
@@ -45,14 +57,14 @@
       android:textSize="20sp"
       android:textStyle="italic"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toBottomOf="@+id/tb_manage_task" />
 
   <TextView
       android:id="@+id/tv_emptyList_task"
       android:layout_width="match_parent"
       android:layout_height="75dp"
       android:layout_marginLeft="15sp"
-      android:layout_marginBottom="540dp"
+      android:layout_marginBottom="490dp"
       android:text="Empty task list"
       android:textColor="@color/white"
       android:textSize="25sp"
