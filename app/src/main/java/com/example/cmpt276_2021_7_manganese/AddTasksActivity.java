@@ -16,13 +16,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class AddTasksActivity extends AppCompatActivity {
-
     private EditText inputTask;
     private boolean isSaved = false;
     private String taskInfo;
     private final String SAVED = "Saved";
     private final String INVALID_INPUT = "Cannot save with invalid inputs!";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +47,6 @@ public class AddTasksActivity extends AppCompatActivity {
             }
             isSaved = true;
         }
-
         @Override
         public void afterTextChanged(Editable s) {
         }

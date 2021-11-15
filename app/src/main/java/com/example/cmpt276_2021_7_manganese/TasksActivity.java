@@ -19,7 +19,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  */
 
 public class TasksActivity extends AppCompatActivity {
-
     private TaskManager t_manager;
     private TextView tv_notice;
     private TextView emptyListInfo;
