@@ -2,6 +2,7 @@ package com.example.cmpt276_2021_7_manganese;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +28,7 @@ public class AddChildActivity extends AppCompatActivity {
     private boolean isSaved = false;
     private EditText inputName;
     private String name;
+    private ChildManager childManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class AddChildActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.add_child_toolbar);
         setSupportActionBar(toolbar);
 
-
+        childManager = ChildManager.getInstance();
 
         indexForSwitchActivity = getIntent().getIntExtra(EXTRA_MESSAGE, -1);
 
@@ -76,11 +78,12 @@ public class AddChildActivity extends AppCompatActivity {
             case R.id.action_backup:
 
                 if (isSaved) {
-                    Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
                     name = inputName.getText().toString();
                     if (indexForSwitchActivity < 0) {
                         addChildToManager();
                     } else {
+                        Toast.makeText(this, "Editing", Toast.LENGTH_SHORT).show();
                         editChildInManager();
                     }
                     finish();
@@ -95,7 +98,7 @@ public class AddChildActivity extends AppCompatActivity {
 
     public static Intent makeLaunchIntent(Context c, String message) {
         Intent intent = new Intent(c, AddChildActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, message);
+        intent.putExtra(EXTRA_MESSAGE, -1);
         return intent;
     }
 
@@ -128,6 +131,7 @@ public class AddChildActivity extends AppCompatActivity {
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         super.onDestroy();
+        jsonSave();
         setIndex(-1);
         this.finish();
     }
@@ -156,5 +160,13 @@ public class AddChildActivity extends AppCompatActivity {
         } else {
             this.setTitle("Add your child");
         }
+    }
+
+    private void jsonSave() {
+        String jsonString = childManager.getGsonString();
+        SharedPreferences prefs = this.getSharedPreferences("tag", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("save", jsonString);
+        editor.apply();
     }
 }

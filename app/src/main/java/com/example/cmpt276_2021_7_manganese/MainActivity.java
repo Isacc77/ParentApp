@@ -6,15 +6,19 @@
 package com.example.cmpt276_2021_7_manganese;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnFlipCoin;
@@ -22,12 +26,15 @@ public class MainActivity extends AppCompatActivity {
     private Button btnChildManager;
     private Button btnWhoseTurn;
 
+    private ChildManager childManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        childManager = ChildManager.getInstance();
 
         setSupportActionBar(toolbar);
         setupFloatingActionButton();
@@ -36,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         btnTimer = findViewById(R.id.btn_timer);
         btnWhoseTurn = findViewById(R.id.btn_whose_turn);
         setListeners();
+
+        load();
     }
 
     private void setupFloatingActionButton() {
@@ -84,5 +93,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private void load() {
+        SharedPreferences prefs = this.getSharedPreferences("tag", MODE_PRIVATE);
+        String jsonString = prefs.getString("save", "");
+        childManager.load(jsonString);
     }
 }
