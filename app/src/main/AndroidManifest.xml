@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CMPT276_2021_7_manganese" >
         <activity
-            android:name=".WhoseTurnActivity"
+            android:name=".TasksActivity"
             android:exported="true"
             android:label="@string/whose_turn_activity_title"
             android:parentActivityName=".MainActivity"/>

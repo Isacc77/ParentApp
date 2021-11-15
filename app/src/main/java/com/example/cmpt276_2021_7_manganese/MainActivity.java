@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.btn_whose_turn:
-                    intent = WhoseTurnActivity.makeLaunchIntent(MainActivity.this);
+                    intent = TasksActivity.makeLaunchIntent(MainActivity.this);
                     break;
             }
             startActivity(intent);
