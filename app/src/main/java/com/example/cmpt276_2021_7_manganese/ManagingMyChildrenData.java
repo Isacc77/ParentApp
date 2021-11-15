@@ -58,33 +58,33 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         registerClick();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
-        loadDataBeforeLaunch();
+//        loadDataBeforeLaunch();
 
         emptyInfo();
     }
 
     private void saveDataBeforeTerminate() {
-        Gson gson = new Gson();
-        String strObject;
-        if (manager.getSize() > 0) {
-            strObject = gson.toJson(manager);
-        } else {
-            strObject = "";
-        }
-        editor.putString("child_manager", strObject);
-        editor.commit();
+//        Gson gson = new Gson();
+//        String strObject;
+//        if (manager.getSize() > 0) {
+//            strObject = gson.toJson(manager);
+//        } else {
+//            strObject = "";
+//        }
+//        editor.putString("child_manager", strObject);
+//        editor.commit();
     }
 
     private void loadDataBeforeLaunch() {
         // to retrieve
-        Gson gson = new Gson();
-        String strObject = preferences.getString("child_manager", "");
-        if (strObject == null || strObject.equals("") || strObject.length() <= 0) {
-            manager = ChildManager.getInstance();
-
-        } else {
-            manager = ChildManager.getInstance(gson.fromJson(strObject, ChildManager.class));
-        }
+//        Gson gson = new Gson();
+//        String strObject = preferences.getString("child_manager", "");
+//        if (strObject == null || strObject.equals("") || strObject.length() <= 0) {
+//            manager = ChildManager.getInstance();
+//
+//        } else {
+//            manager = ChildManager.getInstance(gson.fromJson(strObject, ChildManager.class));
+//        }
     }
 
     private void registerClick() {
@@ -92,7 +92,7 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         lv_child_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                Intent intent = AddChildActivity.makeLaunchIntent(ManagingMyChildrenData.this, "edit children", 5);
+                Intent intent = AddChildActivity.makeLaunchIntent(ManagingMyChildrenData.this, "edit children", position);
 //                startActivityForResult(intent, REQUEST_CODE_AddCHILD);
                 startActivity(intent);
             }
@@ -140,7 +140,7 @@ public class ManagingMyChildrenData extends AppCompatActivity {
     }
 
     public void onDestroy() {
-        saveDataBeforeTerminate();
+//        saveDataBeforeTerminate();
         super.onDestroy();
     }
 }

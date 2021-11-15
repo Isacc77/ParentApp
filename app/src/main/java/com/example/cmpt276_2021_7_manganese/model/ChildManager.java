@@ -110,4 +110,16 @@ public class ChildManager implements Iterable<Child> {
             manager.add(child);
         }
     }
+
+    public String getGsonString() {
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(this);
+        return jsonString;
+    }
+
+    public void load(String jsonString) {
+        Gson gson = new Gson();
+        ChildManager loaded = gson.fromJson(jsonString, ChildManager.class);
+        manager = loaded.manager;
+    }
 }
