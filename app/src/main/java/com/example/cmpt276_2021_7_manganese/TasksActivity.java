@@ -11,6 +11,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.cmpt276_2021_7_manganese.model.TaskManager;
+/**
+ * This Tasks activity is about whose turn section
+ * @author
+ */
 
 public class TasksActivity extends AppCompatActivity {
 
