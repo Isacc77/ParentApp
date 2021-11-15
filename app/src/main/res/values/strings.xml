@@ -50,5 +50,6 @@
     <string name="whose_turn_activity_title">Whose Turn</string>
     <string name="task">Task:</string>
     <string name="input_task_here">Input task here</string>
+    <string name="add_task_title">add task</string>
 
 </resources>
