@@ -15,7 +15,13 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cmpt276_2021_7_manganese.model.Child;
+import com.example.cmpt276_2021_7_manganese.model.ChildManager;
+import com.example.cmpt276_2021_7_manganese.model.Task;
+import com.example.cmpt276_2021_7_manganese.model.TaskManager;
+
 public class AddTasksActivity extends AppCompatActivity {
+    private TaskManager taskManager;
     private EditText inputTask;
     private boolean checkValidInput = false;
     private String taskInfo;
@@ -30,6 +36,7 @@ public class AddTasksActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.add_task_toolbar);
         inputTask = findViewById(R.id.et_add_task);
         inputTask.addTextChangedListener(tw);
+        taskManager = TaskManager.getInstance();
 
         setUpToolBar(toolbar);
     }
@@ -65,7 +72,9 @@ public class AddTasksActivity extends AppCompatActivity {
                 if (checkValidInput) {
                     Toast.makeText(this, SAVED, Toast.LENGTH_SHORT).show();
                     taskInfo = inputTask.getText().toString();
-                    finish();
+                    taskManager.add(new Task(taskInfo));
+                    Intent task = TasksActivity.makeLaunchIntent(AddTasksActivity.this);
+                    startActivity(task);
                 } else {
                     Toast.makeText(this, INVALID_INPUT, Toast.LENGTH_SHORT).show();
                 }

@@ -1,5 +1,6 @@
 package com.example.cmpt276_2021_7_manganese;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -7,9 +8,13 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.example.cmpt276_2021_7_manganese.model.TaskManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -36,6 +41,9 @@ public class TasksActivity extends AppCompatActivity {
         tv_notice.setSelected(true);
         setUpToolBar(toolbar);
         setupFloatingActionButton();
+
+        populateListView();
+        emptyInfo();
     }
 
     private void setUpToolBar(Toolbar toolbar) {
@@ -50,6 +58,35 @@ public class TasksActivity extends AppCompatActivity {
             Intent addTask = AddTasksActivity.makeLaunchIntent(TasksActivity.this);
             startActivity(addTask);
         });
+    }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == REQUEST_CODE_AddCHILD) {
+//            populateListView();
+//            emptyInfo();
+//        }
+//    }
+
+    private void populateListView() {
+        t_manager = TaskManager.getInstance();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                R.layout.da_item,
+                t_manager.StringTaskData());
+
+        lv_task_data.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void emptyInfo() {
+        emptyListInfo = findViewById(R.id.tv_emptyList_task);
+        if (t_manager.getSize() <= 0) {
+            emptyListInfo.setVisibility(View.VISIBLE);
+        } else {
+            emptyListInfo.setVisibility(View.GONE);
+        }
     }
 
     public static Intent makeLaunchIntent(Context c) {

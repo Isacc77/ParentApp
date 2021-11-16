@@ -59,6 +59,17 @@ public class TaskManager implements Iterable<Task> {
         this.tasksManager = tasksManager;
     }
 
+    public String[] StringTaskData() {
+        String[] Str = new String[tasksManager.size()];
+        for (int i = 0; i < tasksManager.size(); i++) {
+            Str[i] = tasksManager.get(i).getTaskInfo();
+        }
+        return Str;
+    }
+
+
+
+
     @Override
     public Iterator<Task> iterator() {
         return tasksManager.iterator();
