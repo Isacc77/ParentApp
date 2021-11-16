@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
-import com.google.gson.Gson;
 import com.example.cmpt276_2021_7_manganese.databinding.ActivityManagingMyChildrenDataBinding;
 
 /**
@@ -25,7 +24,7 @@ import com.example.cmpt276_2021_7_manganese.databinding.ActivityManagingMyChildr
  * after add children data, user can manage child data at this activity
  * @author  Shuai Li & Yam
  */
-public class ManagingMyChildrenData extends AppCompatActivity {
+public class ChildrenListActivity extends AppCompatActivity {
     private static int index = 0; // get child by index in manager
     private ChildManager manager;
     private SharedPreferences preferences;
@@ -92,8 +91,7 @@ public class ManagingMyChildrenData extends AppCompatActivity {
         lv_child_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                Intent intent = AddChildActivity.makeLaunchIntent(ManagingMyChildrenData.this, "edit children", position);
-//                startActivityForResult(intent, REQUEST_CODE_AddCHILD);
+                Intent intent = AddChildActivity.makeLaunchIntentWithPosition(ChildrenListActivity.this, position);
                 startActivity(intent);
             }
         });
@@ -129,7 +127,7 @@ public class ManagingMyChildrenData extends AppCompatActivity {
     }
 
     public static Intent makeLaunchIntent(Context c) {
-        return new Intent(c, ManagingMyChildrenData.class);
+        return new Intent(c, ChildrenListActivity.class);
     }
 
     public static Intent makeLaunchIntent(Context c, String message, int position) {
@@ -142,5 +140,11 @@ public class ManagingMyChildrenData extends AppCompatActivity {
     public void onDestroy() {
 //        saveDataBeforeTerminate();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateListView();
     }
 }

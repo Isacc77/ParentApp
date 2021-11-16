@@ -11,14 +11,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnFlipCoin;
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view -> {
-                Intent addChild = AddChildActivity.makeLaunchIntent(MainActivity.this, "New Child or update child info");
+                Intent addChild = AddChildActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(addChild);
         });
     }
@@ -70,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId()) {
 
                 case R.id.btn_childManager:
-                    intent = new Intent(MainActivity.this, ManagingMyChildrenData.class);
+                    intent = new Intent(MainActivity.this, ChildrenListActivity.class);
                     break;
 
                 case R.id.btn_flipCoin:
