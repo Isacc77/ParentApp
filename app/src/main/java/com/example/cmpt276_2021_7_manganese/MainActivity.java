@@ -6,6 +6,7 @@
 package com.example.cmpt276_2021_7_manganese;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,12 +24,15 @@ public class MainActivity extends AppCompatActivity {
     private Button btnChildManager;
     private Button btnWhoseTurn;
 
+    private ChildManager childManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        childManager = ChildManager.getInstance();
 
         setSupportActionBar(toolbar);
         setupFloatingActionButton();
@@ -36,12 +41,14 @@ public class MainActivity extends AppCompatActivity {
         btnTimer = findViewById(R.id.btn_timer);
         btnWhoseTurn = findViewById(R.id.btn_whose_turn);
         setListeners();
+
+        load();
     }
 
     private void setupFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view -> {
-                Intent addChild = AddChildActivity.makeLaunchIntent(MainActivity.this, "New Child or update child info");
+                Intent addChild = AddChildActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(addChild);
         });
     }
@@ -61,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId()) {
 
                 case R.id.btn_childManager:
-                    intent = new Intent(MainActivity.this, ManagingMyChildrenData.class);
+                    intent = new Intent(MainActivity.this, ChildrenListActivity.class);
                     break;
 
                 case R.id.btn_flipCoin:
@@ -84,5 +91,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private void load() {
+        SharedPreferences prefs = this.getSharedPreferences("tag", MODE_PRIVATE);
+        String jsonString = prefs.getString("save", "");
+        childManager.load(jsonString);
     }
 }

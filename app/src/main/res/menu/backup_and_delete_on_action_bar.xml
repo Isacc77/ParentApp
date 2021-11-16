@@ -9,9 +9,9 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/action_backup_manage"
+        android:id="@+id/action_backup"
         android:icon="@drawable/ic_save"
-        android:title="save child info"
+        android:title="@string/backup"
         app:showAsAction="ifRoom"/>
 
 <!--    &lt;!&ndash; Settings, should always be in the overflow &ndash;&gt;-->
