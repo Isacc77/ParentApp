@@ -18,9 +18,9 @@
             android:label="@string/whose_turn_activity_title"
             android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".ManagingMyChildrenData"
+            android:name=".ChildrenListActivity"
             android:exported="true"
-            android:label="@string/manage_your_children"
+            android:label="@string/your_children"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".TimeoutTimerActivity"

@@ -64,7 +64,7 @@
             android:drawableStart="@drawable/ic_edit"
             android:paddingStart="6dp"
             android:paddingEnd="10dp"
-            android:text="@string/children_manager"
+            android:text="@string/children"
             android:textAllCaps="false"
             android:textColor="@color/yellow"
             android:textSize="15sp"

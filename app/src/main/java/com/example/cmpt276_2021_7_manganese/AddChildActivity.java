@@ -46,9 +46,6 @@ public class AddChildActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        //read intent extra,if no extra , show new game screen,else show edit screen
-        indexForSwitchActivity = getIntent().getIntExtra(EXTRA_MESSAGE, -1);
-
         inputName = findViewById(R.id.et_name);
         inputName.addTextChangedListener(tw);
     }
@@ -76,14 +73,11 @@ public class AddChildActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_backup:
-
                 if (isSaved) {
-//                    Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
                     name = inputName.getText().toString();
                     if (indexForSwitchActivity < 0) {
                         addChildToManager();
                     } else {
-                        Toast.makeText(this, "Editing", Toast.LENGTH_SHORT).show();
                         editChildInManager();
                     }
                     finish();
@@ -91,21 +85,23 @@ public class AddChildActivity extends AppCompatActivity {
                     Toast.makeText(this, "Cannot save with invalid inputs!", Toast.LENGTH_SHORT).show();
                 }
                 return true;
+            case R.id.action_delete:
+                childManager.removeChild(indexForSwitchActivity);
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public static Intent makeLaunchIntent(Context c, String message) {
+    public static Intent makeLaunchIntent(Context c) {
         Intent intent = new Intent(c, AddChildActivity.class);
         intent.putExtra(EXTRA_MESSAGE, -1);
         return intent;
     }
 
-    public static Intent makeLaunchIntent(Context c, String message, int position) {
+    public static Intent makeLaunchIntentWithPosition(Context c, int position) {
         Intent intent = new Intent(c, AddChildActivity.class);
         intent.putExtra(EXTRA_MESSAGE, position);
-//        indexForSwitchActivity = position;
         return intent;
     }
 
@@ -153,9 +149,7 @@ public class AddChildActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        int childIndex = getIntent().getIntExtra(EXTRA_MESSAGE, -1);
-//        indexForSwitchActivity = getIntent().getIntExtra(EXTRA_MESSAGE, -1);
-        if (childIndex >= 0) {
+        if (indexForSwitchActivity >= 0) {
             this.setTitle("Edit your child");
         } else {
             this.setTitle("Add your child");
