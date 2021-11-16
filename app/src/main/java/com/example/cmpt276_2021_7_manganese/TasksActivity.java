@@ -47,7 +47,7 @@ public class TasksActivity extends AppCompatActivity {
     private void setupFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.fab_addTask);
         fab.setOnClickListener(view -> {
-            Intent addTask = AddTasksActivity.makeLaunchIntent(TasksActivity.this, "New Task or update Task info");
+            Intent addTask = AddTasksActivity.makeLaunchIntent(TasksActivity.this);
             startActivity(addTask);
         });
     }

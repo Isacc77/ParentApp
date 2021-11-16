@@ -20,7 +20,7 @@
         <activity
             android:name=".TasksActivity"
             android:exported="true"
-            android:label="@string/whose_turn_activity_title"
+            android:label="@string/tasks_activity_title"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ManagingMyChildrenData"
