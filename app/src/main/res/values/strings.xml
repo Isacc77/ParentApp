@@ -47,9 +47,9 @@
         Click floating button below for Adding task.
         Click floating button below for Adding task.
     </string>
-    <string name="whose_turn_activity_title">Whose Turn</string>
+    <string name="tasks_activity_title">Tasks</string>
     <string name="task">Task:</string>
     <string name="input_task_here">Input task here</string>
-    <string name="add_task_title">add task</string>
+    <string name="add_task_title">Add task</string>
 
 </resources>

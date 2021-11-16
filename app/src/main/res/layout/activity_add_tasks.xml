@@ -7,7 +7,6 @@
     android:background="@drawable/bg_add_task"
     tools:context=".AddTasksActivity">
 
-
     <TextView
         android:id="@+id/tv_task_info"
         android:layout_width="wrap_content"
@@ -15,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="432dp"
         android:text="@string/task"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,7 +31,7 @@
         android:ems="10"
         android:hint="@string/input_task_here"
         android:inputType="textPersonName"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/tv_task_info"
         app:layout_constraintStart_toEndOf="@+id/tv_task_info"
         app:layout_constraintTop_toTopOf="@+id/tv_task_info" />
@@ -53,12 +52,5 @@
             app:popupTheme="@style/Theme.CMPT276_2021_7_manganese.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
-
-
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

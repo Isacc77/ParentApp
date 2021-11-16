@@ -17,10 +17,10 @@ import android.widget.Toast;
 
 public class AddTasksActivity extends AppCompatActivity {
     private EditText inputTask;
-    private boolean isSaved = false;
+    private boolean checkValidInput = false;
     private String taskInfo;
     private final String SAVED = "Saved";
-    private final String INVALID_INPUT = "Cannot save with invalid inputs!";
+    private final String INVALID_INPUT = "Cannot save empty information";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +42,10 @@ public class AddTasksActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             String strName = inputTask.getText().toString().trim();
             if (strName.length() <= 0) {
-                isSaved = false;
+                checkValidInput = false;
                 return;
             }
-            isSaved = true;
+            checkValidInput = true;
         }
         @Override
         public void afterTextChanged(Editable s) {
@@ -62,7 +62,7 @@ public class AddTasksActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_backup:
-                if (isSaved) {
+                if (checkValidInput) {
                     Toast.makeText(this, SAVED, Toast.LENGTH_SHORT).show();
                     taskInfo = inputTask.getText().toString();
                     finish();
@@ -80,7 +80,7 @@ public class AddTasksActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public static Intent makeLaunchIntent(Context c, String message) {
+    public static Intent makeLaunchIntent(Context c) {
         Intent intent = new Intent(c, AddTasksActivity.class);
         return intent;
     }
