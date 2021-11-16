@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class TaskManager implements Iterable<Task> {
-
     private ArrayList<Task> tasksManager = new ArrayList<>();
     private static TaskManager TaskInstance;
     private final String INDEX_OUT_OF_RANGE = "Index out of range";
@@ -29,7 +28,6 @@ public class TaskManager implements Iterable<Task> {
         return TaskInstance;
     }
 
-
     public void add(String task) {
         tasksManager.add(new Task(task));
     }
@@ -37,7 +35,6 @@ public class TaskManager implements Iterable<Task> {
     public void add(Task task) {
         tasksManager.add(task);
     }
-
 
     public void removeTask(int index) {
         if (index < 0 || index > tasksManager.size()) {
@@ -66,9 +63,6 @@ public class TaskManager implements Iterable<Task> {
         }
         return Str;
     }
-
-
-
 
     @Override
     public Iterator<Task> iterator() {

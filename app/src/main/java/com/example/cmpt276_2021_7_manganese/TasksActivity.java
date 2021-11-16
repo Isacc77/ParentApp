@@ -60,15 +60,6 @@ public class TasksActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == REQUEST_CODE_AddCHILD) {
-//            populateListView();
-//            emptyInfo();
-//        }
-//    }
-
     private void populateListView() {
         t_manager = TaskManager.getInstance();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
