@@ -11,9 +11,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.cmpt276_2021_7_manganese.model.TaskManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+/**
+ * This Tasks activity is about whose turn section
+ * @author
+ */
 
 public class TasksActivity extends AppCompatActivity {
-
     private TaskManager t_manager;
     private TextView tv_notice;
     private TextView emptyListInfo;
@@ -28,14 +33,23 @@ public class TasksActivity extends AppCompatActivity {
         lv_task_data = findViewById(R.id.lv_manage_task);
         toolbar = findViewById(R.id.tb_manage_task);
 
-        setUpToolBar(toolbar);
         tv_notice.setSelected(true);
+        setUpToolBar(toolbar);
+        setupFloatingActionButton();
     }
 
     private void setUpToolBar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupFloatingActionButton() {
+        FloatingActionButton fab = findViewById(R.id.fab_addTask);
+        fab.setOnClickListener(view -> {
+            Intent addTask = AddTasksActivity.makeLaunchIntent(TasksActivity.this);
+            startActivity(addTask);
+        });
     }
 
     public static Intent makeLaunchIntent(Context c) {

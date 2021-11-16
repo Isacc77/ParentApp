@@ -135,9 +135,9 @@ public class AddChildActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (indexForSwitchActivity >= 0) {
-            getMenuInflater().inflate(R.menu.edit_child, menu);
+            getMenuInflater().inflate(R.menu.backup_and_delete_on_action_bar, menu);
         }else {
-            getMenuInflater().inflate(R.menu.add_child, menu);
+            getMenuInflater().inflate(R.menu.backup_on_action_bar, menu);
         }
         return super.onCreateOptionsMenu(menu);
     }
