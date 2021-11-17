@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
     private void load() {
         SharedPreferences prefs = this.getSharedPreferences("tag", MODE_PRIVATE);
         String jsonString = prefs.getString("save", "");
-        childManager.load(jsonString);
+        if(!jsonString.equals("")) {
+            childManager.load(jsonString);
+        }
     }
 }
