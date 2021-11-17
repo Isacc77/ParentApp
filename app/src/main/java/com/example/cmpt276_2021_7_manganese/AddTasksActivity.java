@@ -5,8 +5,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +23,7 @@ import com.example.cmpt276_2021_7_manganese.model.Task;
 import com.example.cmpt276_2021_7_manganese.model.TaskManager;
 
 public class AddTasksActivity extends AppCompatActivity {
+    public static final String EXTRA_MESSAGE = "Task";
     private TaskManager taskManager;
     private EditText inputTask;
     private boolean checkValidInput = false;
@@ -92,6 +95,28 @@ public class AddTasksActivity extends AppCompatActivity {
     public static Intent makeLaunchIntent(Context c) {
         Intent intent = new Intent(c, AddTasksActivity.class);
         return intent;
+    }
+
+    private void jsonSave() {
+        String jsonStringForTask = taskManager.getGsonStringForTask();
+        SharedPreferences prefs = this.getSharedPreferences("tag_task", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("save_task_info", jsonStringForTask);
+        editor.apply();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        super.onDestroy();
+        jsonSave();
+        this.finish();
     }
 
 }
