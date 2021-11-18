@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         btnFlipCoin = findViewById(R.id.btn_flipCoin);
         btnTimer = findViewById(R.id.btn_timer);
         btnWhoseTurn = findViewById(R.id.btn_whose_turn);
-        btwHelpScreen = findViewById(R.id.helpButton);
+        btwHelpScreen = findViewById(R.id.btn_help);
         setListeners();
 
         load();
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn_whose_turn:
                     intent = TasksActivity.makeLaunchIntent(MainActivity.this);
                     break;
-                case R.id.helpButton:
+                case R.id.btn_help:
                     intent = HelpActivity.makeLaunchIntent(MainActivity.this);
                     break;
             }
