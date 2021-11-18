@@ -13,10 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CMPT276_2021_7_manganese">
         <activity
+            android:name=".HelpActivity"
+            android:exported="true" />
+        <activity
             android:name=".AddTasksActivity"
             android:exported="true"
             android:label="@string/add_task_title"
-            android:parentActivityName=".TasksActivity"/>
+            android:parentActivityName=".TasksActivity" />
         <activity
             android:name=".TasksActivity"
             android:exported="true"

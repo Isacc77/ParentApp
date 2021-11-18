@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnTimer;
     private Button btnChildManager;
     private Button btnWhoseTurn;
+    private Button btwHelpScreen;
 
     private ChildManager childManager;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         btnFlipCoin = findViewById(R.id.btn_flipCoin);
         btnTimer = findViewById(R.id.btn_timer);
         btnWhoseTurn = findViewById(R.id.btn_whose_turn);
+        btwHelpScreen = findViewById(R.id.helpButton);
         setListeners();
 
         load();
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         btnFlipCoin.setOnClickListener(onClick);
         btnTimer.setOnClickListener(onClick);
         btnWhoseTurn.setOnClickListener(onClick);
+        btwHelpScreen.setOnClickListener(onClick);
     }
 
     private class OnClick implements View.OnClickListener {
@@ -81,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.btn_whose_turn:
                     intent = TasksActivity.makeLaunchIntent(MainActivity.this);
+                    break;
+                case R.id.helpButton:
+                    intent = HelpActivity.makeLaunchIntent(MainActivity.this);
                     break;
             }
             startActivity(intent);
