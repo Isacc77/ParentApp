@@ -110,7 +110,7 @@ public class ChildrenListActivity extends AppCompatActivity {
         manager = ChildManager.getInstance();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
-                R.layout.da_item,
+                R.layout.lv_child_list,
                 manager.StringChildData());
 
         lv_child_data.setAdapter(adapter);

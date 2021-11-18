@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
+import com.example.cmpt276_2021_7_manganese.model.TaskManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnWhoseTurn;
 
     private ChildManager childManager;
+    private TaskManager taskManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setListeners();
 
         load();
+        load_task_info();
     }
 
     private void setupFloatingActionButton() {
@@ -100,4 +103,11 @@ public class MainActivity extends AppCompatActivity {
             childManager.load(jsonString);
         }
     }
+
+    private void load_task_info() {
+        SharedPreferences prefs = this.getSharedPreferences("tag_task", MODE_PRIVATE);
+        String jsonStringTask = prefs.getString("save_task_info", "");
+//        taskManager.loadTaskInfo(jsonStringTask);
+    }
+
 }
