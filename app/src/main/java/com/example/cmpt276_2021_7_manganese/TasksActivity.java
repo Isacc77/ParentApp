@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,13 +48,12 @@ public class TasksActivity extends AppCompatActivity {
         tv_notice.setSelected(true);
         setUpToolBar(toolbar);
         setupFloatingActionButton();
-
+        registerClick();
         populateListView();
         emptyInfo();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -62,6 +62,16 @@ public class TasksActivity extends AppCompatActivity {
         emptyInfo();
     }
 
+    private void registerClick() {
+        lv_task_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                Intent intent = EditActivity.makeLaunchIntent(TasksActivity.this);
+                startActivity(intent);
+            }
+        });
+    }
+    
     private void populateListView() {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
