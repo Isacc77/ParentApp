@@ -22,7 +22,6 @@ import com.google.gson.reflect.TypeToken;
 public class ChildManager implements Iterable<Child> {
     private ArrayList<Child> manager = new ArrayList<>();
     private static ChildManager instance;
-    String json;
 
     public ChildManager() {
     }
@@ -57,14 +56,6 @@ public class ChildManager implements Iterable<Child> {
         return manager.size();
     }
 
-    public ArrayList<Child> getManager() {
-        return manager;
-    }
-
-    public void setManager(ArrayList<Child> manager) {
-        this.manager = manager;
-    }
-
     public String[] StringChildData() {
         String[] Str = new String[manager.size()];
         for (int i = 0; i < manager.size(); i++) {
@@ -78,37 +69,12 @@ public class ChildManager implements Iterable<Child> {
         return manager.iterator();
     }
 
-    public void printAll() {
-        int cnt = 0;
-        for (Child c : manager) {
-            System.out.println(cnt++ + ": " + c);
-        }
-    }
-
     public Child getByIndex(int index) {
         if (index > manager.size() || index < 0) {
             System.out.println("PROBLEM: in getByIndex, i should be [0, " + manager.size() + ").");
             return new Child("");
         }
         return manager.get(index);
-    }
-
-    public void TransferToDatabase(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences("Child", Context.MODE_PRIVATE);
-        Gson getGson = new GsonBuilder().create();
-        json = getGson.toJson(manager);
-        preferences.edit().putString("Child", json).commit();
-    }
-
-    public void UseDatabase(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences("Child", Context.MODE_PRIVATE);
-        Gson getGson = new GsonBuilder().create();
-        json = getGson.toJson(manager);
-        manager = getGson.fromJson(preferences.getString("Child", "[]"), new TypeToken<ArrayList<Child>>() {
-        }.getType());
-        for (Child child : manager) {
-            manager.add(child);
-        }
     }
 
     public String getGsonString() {

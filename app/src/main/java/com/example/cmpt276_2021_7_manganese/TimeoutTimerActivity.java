@@ -3,7 +3,9 @@
 //https://www.youtube.com/watch?v=sOwqYNdi_x8
 package com.example.cmpt276_2021_7_manganese;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -53,6 +55,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout_timer);
+//        Toolbar toolbar = findViewById(R.id.);
 
         timerClock = findViewById(R.id.timerClock);
         startPauseTimer = findViewById(R.id.startBtn);
@@ -64,6 +67,13 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         setupPreMadeTimerSettings();
         setupTimerClockWithButtons();
         setupCustomTimerSettings();
+//        setUpToolBar(toolbar);
+    }
+
+    private void setUpToolBar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     private void checkRunningStatus() {

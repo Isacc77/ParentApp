@@ -116,7 +116,7 @@
             android:drawableStart="@drawable/ic_whoseturn"
             android:paddingStart="6dp"
             android:paddingEnd="20sp"
-            android:text="@string/whose_turn"
+            android:text="@string/tasks"
             android:textAllCaps="false"
             android:textColor="@color/yellow"
             android:textStyle="italic" />

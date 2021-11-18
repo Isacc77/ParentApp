@@ -33,6 +33,7 @@
         <activity
             android:name=".TimeoutTimerActivity"
             android:exported="true"
+            android:parentActivityName=".MainActivity"
             android:label="@string/timeout_timer" />
         <activity
             android:name=".AddChildActivity"
