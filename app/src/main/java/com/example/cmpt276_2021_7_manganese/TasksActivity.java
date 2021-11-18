@@ -79,8 +79,9 @@ public class TasksActivity extends AppCompatActivity {
             for (int i = 0; i < taskManager.getSize(); i++) {
                 StringBuilder builder = new StringBuilder();
                 builder.append(taskInfo[i]);
-                builder.append(": The next child: ");
+                builder.append("    (");
                 builder.append(ChildInfo[0]);
+                builder.append(")");
                 Str[i] = builder.toString();
             }
             return Str;

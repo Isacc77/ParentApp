@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         childManager = ChildManager.getInstance();
+        taskManager = TaskManager.getInstance();
 
         setSupportActionBar(toolbar);
         setupFloatingActionButton();
@@ -113,7 +114,9 @@ public class MainActivity extends AppCompatActivity {
     private void load_task_info() {
         SharedPreferences prefs = this.getSharedPreferences("tag_task", MODE_PRIVATE);
         String jsonStringTask = prefs.getString("save_task_info", "");
-//        taskManager.loadTaskInfo(jsonStringTask);
+        if(!jsonStringTask.equals("")) {
+            taskManager.loadTaskInfo(jsonStringTask);
+        }
     }
 
 }

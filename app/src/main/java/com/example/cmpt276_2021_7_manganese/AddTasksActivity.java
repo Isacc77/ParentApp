@@ -73,11 +73,9 @@ public class AddTasksActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_backup:
                 if (checkValidInput) {
-                    Toast.makeText(this, SAVED, Toast.LENGTH_SHORT).show();
                     taskInfo = inputTask.getText().toString();
                     taskManager.add(new Task(taskInfo));
-                    Intent task = TasksActivity.makeLaunchIntent(AddTasksActivity.this);
-                    startActivity(task);
+                    finish();
                 } else {
                     Toast.makeText(this, INVALID_INPUT, Toast.LENGTH_SHORT).show();
                 }

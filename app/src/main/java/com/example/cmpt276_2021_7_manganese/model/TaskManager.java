@@ -1,12 +1,6 @@
 package com.example.cmpt276_2021_7_manganese.model;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -49,14 +43,6 @@ public class TaskManager implements Iterable<Task> {
         return taskManager.size();
     }
 
-    public ArrayList<Task> getTaskManager() {
-        return taskManager;
-    }
-
-    public void setTaskManager(ArrayList<Task> taskManager) {
-        this.taskManager = taskManager;
-    }
-
     public String[] StringTaskData() {
         String[] Str = new String[taskManager.size()];
         for (int i = 0; i < taskManager.size(); i++) {
@@ -68,13 +54,6 @@ public class TaskManager implements Iterable<Task> {
     @Override
     public Iterator<Task> iterator() {
         return taskManager.iterator();
-    }
-
-    public void printAll() {
-        int index = 0;
-        for (Task t : taskManager) {
-            System.out.println(index++ + ": " + t);
-        }
     }
 
     public Task getByIndex(int index) {
