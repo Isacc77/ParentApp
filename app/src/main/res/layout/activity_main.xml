@@ -116,10 +116,16 @@
             android:drawableStart="@drawable/ic_whoseturn"
             android:paddingStart="6dp"
             android:paddingEnd="20sp"
-            android:text="@string/whose_turn"
+            android:text="@string/tasks"
             android:textAllCaps="false"
             android:textColor="@color/yellow"
             android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/helpButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Help " />
 
     </RelativeLayout>
 

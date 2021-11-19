@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
+import com.example.cmpt276_2021_7_manganese.model.TaskManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,8 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private Button btnTimer;
     private Button btnChildManager;
     private Button btnWhoseTurn;
+    private Button btwHelpScreen;
 
     private ChildManager childManager;
+    private TaskManager taskManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         childManager = ChildManager.getInstance();
+        taskManager = TaskManager.getInstance();
 
         setSupportActionBar(toolbar);
         setupFloatingActionButton();
@@ -40,9 +44,11 @@ public class MainActivity extends AppCompatActivity {
         btnFlipCoin = findViewById(R.id.btn_flipCoin);
         btnTimer = findViewById(R.id.btn_timer);
         btnWhoseTurn = findViewById(R.id.btn_whose_turn);
+        btwHelpScreen = findViewById(R.id.helpButton);
         setListeners();
 
         load();
+        load_task_info();
     }
 
     private void setupFloatingActionButton() {
@@ -59,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         btnFlipCoin.setOnClickListener(onClick);
         btnTimer.setOnClickListener(onClick);
         btnWhoseTurn.setOnClickListener(onClick);
+        btwHelpScreen.setOnClickListener(onClick);
     }
 
     private class OnClick implements View.OnClickListener {
@@ -82,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn_whose_turn:
                     intent = TasksActivity.makeLaunchIntent(MainActivity.this);
                     break;
+                case R.id.helpButton:
+                    intent = HelpActivity.makeLaunchIntent(MainActivity.this);
+                    break;
             }
             startActivity(intent);
         }
@@ -100,4 +110,13 @@ public class MainActivity extends AppCompatActivity {
             childManager.load(jsonString);
         }
     }
+
+    private void load_task_info() {
+        SharedPreferences prefs = this.getSharedPreferences("tag_task", MODE_PRIVATE);
+        String jsonStringTask = prefs.getString("save_task_info", "");
+        if(!jsonStringTask.equals("")) {
+            taskManager.loadTaskInfo(jsonStringTask);
+        }
+    }
+
 }
