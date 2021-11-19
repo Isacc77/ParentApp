@@ -16,12 +16,14 @@ public class CoinResult {
     public String currentChose;
     public String result;
     public String user;
+    public String photo;
 
-    public CoinResult(String uid, String time, String currentChose, String result, String user) {
+    public CoinResult(String uid, String time, String currentChose, String result, String user, String photo) {
         this.uid = uid;
         this.time = time;
         this.currentChose = currentChose;
         this.result = result;
         this.user = user;
+        this.photo = photo;
     }
 }

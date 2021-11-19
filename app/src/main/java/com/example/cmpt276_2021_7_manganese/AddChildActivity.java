@@ -93,6 +93,10 @@ public class AddChildActivity extends AppCompatActivity {
         }
     }
 
+    public String getName(){
+        return name;
+    }
+
     public static Intent makeLaunchIntent(Context c) {
         Intent intent = new Intent(c, AddChildActivity.class);
         intent.putExtra(EXTRA_MESSAGE, -1);
