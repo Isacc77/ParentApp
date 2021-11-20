@@ -201,7 +201,7 @@ public class AddChildActivity extends AppCompatActivity {
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         super.onDestroy();
-        //jsonSave();
+        jsonSave();
         setIndex(-1);
         this.finish();
     }
@@ -229,7 +229,7 @@ public class AddChildActivity extends AppCompatActivity {
             this.setTitle("Add your child");
         }
     }
-/*
+
     private void jsonSave() {
         String jsonString = childManager.getGsonString();
         SharedPreferences prefs = this.getSharedPreferences("tag", MODE_PRIVATE);
@@ -238,6 +238,5 @@ public class AddChildActivity extends AppCompatActivity {
         editor.apply();
     }
 
- */
 
 }
