@@ -18,10 +18,12 @@ import com.google.gson.reflect.TypeToken;
  * it use singleton model
  * we can populate data Children data by this class
  * @author  Shuai Li
+ * @author Yam for Iteration 2
  */
 public class ChildManager implements Iterable<Child> {
     private ArrayList<Child> manager = new ArrayList<>();
     private static ChildManager instance;
+    String json;
 
     public ChildManager() {
     }
@@ -56,6 +58,14 @@ public class ChildManager implements Iterable<Child> {
         return manager.size();
     }
 
+    public ArrayList<Child> getManager() {
+        return manager;
+    }
+
+    public void setManager(ArrayList<Child> manager) {
+        this.manager = manager;
+    }
+
     public String[] StringChildData() {
         String[] Str = new String[manager.size()];
         for (int i = 0; i < manager.size(); i++) {
@@ -64,9 +74,25 @@ public class ChildManager implements Iterable<Child> {
         return Str;
     }
 
+    public Child[] ChildData() {
+        Child[] child = new Child[manager.size()];
+        for (int i = 0; i < manager.size(); i++) {
+            child[i].name = manager.get(i).getName();
+            child[i].PhotoUrl = manager.get(i).getPhotoUrl();
+        }
+        return child;
+    }
+
     @Override
     public Iterator<Child> iterator() {
         return manager.iterator();
+    }
+
+    public void printAll() {
+        int cnt = 0;
+        for (Child c : manager) {
+            System.out.println(cnt++ + ": " + c);
+        }
     }
 
     public Child getByIndex(int index) {
@@ -77,15 +103,21 @@ public class ChildManager implements Iterable<Child> {
         return manager.get(index);
     }
 
-    public String getGsonString() {
-        Gson gson = new Gson();
-        String jsonString = gson.toJson(this);
-        return jsonString;
+    public void TransferToDatabase(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("Child", Context.MODE_PRIVATE);
+        Gson getGson = new GsonBuilder().create();
+        json = getGson.toJson(manager);
+        preferences.edit().putString("Child", json).commit();
     }
 
-    public void load(String jsonString) {
-        Gson gson = new Gson();
-        ChildManager loaded = gson.fromJson(jsonString, ChildManager.class);
-        manager = loaded.manager;
+    public void UseDatabase(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("Child", Context.MODE_PRIVATE);
+        Gson getGson = new GsonBuilder().create();
+        json = getGson.toJson(manager);
+        manager = getGson.fromJson(preferences.getString("Child", "[]"), new TypeToken<ArrayList<Child>>() {
+        }.getType());
+        for (Child child : manager) {
+            manager.add(child);
+        }
     }
 }
