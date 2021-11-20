@@ -23,7 +23,6 @@ import com.google.gson.reflect.TypeToken;
 public class ChildManager implements Iterable<Child> {
     private ArrayList<Child> manager = new ArrayList<>();
     private static ChildManager instance;
-    String json;
 
     public ChildManager() {
     }
@@ -73,7 +72,7 @@ public class ChildManager implements Iterable<Child> {
         }
         return Str;
     }
-
+/*
     public Child[] ChildData() {
         Child[] child = new Child[manager.size()];
         for (int i = 0; i < manager.size(); i++) {
@@ -82,6 +81,8 @@ public class ChildManager implements Iterable<Child> {
         }
         return child;
     }
+
+ */
 
     @Override
     public Iterator<Child> iterator() {
@@ -103,21 +104,15 @@ public class ChildManager implements Iterable<Child> {
         return manager.get(index);
     }
 
-    public void TransferToDatabase(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences("Child", Context.MODE_PRIVATE);
-        Gson getGson = new GsonBuilder().create();
-        json = getGson.toJson(manager);
-        preferences.edit().putString("Child", json).commit();
+    public String getGsonString(){
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(this);
+        return jsonString;
     }
 
-    public void UseDatabase(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences("Child", Context.MODE_PRIVATE);
-        Gson getGson = new GsonBuilder().create();
-        json = getGson.toJson(manager);
-        manager = getGson.fromJson(preferences.getString("Child", "[]"), new TypeToken<ArrayList<Child>>() {
-        }.getType());
-        for (Child child : manager) {
-            manager.add(child);
-        }
+    public void load(String jsonString){
+        Gson gson = new Gson();
+        ChildManager loaded = gson.fromJson(jsonString, ChildManager.class);
+        manager = loaded.manager;
     }
 }
