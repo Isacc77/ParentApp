@@ -54,5 +54,7 @@
     <string name="task">Task:</string>
     <string name="input_task_here">Input task here</string>
     <string name="add_task_title">Add task</string>
+    <string name="tasks">Tasks</string>
+    <string name="hep">Help</string>
 
 </resources>
