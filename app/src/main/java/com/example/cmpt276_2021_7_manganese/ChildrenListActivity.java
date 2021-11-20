@@ -3,6 +3,7 @@ package com.example.cmpt276_2021_7_manganese;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -48,16 +49,16 @@ public class ChildrenListActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
+
         tv_notice = findViewById(R.id.tv_manage_child_info);
         tv_notice.setSelected(true);
 
-        lv_child_data = findViewById(R.id.lv_manage_child);
 
-        populateListView();
-        registerClick();
+        //lv_child_data = findViewById(R.id.tv_child);
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
-//        loadDataBeforeLaunch();
+        loadDataBeforeLaunch();
 
         emptyInfo();
     }
@@ -101,7 +102,6 @@ public class ChildrenListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_AddCHILD) {
-            populateListView();
             emptyInfo();
         }
     }
