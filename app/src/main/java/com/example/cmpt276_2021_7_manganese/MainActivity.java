@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId()) {
 
                 case R.id.btn_childManager:
-                    intent = new Intent(MainActivity.this, ChildrenListActivity.class);
+                    intent = new Intent(MainActivity.this, AddChildActivity.class);
                     break;
 
                 case R.id.btn_flipCoin:
