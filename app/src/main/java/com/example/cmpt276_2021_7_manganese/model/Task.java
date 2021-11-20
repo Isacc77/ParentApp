@@ -1,12 +1,29 @@
 package com.example.cmpt276_2021_7_manganese.model;
 
-public class Task {
+import android.widget.Toast;
 
+public class Task {
     String taskInfo;
     private final String TASK_CONTENT = "Task:";
+    private Child curChildForTask;
+    private ChildManager childManager;
+    private int childIndex;
 
     public Task(String taskInfo) {
+        childManager = ChildManager.getInstance();
         this.taskInfo = taskInfo;
+        childIndex = 0;
+    }
+
+    public void childDoneTask() {
+        updateInformation();
+        if (childIndex != -1) {
+            if (childIndex == (childManager.getSize() - 1)) {
+                childIndex = 0;
+            } else {
+                childIndex++;
+            }
+        }
     }
 
     public String getTaskInfo() {
@@ -17,10 +34,31 @@ public class Task {
         this.taskInfo = taskInfo;
     }
 
+    public String getCurChildName() {
+        updateInformation();
+        if (childIndex == -1) {
+            return "No Children";
+        }
+        curChildForTask = childManager.getByIndex(childIndex);
+        return curChildForTask.getName();
+    }
+
+    private void updateInformation() {
+        childManager = ChildManager.getInstance();
+        updateIndex();
+    }
+
+    private void updateIndex() {
+        int childrenNumber = childManager.getSize();
+        if (childrenNumber == 0) {
+            childIndex = -1;
+        } else if (childIndex == -1) {
+            childIndex = 0;
+        }
+    }
+
     @Override
     public String toString() {
         return TASK_CONTENT + taskInfo ;
     }
-
 }
-

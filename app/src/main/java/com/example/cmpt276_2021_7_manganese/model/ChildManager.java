@@ -3,15 +3,10 @@
  */
 package com.example.cmpt276_2021_7_manganese.model;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 /**
  * This class is for ChildManager
@@ -20,10 +15,10 @@ import com.google.gson.reflect.TypeToken;
  * @author  Shuai Li
  */
 public class ChildManager implements Iterable<Child> {
-    private ArrayList<Child> manager = new ArrayList<>();
+    private ArrayList<Child> childArrayList = new ArrayList<>();
     private static ChildManager instance;
 
-    public ChildManager() {
+    private ChildManager() {
     }
 
     public static ChildManager getInstance() {
@@ -33,48 +28,44 @@ public class ChildManager implements Iterable<Child> {
         return instance;
     }
 
-    public static ChildManager getInstance(ChildManager Manager) {
-        if (instance == null) {
-            instance = Manager;
-        }
-        return instance;
-    }
+//    public static ChildManager getInstance(ChildManager Manager) {
+//        if (instance == null) {
+//            instance = Manager;
+//        }
+//        return instance;
+//    }
 
     public void add(Child child) {
-        manager.add(child);
+        childArrayList.add(child);
     }
 
     public void removeChild(int index) {
-        if (index < 0 || index > manager.size()) {
+        if (index < 0 || index > childArrayList.size()) {
             throw new IndexOutOfBoundsException("Index out of range");
         } else {
-            manager.remove(index);
+            childArrayList.remove(index);
         }
     }
 
     public int getSize() {
-        return manager.size();
+        return childArrayList.size();
     }
 
     public String[] StringChildData() {
-        String[] Str = new String[manager.size()];
-        for (int i = 0; i < manager.size(); i++) {
-            Str[i] = manager.get(i).getName();
+        String[] Str = new String[childArrayList.size()];
+        for (int i = 0; i < childArrayList.size(); i++) {
+            Str[i] = childArrayList.get(i).getName();
         }
         return Str;
     }
 
     @Override
     public Iterator<Child> iterator() {
-        return manager.iterator();
+        return childArrayList.iterator();
     }
 
     public Child getByIndex(int index) {
-        if (index > manager.size() || index < 0) {
-            System.out.println("PROBLEM: in getByIndex, i should be [0, " + manager.size() + ").");
-            return new Child("");
-        }
-        return manager.get(index);
+        return childArrayList.get(index);
     }
 
     public String getGsonString() {
@@ -86,6 +77,6 @@ public class ChildManager implements Iterable<Child> {
     public void load(String jsonString) {
         Gson gson = new Gson();
         ChildManager loaded = gson.fromJson(jsonString, ChildManager.class);
-        manager = loaded.manager;
+        childArrayList = loaded.childArrayList;
     }
 }

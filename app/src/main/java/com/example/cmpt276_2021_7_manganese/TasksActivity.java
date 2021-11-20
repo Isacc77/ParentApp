@@ -15,8 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
+import com.example.cmpt276_2021_7_manganese.model.Task;
 import com.example.cmpt276_2021_7_manganese.model.TaskManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -66,7 +68,7 @@ public class TasksActivity extends AppCompatActivity {
         lv_task_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                Intent intent = EditActivity.makeLaunchIntent(TasksActivity.this);
+                Intent intent = EditTaskActivity.makeLaunchIntent(TasksActivity.this, position);
                 startActivity(intent);
             }
         });
@@ -82,21 +84,20 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     private String[] taskInfo() {
-        if (taskManager.getSize() > 0 && childManager.getSize() > 0) {
+//        if (taskManager.getSize() > 0 && childManager.getSize() > 0) {
             String[] Str = new String[taskManager.getSize()];
-            String[] taskInfo = taskManager.StringTaskData();
-            String[] ChildInfo = childManager.StringChildData();
             for (int i = 0; i < taskManager.getSize(); i++) {
+                Task task = taskManager.getTask(i);
                 StringBuilder builder = new StringBuilder();
-                builder.append(taskInfo[i]);
+                builder.append(task.getTaskInfo());
                 builder.append("    (");
-                builder.append(ChildInfo[0]);
+                builder.append(task.getCurChildName());
                 builder.append(")");
                 Str[i] = builder.toString();
             }
             return Str;
-        }
-        return taskManager.StringTaskData();
+//        }
+//        return taskManager.StringTaskData();
     }
 
     private void emptyInfo() {
@@ -121,8 +122,13 @@ public class TasksActivity extends AppCompatActivity {
     private void setupFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.fab_addTask);
         fab.setOnClickListener(view -> {
-            Intent addTask = AddTasksActivity.makeLaunchIntent(TasksActivity.this);
-            startActivity(addTask);
+//            if (childManager.getSize() != 0) {
+                Intent addTask = AddTasksActivity.makeLaunchIntent(TasksActivity.this);
+                startActivity(addTask);
+//            } else {
+//                Toast.makeText(this, "Error: No Children added to do task.",
+//                        Toast.LENGTH_LONG).show();
+//            }
         });
     }
 
