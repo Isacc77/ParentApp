@@ -72,7 +72,7 @@ public class ChildManager implements Iterable<Child> {
         }
         return Str;
     }
-
+/*
     public Child[] ChildData() {
         Child[] child = new Child[manager.size()];
         for (int i = 0; i < manager.size(); i++) {
@@ -81,6 +81,8 @@ public class ChildManager implements Iterable<Child> {
         }
         return child;
     }
+
+ */
 
     @Override
     public Iterator<Child> iterator() {

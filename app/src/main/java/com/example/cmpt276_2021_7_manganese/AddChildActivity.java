@@ -24,9 +24,12 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 
+/*
 import com.wildma.pictureselector.PictureBean;
 import com.wildma.pictureselector.PictureSelector;
 
+
+ */
 import java.util.Date;
 
 /**
@@ -79,6 +82,7 @@ public class AddChildActivity extends AppCompatActivity {
         inputName = findViewById(R.id.et_name);
         inputName.addTextChangedListener(tw);
 
+        /*
         photo = findViewById(R.id.iv_photo);
         photo.setOnClickListener(view -> PictureSelector
                 .create(AddChildActivity.this, PictureSelector.SELECT_REQUEST_CODE)
@@ -105,8 +109,11 @@ public class AddChildActivity extends AppCompatActivity {
             }
 
         });
+
+         */
     }
 
+    /*
     //reload the result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -123,6 +130,8 @@ public class AddChildActivity extends AppCompatActivity {
             }
         }
     }
+
+     */
 
     private TextWatcher tw = new TextWatcher() {
         @Override
