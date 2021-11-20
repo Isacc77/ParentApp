@@ -53,11 +53,11 @@ public class ChildManager implements Iterable<Child> {
     }
 
     public ArrayList<Child> getManager() {
-        return manager;
+        return childArrayList;
     }
 
     public void setManager(ArrayList<Child> manager) {
-        this.manager = manager;
+        this.childArrayList = manager;
     }
 
     public String[] StringChildData() {
@@ -86,7 +86,7 @@ public class ChildManager implements Iterable<Child> {
 
     public void printAll() {
         int cnt = 0;
-        for (Child c : manager) {
+        for (Child c : childArrayList) {
             System.out.println(cnt++ + ": " + c);
         }
     }
