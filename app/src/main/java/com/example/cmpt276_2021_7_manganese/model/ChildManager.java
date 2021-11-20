@@ -23,7 +23,6 @@ import com.google.gson.reflect.TypeToken;
 public class ChildManager implements Iterable<Child> {
     private ArrayList<Child> manager = new ArrayList<>();
     private static ChildManager instance;
-    String json;
 
     public ChildManager() {
     }
