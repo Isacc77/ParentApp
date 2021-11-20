@@ -1,24 +1,33 @@
 package com.example.cmpt276_2021_7_manganese;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
+
+import com.wildma.pictureselector.PictureBean;
+import com.wildma.pictureselector.PictureSelector;
+
+import java.util.Date;
 
 /**
  * This class is for add child
@@ -31,15 +40,30 @@ public class AddChildActivity extends AppCompatActivity {
     private boolean isSaved = false;
     private EditText inputName;
     private String name;
+    private String photourl;
     private ChildManager childManager;
 
+    private ImageView photo;
+    private Button skip;
 
+    //whether user change their photo done.
+    private Handler handler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            if (msg.what==0){
+                Toast.makeText(AddChildActivity.this,"Change Successfully",Toast.LENGTH_SHORT).show();
+                finish();
+            }else {
+                Toast.makeText(AddChildActivity.this,"Change Fail",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
-
 
         Toolbar toolbar = findViewById(R.id.add_child_toolbar);
         setSupportActionBar(toolbar);
@@ -54,6 +78,50 @@ public class AddChildActivity extends AppCompatActivity {
 
         inputName = findViewById(R.id.et_name);
         inputName.addTextChangedListener(tw);
+
+        photo = findViewById(R.id.iv_photo);
+        photo.setOnClickListener(view -> PictureSelector
+                .create(AddChildActivity.this, PictureSelector.SELECT_REQUEST_CODE)
+                .selectPicture(true));
+
+        //set photo url default if user skip.
+        skip = findViewById(R.id.bt_skip_photo);
+        skip.setOnClickListener(view ->{
+            if (inputName.getText() == null){
+                Toast.makeText(AddChildActivity.this,"Name cannot be null",Toast.LENGTH_SHORT).show();
+            }
+            if (TextUtils.isEmpty(photourl)){
+                name = inputName.getText().toString();
+                photourl = "default";
+                Child ch = new Child(name, photourl);
+                if (indexForSwitchActivity < 0) {
+                    addChildToManager();
+                }
+                else {
+                    editChildInManager();
+                }
+                Toast.makeText(AddChildActivity.this,"Saved With Skip Choosing Photo!",Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+        });
+    }
+
+    //reload the result
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PictureSelector.SELECT_REQUEST_CODE) {
+            if (data != null) {
+                PictureBean pictureBean = data.getParcelableExtra(PictureSelector.PICTURE_RESULT);
+                if (pictureBean.isCut()) {
+                    photourl = pictureBean.getPath();
+                    photo.setImageBitmap(BitmapFactory.decodeFile(pictureBean.getPath()));
+                } else {
+                    photo.setImageURI(pictureBean.getUri());
+                }
+            }
+        }
     }
 
     private TextWatcher tw = new TextWatcher() {
@@ -87,8 +155,6 @@ public class AddChildActivity extends AppCompatActivity {
                         editChildInManager();
                     }
                     finish();
-
-
                 } else {
                     Toast.makeText(this, "Cannot save with invalid inputs!", Toast.LENGTH_SHORT).show();
                 }
@@ -99,10 +165,6 @@ public class AddChildActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    public String getName(){
-        return name;
     }
 
     public static Intent makeLaunchIntent(Context c) {
@@ -139,7 +201,7 @@ public class AddChildActivity extends AppCompatActivity {
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         super.onDestroy();
-        jsonSave();
+        //jsonSave();
         setIndex(-1);
         this.finish();
     }
@@ -167,7 +229,7 @@ public class AddChildActivity extends AppCompatActivity {
             this.setTitle("Add your child");
         }
     }
-
+/*
     private void jsonSave() {
         String jsonString = childManager.getGsonString();
         SharedPreferences prefs = this.getSharedPreferences("tag", MODE_PRIVATE);
@@ -175,4 +237,7 @@ public class AddChildActivity extends AppCompatActivity {
         editor.putString("save", jsonString);
         editor.apply();
     }
+
+ */
+
 }
