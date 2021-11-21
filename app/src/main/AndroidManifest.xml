@@ -61,8 +61,13 @@
         <activity
             android:name=".FlipCoinActivity"
             android:exported="true"
-            android:label="@string/flip_coin" />
-        <activity android:name=".RecordListActivity" />
+            android:label="@string/flip_coin"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".RecordListActivity"
+            android:exported="true"
+            android:label="@string/title_flip_coin_history"
+            android:parentActivityName=".FlipCoinActivity"/>
 
         <service android:name=".TimerService" />
     </application>

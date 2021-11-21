@@ -1,5 +1,6 @@
 package com.example.cmpt276_2021_7_manganese;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -16,11 +19,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.room.Room;
 
 import com.example.cmpt276_2021_7_manganese.model.Child;
@@ -54,6 +60,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     private Spinner show_name;
     private Spinner show_icon;
     private String currentPhoto = "default";
+    private Toolbar toolbar;
     private AppDatabase db;
     private static final String[] childrenChooseList = {"nobody","child_1","child_2"};
     private static final String[] coinChooseList = {"——","Head","Tail"};
@@ -113,13 +120,11 @@ public class FlipCoinActivity extends AppCompatActivity {
         mCoinImageView = findViewById(R.id.tiv);
         show_name = findViewById(R.id.show_name);
         show_icon = findViewById(R.id.show_coin);
+        toolbar = findViewById(R.id.tb_flip_coin);
         start.setOnClickListener(view -> showAnimotion());
 
-        record_btn = findViewById(R.id.record_btn);
-        record_btn.setOnClickListener(view -> {
-            Intent intent = new Intent(FlipCoinActivity.this,RecordListActivity.class);
-            startActivity(intent);
-        });
+
+
         childrenData = manager.StringChildData();
 
         coin_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, coinChooseList);
@@ -160,6 +165,40 @@ public class FlipCoinActivity extends AppCompatActivity {
 
             }
         });
+
+
+        setUpToolBar(toolbar);
+
+
+    }
+
+    public static Intent makeLaunchIntent(Context c) {
+        return new Intent(c, FlipCoinActivity.class);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_history:
+                Intent intent = RecordListActivity.makeLaunchIntent(FlipCoinActivity.this);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.history_on_action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setUpToolBar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     private void showMain(){

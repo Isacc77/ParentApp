@@ -56,5 +56,7 @@
     <string name="add_task_title">Add task</string>
     <string name="tasks">Tasks</string>
     <string name="hep">Help</string>
+    <string name="title_flip_coin_history">History for flip coin</string>
+    <string name="action_bar_history">History</string>
 
 </resources>

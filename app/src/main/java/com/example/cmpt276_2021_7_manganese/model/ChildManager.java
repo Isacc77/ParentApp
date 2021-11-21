@@ -68,28 +68,18 @@ public class ChildManager implements Iterable<Child> {
         }
         return Str;
     }
-/*
-    public Child[] ChildData() {
-        Child[] child = new Child[manager.size()];
-        for (int i = 0; i < manager.size(); i++) {
-            child[i].name = manager.get(i).getName();
-            child[i].PhotoUrl = manager.get(i).getPhotoUrl();
-        }
-        return child;
-    }
 
- */
-    public List<Child> ChildData(){
-        List<Child> childData = new ArrayList<>();
-        if(manager.size() == 0)
-            return null;
-        else {
-            for (int i = 0; i < manager.size(); i++) {
-                childData.add(i, new Child(manager.get(i).name, manager.get(i).PhotoUrl));
-            }
-        }
-        return childData;
-    }
+//    public List<Child> ChildData(){
+//        List<Child> childData = new ArrayList<>();
+//        if(childArrayList.size() == 0)
+//            return null;
+//        else {
+//            for (int i = 0; i < childArrayList.size(); i++) {
+//                childData.add(i, new Child(childArrayList.get(i).name, childArrayList.get(i).PhotoUrl));
+//            }
+//        }
+//        return childData;
+//    }
 
 
     @Override

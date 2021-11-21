@@ -1,5 +1,7 @@
 package com.example.cmpt276_2021_7_manganese;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -45,6 +47,10 @@ public class RecordListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         db = Room.databaseBuilder(this,AppDatabase.class,"database-name").build();
         checkAll();
+    }
+
+    public static Intent makeLaunchIntent(Context c) {
+        return new Intent(c, RecordListActivity.class);
     }
 
     private void checkAll(){

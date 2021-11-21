@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.btn_flipCoin:
-                    intent = new Intent(MainActivity.this, FlipCoinActivity.class);
+                    intent = FlipCoinActivity.makeLaunchIntent(MainActivity.this);
                     break;
 
                 case R.id.btn_timer:
