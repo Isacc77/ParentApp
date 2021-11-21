@@ -5,10 +5,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class TaskManager implements Iterable<Task> {
-    private ArrayList<Task> taskManager = new ArrayList<>();
+    private ArrayList<Task> tasksList = new ArrayList<>();
     private static TaskManager TaskInstance;
     private final String INDEX_OUT_OF_RANGE = "Index out of range";
-    private final String INDEX_OUT_OF_RANGE_FOR_GET_BY_INDEX = "PROBLEM: in getByIndex, i should be from 0 to ";
 
     public TaskManager() {
     }
@@ -20,48 +19,37 @@ public class TaskManager implements Iterable<Task> {
         return TaskInstance;
     }
 
-    public static TaskManager getInstance(TaskManager Manager) {
-        if (TaskInstance == null) {
-            TaskInstance = Manager;
-        }
-        return TaskInstance;
-    }
-
     public void add(Task task) {
-        taskManager.add(task);
+        tasksList.add(task);
     }
 
     public void removeTask(int index) {
-        if (index < 0 || index > taskManager.size()) {
+        if (index < 0 || index > tasksList.size()) {
             throw new IndexOutOfBoundsException(INDEX_OUT_OF_RANGE);
         } else {
-            taskManager.remove(index);
+            tasksList.remove(index);
         }
     }
 
     public int getSize() {
-        return taskManager.size();
+        return tasksList.size();
+    }
+
+    public Task getTask(int index) {
+        return tasksList.get(index);
     }
 
     public String[] StringTaskData() {
-        String[] Str = new String[taskManager.size()];
-        for (int i = 0; i < taskManager.size(); i++) {
-            Str[i] = taskManager.get(i).getTaskInfo();
+        String[] Str = new String[tasksList.size()];
+        for (int i = 0; i < tasksList.size(); i++) {
+            Str[i] = tasksList.get(i).getTaskInfo();
         }
         return Str;
     }
 
     @Override
     public Iterator<Task> iterator() {
-        return taskManager.iterator();
-    }
-
-    public Task getByIndex(int index) {
-        if (index > taskManager.size() || index < 0) {
-            System.out.println(INDEX_OUT_OF_RANGE_FOR_GET_BY_INDEX + taskManager.size());
-            return new Task("");
-        }
-        return taskManager.get(index);
+        return tasksList.iterator();
     }
 
     public String getGsonStringForTask() {
@@ -73,7 +61,6 @@ public class TaskManager implements Iterable<Task> {
     public void loadTaskInfo(String jsonString) {
         Gson gsonTask = new Gson();
         TaskManager loaded = gsonTask.fromJson(jsonString, TaskManager.class);
-        taskManager = loaded.taskManager;
+        tasksList = loaded.tasksList;
     }
-
 }

@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CMPT276_2021_7_manganese">
         <activity
-            android:name=".EditActivity"
+            android:name=".EditTaskActivity"
+            android:label="@string/task"
+            android:parentActivityName=".TasksActivity"
             android:exported="true" />
         <activity
             android:name=".HelpActivity"
