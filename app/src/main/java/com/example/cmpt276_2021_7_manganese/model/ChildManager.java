@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -83,6 +84,18 @@ public class ChildManager implements Iterable<Child> {
     }
 
  */
+    public List<Child> ChildData(){
+        List<Child> childData = new ArrayList<>();
+        if(manager.size() == 0)
+            return null;
+        else {
+            for (int i = 0; i < manager.size(); i++) {
+                childData.add(i, new Child(manager.get(i).name, manager.get(i).PhotoUrl));
+            }
+        }
+        return childData;
+    }
+
 
     @Override
     public Iterator<Child> iterator() {

@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
@@ -16,6 +17,13 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <ImageView
+            android:text=""
+            android:id="@+id/user_header"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
         <TextView
             android:text=""
             android:id="@+id/choice"

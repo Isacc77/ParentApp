@@ -28,10 +28,8 @@ public class RecordListActivity extends AppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
-                case 0:
-                    adapter.notifyDataSetChanged();
-                    break;
+            if (msg.what == 0) {
+                adapter.notifyDataSetChanged();
             }
         }
     };
