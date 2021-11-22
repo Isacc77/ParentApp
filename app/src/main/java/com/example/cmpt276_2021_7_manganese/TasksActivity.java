@@ -73,7 +73,7 @@ public class TasksActivity extends AppCompatActivity {
             }
         });
     }
-    
+
     private void populateListView() {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
@@ -85,17 +85,17 @@ public class TasksActivity extends AppCompatActivity {
 
     private String[] taskInfo() {
 //        if (taskManager.getSize() > 0 && childManager.getSize() > 0) {
-            String[] Str = new String[taskManager.getSize()];
-            for (int i = 0; i < taskManager.getSize(); i++) {
-                Task task = taskManager.getTask(i);
-                StringBuilder builder = new StringBuilder();
-                builder.append(task.getTaskInfo());
-                builder.append("    (");
-                builder.append(task.getCurChildName());
-                builder.append(")");
-                Str[i] = builder.toString();
-            }
-            return Str;
+        String[] Str = new String[taskManager.getSize()];
+        for (int i = 0; i < taskManager.getSize(); i++) {
+            Task task = taskManager.getTask(i);
+            StringBuilder builder = new StringBuilder();
+            builder.append(task.getTaskInfo());
+            builder.append("    (");
+            builder.append(task.getCurChildName());
+            builder.append(")");
+            Str[i] = builder.toString();
+        }
+        return Str;
 //        }
 //        return taskManager.StringTaskData();
     }
@@ -123,8 +123,8 @@ public class TasksActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab_addTask);
         fab.setOnClickListener(view -> {
 //            if (childManager.getSize() != 0) {
-                Intent addTask = AddTasksActivity.makeLaunchIntent(TasksActivity.this);
-                startActivity(addTask);
+            Intent addTask = AddTasksActivity.makeLaunchIntent(TasksActivity.this);
+            startActivity(addTask);
 //            } else {
 //                Toast.makeText(this, "Error: No Children added to do task.",
 //                        Toast.LENGTH_LONG).show();
@@ -139,6 +139,7 @@ public class TasksActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        emptyInfo();
         populateListView();
     }
 
