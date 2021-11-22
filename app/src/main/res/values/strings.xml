@@ -58,5 +58,10 @@
     <string name="hep">Help</string>
     <string name="title_flip_coin_history">History for flip coin</string>
     <string name="action_bar_history">History</string>
+    <string name="user_photo">UserHeader</string>
+    <string name="user_name">UserName</string>
+    <string name="user_choice">UserChoice</string>
+    <string name="flip_result">Flip result</string>
+    <string name="time">Time</string>
 
 </resources>

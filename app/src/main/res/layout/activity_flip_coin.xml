@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:coin="http://schemas.android.com/apk/res-auto"
     tools:context=".FlipCoinActivity"
-    android:background="@drawable/back_flipcoin">
+    android:background="@drawable/bg_flip_coin">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -82,7 +82,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="186dp"
                 android:layout_marginTop="20dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/default_head" />
 
             <Button
                 android:id="@+id/start"
