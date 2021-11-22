@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,51 +37,49 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-/**
- * This class is for Flip coin activity
- * After children data transfer, user can choose child to choose head or tail and flip coin
- * When choose one child which is not the first child the order of children flip will change,
- * the chose children will turn  to the top and be the first one to flip coin, otherwise, the order will be
- * the order user add child.
- * @author  Lingjie Li(Larry)
- */
-
 public class FlipCoinActivity extends AppCompatActivity {
+
     private Button start;
     private CoinImageView mCoinImageView;
     private int currentItem = -1;
     private int result;
+    private int currentUserPosition = 0;
+
     private MediaPlayer player;
     private ChildManager manager;
     private Spinner show_name;
     private Spinner show_icon;
+
     private Toolbar toolbar;
     private AppDatabase db;
+
     private static final String[] coinChooseList = {"——", "Head", "Tail"};
+
     private ArrayAdapter<String> coin_adapter;
     private ArrayAdapter<Child> arrayAdapter;
     private ArrayList<Child> childrenList = new ArrayList<>();
     private ImageView childPhoto;
+
     private Child childCurrent=null;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin);
-        //Initialize the controller
+        //Initial Spinner
         initView();
-        //Initialize data
+        //Initial data
         initData();
-        //Adding listening Events
+        //Initial listener events
         initListener();
         showIcon();
         showMain();
-
     }
 
     private void showIcon() {
@@ -92,6 +91,7 @@ public class FlipCoinActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 currentItem = i - 1;
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -106,7 +106,8 @@ public class FlipCoinActivity extends AppCompatActivity {
     private void initData() {
         db = Room.databaseBuilder(this, AppDatabase.class, "database-name").build();
         manager = ChildManager.getInstance();
-        childrenList = this.manager.getManager();
+        ArrayList<Child> manager = this.manager.getManager();
+        childrenList.addAll(manager);
         Child child = new Child("nobody", "");
         childrenList.add(child);
     }
@@ -140,34 +141,40 @@ public class FlipCoinActivity extends AppCompatActivity {
                         }else {
                             Glide.with(FlipCoinActivity.this).load(childrenList.get(index).getPhotoUrl()).into(childPhoto);
                         }
+
                     }
+
                 }
                 childCurrent=childrenList.get(index);
-                chooseChildInOrder(index);
+                //chooseChildInOrder(index);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
+
         });
+
     }
 
-    private void chooseChildInOrder(int position) {
-        if (position == 0||childrenList.get(position).getName().equals("nobody")){
-            return;
-        }
-        List<Child> strNew = new ArrayList<>();
-        strNew.add(childrenList.get(position));
-        for (int i = 0; i < childrenList.size(); i++) {
-            if (i!=position){
-                strNew.add(childrenList.get(i));
-            }
-        }
-        childrenList.clear();
-        childrenList.addAll(strNew);
-        arrayAdapter.notifyDataSetChanged();
-        show_name.setSelection(0);
-    }
+//    private void chooseChildInOrder(int position) {
+//        if (position == 0||childrenList.get(position).getName().equals("nobody")){
+//            return;
+//        }
+//        List<Child> strNew = new ArrayList<>();
+//
+//        for (int i = 0; i < childrenList.size(); i++) {
+//            if (i!=position){
+//                strNew.add(childrenList.get(i));
+//            }
+//        }
+//        strNew.add(childrenList.get(position));
+//        childrenList.clear();
+//        childrenList.addAll(strNew);
+//        arrayAdapter.notifyDataSetChanged();
+//        show_name.setSelection(0);
+//    }
 
     private void showAnimotion() {
         result = new Random().nextInt(2);
@@ -199,6 +206,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                 }else {
                     msg = "The result is Tail!";
                 }
+
                 showNormalDialog(msg);
                 if (null!=childCurrent&&!childCurrent.getName().equals("nobody")) {
                     String coinResultChoose = "--";
@@ -207,7 +215,9 @@ public class FlipCoinActivity extends AppCompatActivity {
                     } else if (currentItem == 1) {
                         coinResultChoose = "Tail";
                     }
+                    show_icon.setSelection(0);
                     CoinResult coinresult = new CoinResult(getUUID(), getTime(), coinResultChoose, result == 0 ? "Head" : "Tail", childCurrent.getName(), childCurrent.getPhotoUrl());
+
                     new Thread(() -> db.coinDao().insert(coinresult)).start();
                 }
             }

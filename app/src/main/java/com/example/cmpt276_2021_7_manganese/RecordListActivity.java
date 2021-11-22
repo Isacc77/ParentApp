@@ -23,13 +23,6 @@ import com.example.cmpt276_2021_7_manganese.model.CoinResult;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This class is for History or record of Flip coin activity
- * After each child flip coin, the child name, photo ,choice of coin, result of coin and
- * time will be record in this activity, when child don't choose head or tail, the photo will not be
- * shown in this screen, only show those children who choose head or tail
- * @author  Lingjie Li(Larry)
- */
 public class RecordListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -60,6 +53,7 @@ public class RecordListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         db = Room.databaseBuilder(this,AppDatabase.class,"database-name").build();
         checkAll();
+
     }
 
     private void checkAll(){
@@ -78,6 +72,7 @@ public class RecordListActivity extends AppCompatActivity {
     private void setUpToolBar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
+        assert ab != null;
         ab.setDisplayHomeAsUpEnabled(true);
     }
 }

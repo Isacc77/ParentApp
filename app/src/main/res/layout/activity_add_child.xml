@@ -8,6 +8,17 @@
     tools:context=".AddChildActivity">
 
 
+    <Button
+        android:id="@+id/bt_take_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="276dp"
+        android:text="Take Photo now"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.626"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/tv_photo"
         android:layout_width="wrap_content"
@@ -70,21 +81,33 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ImageView
-        android:id="@+id/iv_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="175dp"
-        tools:layout_editor_absoluteY="172dp"
-        tools:srcCompat="@tools:sample/avatars" />
+
 
     <Button
         android:id="@+id/bt_skip_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sking Choosing Photo"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="318dp" />
+        android:layout_marginBottom="172dp"
+        android:text="Skip Choosing Photo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.63"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_take_photo"
+        app:layout_constraintVertical_bias="0.0" />
 
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_photo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="128dp"
+
+        android:layout_marginBottom="348dp"
+        android:src="@mipmap/default_head"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
