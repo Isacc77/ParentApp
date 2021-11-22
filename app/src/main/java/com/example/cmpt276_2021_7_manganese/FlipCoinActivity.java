@@ -36,6 +36,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+/**
+ * This class is for Flip coin activity
+ * After children data transfer, user can choose child to choose head or tail and flip coin
+ * When choose one child which is not the first child the order of children flip will change,
+ * the chose children will turn  to the top and be the first one to flip coin, otherwise, the order will be
+ * the order user add child.
+ * @author  Lingjie Li(Larry)
+ */
 
 public class FlipCoinActivity extends AppCompatActivity {
 

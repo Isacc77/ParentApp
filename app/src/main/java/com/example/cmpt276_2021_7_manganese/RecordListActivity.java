@@ -22,6 +22,13 @@ import com.example.cmpt276_2021_7_manganese.model.CoinResult;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * This class is for History or record of Flip coin activity
+ * After each child flip coin, the child name, photo ,choice of coin, result of coin and
+ * time will be record in this activity, when child don't choose head or tail, the photo will not be
+ * shown in this screen, only show those children who choose head or tail
+ * @author  Lingjie Li(Larry)
+ */
 
 public class RecordListActivity extends AppCompatActivity {
 
