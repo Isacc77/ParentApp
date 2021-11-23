@@ -26,7 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * There is a button for adding the task, then the tasks are listed with
  * the next child's name. Click on the tasks to edit, delete and go to next
  * child for the task. The tasks are saved between app runs.
- * @author
+ * @author Shuai Li
  */
 public class TasksActivity extends AppCompatActivity {
     private TaskManager taskManager;

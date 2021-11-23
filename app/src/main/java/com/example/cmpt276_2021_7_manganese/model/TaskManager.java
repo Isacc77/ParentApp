@@ -3,7 +3,12 @@ package com.example.cmpt276_2021_7_manganese.model;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Iterator;
-
+/**
+ * This class is for TaskManager
+ * There are some basic operations for controlling taskManager
+ * It uses singleton model
+ * @author Shuai Li for Iteration2
+ */
 public class TaskManager implements Iterable<Task> {
     private ArrayList<Task> tasksList = new ArrayList<>();
     private static TaskManager TaskInstance;

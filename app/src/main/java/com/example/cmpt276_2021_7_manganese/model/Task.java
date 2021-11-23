@@ -1,7 +1,10 @@
 package com.example.cmpt276_2021_7_manganese.model;
 
-import android.widget.Toast;
-
+/**
+ * This class is for Task
+ * There are some basic operations for controlling each task
+ * @author Shuai Li for Iteration2
+ */
 public class Task {
     String taskInfo;
     private final String TASK_CONTENT = "Task:";

@@ -1,5 +1,4 @@
 package com.example.cmpt276_2021_7_manganese;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +20,11 @@ import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.example.cmpt276_2021_7_manganese.model.Task;
 import com.example.cmpt276_2021_7_manganese.model.TaskManager;
-
+/**
+ * This class is for adding Task
+ * after add, the task will show on the TasksActivity
+ * @author  Shuai Li
+ */
 public class AddTasksActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "Task";
     private TaskManager taskManager;
