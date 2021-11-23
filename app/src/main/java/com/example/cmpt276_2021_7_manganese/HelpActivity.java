@@ -9,6 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+/**
+ * This activity is for all the resources. Simply displays all the links to
+ * copyrighted images. Shows information about the group of developers
+ */
 public class HelpActivity extends AppCompatActivity {
 
     @Override
@@ -16,7 +20,6 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
-//        tv_notice.setSelected(true);
         Toolbar toolbar = findViewById(R.id.helpScreenToolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();

@@ -40,7 +40,7 @@ https://www.youtube.com/watch?v=RpnAqZP4PzI
 Code 
 
 Rio Samson:
-Resource used: https://www.youtube.com/watch?v=MDuGwI6P-X8
+Resources used: https://www.youtube.com/watch?v=MDuGwI6P-X8
 more resource taken from: https://codinginflow.com/tutorials/android/countdowntimer/part-2-configuration-changes
 https://www.youtube.com/watch?v=sOwqYNdi_x8
 
