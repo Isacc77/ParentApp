@@ -43,6 +43,10 @@ public class Task {
         return curChildForTask.getName();
     }
 
+    public Child getCurChild() {
+        return curChildForTask;
+    }
+
     private void updateInformation() {
         childManager = ChildManager.getInstance();
         updateIndex();
