@@ -67,5 +67,11 @@
     <string name="take_choose_photo">Take/Choose Photo</string>
     <string name="using_default_photo">Using default Photo</string>
     <string name="photo">Photo:</string>
+    <string name="done_task">Done Task</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">UPDATE</string>
+    <string name="current_turn_of">Current Turn of:</string>
+    <string name="textview">TextView</string>
+    <string name="delete_task">Delete Task</string>
 
 </resources>
