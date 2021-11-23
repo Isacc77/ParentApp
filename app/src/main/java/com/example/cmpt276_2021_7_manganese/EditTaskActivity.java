@@ -53,21 +53,21 @@ public class EditTaskActivity extends AppCompatActivity {
         setupButtons();
         setupTaskNamePanel();
         setupChildNamePanel();
-//        setupPicture();
+        setupPicture();
     }
 
-//    private void setupPicture() {
-//        childPicture = findViewById(R.id.child_picture);
-//        if (TextUtils.isEmpty(taskManager.getTask(taskListIndex).getCurChild().getPhotoUrl())){
-//            Glide.with(EditTaskActivity.this).load(R.mipmap.default_head).into(childPicture);
-//        } else {
-//            if (taskManager.getTask(taskListIndex).getCurChild().getPhotoUrl().equals("photo.jpg")) {
-//                Glide.with(EditTaskActivity.this).load(R.mipmap.default_head).into(childPicture);
-//            } else {
-//                Glide.with(EditTaskActivity.this).load(taskManager.getTask(taskListIndex).getCurChild().getPhotoUrl()).into(childPicture);
-//            }
-//        }
-//    }
+    private void setupPicture() {
+        childPicture = findViewById(R.id.child_picture);
+        if (TextUtils.isEmpty(taskManager.getTask(taskListIndex).getCurChild().getPhotoUrl())){
+            Glide.with(EditTaskActivity.this).load(R.mipmap.default_head).into(childPicture);
+        } else {
+            if (taskManager.getTask(taskListIndex).getCurChild().getPhotoUrl().equals("photo.jpg")) {
+                Glide.with(EditTaskActivity.this).load(R.mipmap.default_head).into(childPicture);
+            } else {
+                Glide.with(EditTaskActivity.this).load(taskManager.getTask(taskListIndex).getCurChild().getPhotoUrl()).into(childPicture);
+            }
+        }
+    }
 
     private void setupChildNamePanel() {
         nameTitle = findViewById(R.id.name_title);
