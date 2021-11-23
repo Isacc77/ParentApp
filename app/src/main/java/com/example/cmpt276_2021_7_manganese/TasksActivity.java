@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.example.cmpt276_2021_7_manganese.model.Task;
@@ -23,8 +22,10 @@ import com.example.cmpt276_2021_7_manganese.model.TaskManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
- * This Tasks activity is about whose turn section
- *
+ * This Tasks activity is for showing all the tasks that the user wants to add.
+ * There is a button for adding the task, then the tasks are listed with
+ * the next child's name. Click on the tasks to edit, delete and go to next
+ * child for the task. The tasks are saved between app runs.
  * @author
  */
 public class TasksActivity extends AppCompatActivity {
@@ -84,7 +85,6 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     private String[] taskInfo() {
-//        if (taskManager.getSize() > 0 && childManager.getSize() > 0) {
         String[] Str = new String[taskManager.getSize()];
         for (int i = 0; i < taskManager.getSize(); i++) {
             Task task = taskManager.getTask(i);
@@ -96,8 +96,6 @@ public class TasksActivity extends AppCompatActivity {
             Str[i] = builder.toString();
         }
         return Str;
-//        }
-//        return taskManager.StringTaskData();
     }
 
     private void emptyInfo() {
@@ -122,13 +120,8 @@ public class TasksActivity extends AppCompatActivity {
     private void setupFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.fab_addTask);
         fab.setOnClickListener(view -> {
-//            if (childManager.getSize() != 0) {
             Intent addTask = AddTasksActivity.makeLaunchIntent(TasksActivity.this);
             startActivity(addTask);
-//            } else {
-//                Toast.makeText(this, "Error: No Children added to do task.",
-//                        Toast.LENGTH_LONG).show();
-//            }
         });
     }
 
