@@ -106,7 +106,6 @@ public class AddChildActivity extends AppCompatActivity {
         inputName = findViewById(R.id.et_name);
         inputName.addTextChangedListener(tw);
 
-
         Photo = findViewById(R.id.iv_photo);
 
         TakePhoto = findViewById(R.id.bt_take_photo);
@@ -233,6 +232,7 @@ public class AddChildActivity extends AppCompatActivity {
             case R.id.action_delete:
                 childManager.removeChild(indexForSwitchActivity);
                 finish();
+
             default:
                 return super.onOptionsItemSelected(item);
         }

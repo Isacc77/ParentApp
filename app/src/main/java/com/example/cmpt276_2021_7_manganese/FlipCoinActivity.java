@@ -77,6 +77,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     private Child childCurrent=null;
     private PopupWindow mPopupWindow;
     private MyListAdapter  myListAdapter;
+    private boolean isItemClick;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -101,6 +102,8 @@ public class FlipCoinActivity extends AppCompatActivity {
     private void setPop() {
         childCurrent=childrenList.get(0);
         show_name.setText(childCurrent.getName());
+        Glide.with(this).load(childCurrent.getPhotoUrl()).placeholder(R.mipmap.default_head)
+                .error(R.mipmap.default_head).into(childPhoto);
         View popupView = getLayoutInflater().inflate(R.layout.layout_popupwindow, null);
 
         mPopupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -111,6 +114,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         myListAdapter=new MyListAdapter(this,childrenList);
         mListView.setAdapter(myListAdapter);
         mListView.setOnItemClickListener((adapterView, view, index, l) -> {
+            isItemClick=true;
             if (childrenList.get(index).getName().equals("nobody")){
                 Glide.with(FlipCoinActivity.this).load(R.mipmap.default_head).into(childPhoto);
             }else {
@@ -128,8 +132,12 @@ public class FlipCoinActivity extends AppCompatActivity {
             }
             childCurrent=childrenList.get(index);
             show_name.setText(childCurrent.getName());
+
+
+
             chooseChildInOrder(index);
         });
+
 
     }
 
@@ -184,7 +192,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
 
     private void chooseChildInOrder(int position) {
-        if (position == 0||childrenList.get(position).getName().equals("nobody")){
+        if (childrenList.get(position).getName().equals("nobody")){
             return;
         }
         List<Child> strNew = new ArrayList<>();
@@ -195,8 +203,10 @@ public class FlipCoinActivity extends AppCompatActivity {
             }
         }
         strNew.add(childrenList.get(position));
+
         Child child = new Child("nobody", "");
         strNew.add(child);
+
         childrenList.clear();
         childrenList.addAll(strNew);
         myListAdapter.setListItems(childrenList);
@@ -220,6 +230,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         mCoinImageView.setCoinAnimationListener(new CoinAnimation.CoinAnimationListener() {
             @Override
             public void onDrawableChange(int result, CoinAnimation animation) {
+
             }
 
             @Override
@@ -244,6 +255,30 @@ public class FlipCoinActivity extends AppCompatActivity {
                         coinResultChoose = "Tail";
                     }
                     show_icon.setSelection(0);
+                    if (isItemClick){
+                        childCurrent=childrenList.get(0);
+                        chooseChildInOrder(0);
+                    }else {
+                        if (childrenList.size()>1){
+                            if (childrenList.get(1).getName().equals("nobody")){
+                                childCurrent=childrenList.get(1);
+                            }else {
+                                childCurrent=childrenList.get(1);
+                                chooseChildInOrder(0);
+                            }
+                        }else {
+                            if (childrenList.size()==1){
+                                chooseChildInOrder(0);
+                            }
+                        }
+                    }
+
+                    show_name.setText(childCurrent.getName());
+                    Glide.with(FlipCoinActivity.this).load(childCurrent.getPhotoUrl()).placeholder(R.mipmap.default_head)
+                            .error(R.mipmap.default_head).into(childPhoto);
+
+
+
                     CoinResult coinresult = new CoinResult(getUUID(), getTime(), coinResultChoose, result == 0 ? "Head" : "Tail", childCurrent.getName(), childCurrent.getPhotoUrl());
 
                     new Thread(() -> db.coinDao().insert(coinresult)).start();
