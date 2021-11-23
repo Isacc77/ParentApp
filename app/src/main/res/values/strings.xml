@@ -63,5 +63,6 @@
     <string name="user_choice">UserChoice</string>
     <string name="flip_result">Flip result</string>
     <string name="time">Time</string>
+    <string name="action_bar_back">action_bar_back</string>
 
 </resources>
