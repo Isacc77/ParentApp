@@ -10,13 +10,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.example.cmpt276_2021_7_manganese.model.TaskManager;
+
+import java.util.ArrayList;
 
 public class EditTaskActivity extends AppCompatActivity {
     private TaskManager taskManager;
@@ -27,6 +33,8 @@ public class EditTaskActivity extends AppCompatActivity {
     private Button saveBtn;
     private TextView nameTitle;
     private TextView childName;
+    private ChildManager childManager;
+    private ImageView childPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +42,27 @@ public class EditTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_task);
 
         taskManager = TaskManager.getInstance();
+        childManager = ChildManager.getInstance();
         taskListIndex = getIntent().getIntExtra(EXTRA_INTENT_MESSAGE, defaultIndex);
         setupToolBar();
         setupButtons();
         setupTaskNamePanel();
         setupChildNamePanel();
+//        setupPicture();
     }
+
+//    private void setupPicture() {
+//        childPicture = findViewById(R.id.child_picture);
+//        if (TextUtils.isEmpty(taskManager.getTask(taskListIndex).getCurChild().getPhotoUrl())){
+//            Glide.with(EditTaskActivity.this).load(R.mipmap.default_head).into(childPicture);
+//        } else {
+//            if (taskManager.getTask(taskListIndex).getCurChild().getPhotoUrl().equals("photo.jpg")) {
+//                Glide.with(EditTaskActivity.this).load(R.mipmap.default_head).into(childPicture);
+//            } else {
+//                Glide.with(EditTaskActivity.this).load(taskManager.getTask(taskListIndex).getCurChild().getPhotoUrl()).into(childPicture);
+//            }
+//        }
+//    }
 
     private void setupChildNamePanel() {
         nameTitle = findViewById(R.id.name_title);
