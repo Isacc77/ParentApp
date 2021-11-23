@@ -39,13 +39,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+
 /**
  * This class is for Flip coin activity
  * After children data transfer, user can choose child to choose head or tail and flip coin
  * When choose one child which is not the first child the order of children flip will change,
  * the chose children will turn  to the top and be the first one to flip coin, otherwise, the order will be
  * the order user add child.
- * @author  Lingjie Li(Larry)
+ *
+ * @author Lingjie Li(Larry)
  */
 
 public class FlipCoinActivity extends AppCompatActivity {
@@ -71,9 +73,9 @@ public class FlipCoinActivity extends AppCompatActivity {
     private ArrayList<Child> childrenList = new ArrayList<>();
     private ImageView childPhoto;
 
-    private Child childCurrent=null;
+    private Child childCurrent = null;
     private PopupWindow mPopupWindow;
-    private MyListAdapter  myListAdapter;
+    private MyListAdapter myListAdapter;
     private boolean isItemClick;
 
     @Override
@@ -96,7 +98,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     private void setPop() {
-        childCurrent=childrenList.get(0);
+        childCurrent = childrenList.get(0);
         show_name.setText(childCurrent.getName());
         Glide.with(this).load(childCurrent.getPhotoUrl()).placeholder(R.mipmap.default_head)
                 .error(R.mipmap.default_head).into(childPhoto);
@@ -106,27 +108,27 @@ public class FlipCoinActivity extends AppCompatActivity {
         mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
 
-        ListView mListView=popupView.findViewById(R.id.rv_content);
-        myListAdapter=new MyListAdapter(this,childrenList);
+        ListView mListView = popupView.findViewById(R.id.rv_content);
+        myListAdapter = new MyListAdapter(this, childrenList);
         mListView.setAdapter(myListAdapter);
         mListView.setOnItemClickListener((adapterView, view, index, l) -> {
-            isItemClick=true;
-            if (childrenList.get(index).getName().equals("nobody")){
+            isItemClick = true;
+            if (childrenList.get(index).getName().equals("nobody")) {
                 Glide.with(FlipCoinActivity.this).load(R.mipmap.default_head).into(childPhoto);
-            }else {
-                if (TextUtils.isEmpty(childrenList.get(index).getPhotoUrl())){
+            } else {
+                if (TextUtils.isEmpty(childrenList.get(index).getPhotoUrl())) {
                     Glide.with(FlipCoinActivity.this).load(R.mipmap.default_head).into(childPhoto);
-                }else {
-                    if (childrenList.get(index).getPhotoUrl().equals("photo.jpg")){
+                } else {
+                    if (childrenList.get(index).getPhotoUrl().equals("photo.jpg")) {
                         Glide.with(FlipCoinActivity.this).load(R.mipmap.default_head).into(childPhoto);
-                    }else {
+                    } else {
                         Glide.with(FlipCoinActivity.this).load(childrenList.get(index).getPhotoUrl()).into(childPhoto);
                     }
 
                 }
 
             }
-            childCurrent=childrenList.get(index);
+            childCurrent = childrenList.get(index);
             show_name.setText(childCurrent.getName());
 
             chooseChildInOrder(index);
@@ -157,7 +159,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         findViewById(R.id.ll_name).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (null!=mPopupWindow){
+                if (null != mPopupWindow) {
                     mPopupWindow.showAsDropDown(findViewById(R.id.show_name));
                 }
             }
@@ -179,18 +181,18 @@ public class FlipCoinActivity extends AppCompatActivity {
         show_name = findViewById(R.id.show_name);
         show_icon = findViewById(R.id.show_coin);
         toolbar = findViewById(R.id.tb_flip_coin);
-        childPhoto=findViewById(R.id.child_photo);
+        childPhoto = findViewById(R.id.child_photo);
         setUpToolBar(toolbar);
     }
 
     private void chooseChildInOrder(int position) {
-        if (childrenList.get(position).getName().equals("nobody")){
+        if (childrenList.get(position).getName().equals("nobody")) {
             return;
         }
         List<Child> strNew = new ArrayList<>();
 
         for (int i = 0; i < childrenList.size(); i++) {
-            if (i!=position&&!childrenList.get(i).getName().equals("nobody")){
+            if (i != position && !childrenList.get(i).getName().equals("nobody")) {
                 strNew.add(childrenList.get(i));
             }
         }
@@ -231,14 +233,14 @@ public class FlipCoinActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 String msg;
-                if (result == 0){
+                if (result == 0) {
                     msg = "Heads!";
-                }else {
+                } else {
                     msg = "Tails!";
                 }
 
                 showNormalDialog(msg);
-                if (null!=childCurrent&&!childCurrent.getName().equals("nobody")) {
+                if (null != childCurrent && !childCurrent.getName().equals("nobody")) {
                     String coinResultChoose = "--";
                     if (currentItem == 0) {
                         coinResultChoose = "Head";
@@ -246,19 +248,19 @@ public class FlipCoinActivity extends AppCompatActivity {
                         coinResultChoose = "Tail";
                     }
                     show_icon.setSelection(0);
-                    if (isItemClick){
-                        childCurrent=childrenList.get(0);
+                    if (isItemClick) {
+                        childCurrent = childrenList.get(0);
                         chooseChildInOrder(0);
-                    }else {
-                        if (childrenList.size()>1){
-                            if (childrenList.get(1).getName().equals("nobody")){
-                                childCurrent=childrenList.get(1);
-                            }else {
-                                childCurrent=childrenList.get(1);
+                    } else {
+                        if (childrenList.size() > 1) {
+                            if (childrenList.get(1).getName().equals("nobody")) {
+                                childCurrent = childrenList.get(1);
+                            } else {
+                                childCurrent = childrenList.get(1);
                                 chooseChildInOrder(0);
                             }
-                        }else {
-                            if (childrenList.size()==1){
+                        } else {
+                            if (childrenList.size() == 1) {
                                 chooseChildInOrder(0);
                             }
                         }

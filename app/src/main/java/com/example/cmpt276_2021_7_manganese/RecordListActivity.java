@@ -22,12 +22,14 @@ import com.example.cmpt276_2021_7_manganese.model.CoinResult;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * This class is for History or record of Flip coin activity
  * After each child flip coin, the child name, photo ,choice of coin, result of coin and
  * time will be record in this activity, when child don't choose head or tail, the photo will not be
  * shown in this screen, only show those children who choose head or tail
- * @author  Lingjie Li(Larry)
+ *
+ * @author Lingjie Li(Larry)
  */
 
 public class RecordListActivity extends AppCompatActivity {
@@ -38,7 +40,7 @@ public class RecordListActivity extends AppCompatActivity {
     private AppDatabase db;
     private Toolbar toolbar;
 
-    private Handler handler = new Handler(Looper.getMainLooper()){
+    private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
@@ -55,17 +57,17 @@ public class RecordListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycle);
         toolbar = findViewById(R.id.tb_history);
         setUpToolBar(toolbar);
-        adapter = new ChoiceAdapter(this,coinResults);
+        adapter = new ChoiceAdapter(this, coinResults);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        db = Room.databaseBuilder(this,AppDatabase.class,"database-name").build();
+        db = Room.databaseBuilder(this, AppDatabase.class, "database-name").build();
         checkAll();
 
     }
 
-    private void checkAll(){
+    private void checkAll() {
         new Thread(() -> {
-            List<CoinResult> datas =  db.coinDao().getAll();
+            List<CoinResult> datas = db.coinDao().getAll();
             coinResults.clear();
             coinResults.addAll(datas);
             handler.sendEmptyMessage(0);
