@@ -2,18 +2,23 @@ package com.example.cmpt276_2021_7_manganese;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,6 +28,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
@@ -55,7 +61,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private MediaPlayer player;
     private ChildManager manager;
-    private Spinner show_name;
+    private TextView show_name;
     private Spinner show_icon;
 
     private Toolbar toolbar;
@@ -64,11 +70,13 @@ public class FlipCoinActivity extends AppCompatActivity {
     private static final String[] coinChooseList = {"——", "Head", "Tail"};
 
     private ArrayAdapter<String> coin_adapter;
-    private ArrayAdapter<Child> arrayAdapter;
+
     private ArrayList<Child> childrenList = new ArrayList<>();
     private ImageView childPhoto;
 
     private Child childCurrent=null;
+    private PopupWindow mPopupWindow;
+    private MyListAdapter  myListAdapter;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -87,7 +95,42 @@ public class FlipCoinActivity extends AppCompatActivity {
         //Initial listener events
         initListener();
         showIcon();
-        showMain();
+        setPop();
+    }
+
+    private void setPop() {
+        childCurrent=childrenList.get(0);
+        show_name.setText(childCurrent.getName());
+        View popupView = getLayoutInflater().inflate(R.layout.layout_popupwindow, null);
+
+        mPopupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        mPopupWindow.setTouchable(true);
+        mPopupWindow.setOutsideTouchable(true);
+
+        ListView mListView=popupView.findViewById(R.id.rv_content);
+        myListAdapter=new MyListAdapter(this,childrenList);
+        mListView.setAdapter(myListAdapter);
+        mListView.setOnItemClickListener((adapterView, view, index, l) -> {
+            if (childrenList.get(index).getName().equals("nobody")){
+                Glide.with(FlipCoinActivity.this).load(R.mipmap.default_head).into(childPhoto);
+            }else {
+                if (TextUtils.isEmpty(childrenList.get(index).getPhotoUrl())){
+                    Glide.with(FlipCoinActivity.this).load(R.mipmap.default_head).into(childPhoto);
+                }else {
+                    if (childrenList.get(index).getPhotoUrl().equals("photo.jpg")){
+                        Glide.with(FlipCoinActivity.this).load(R.mipmap.default_head).into(childPhoto);
+                    }else {
+                        Glide.with(FlipCoinActivity.this).load(childrenList.get(index).getPhotoUrl()).into(childPhoto);
+                    }
+
+                }
+
+            }
+            childCurrent=childrenList.get(index);
+            show_name.setText(childCurrent.getName());
+            chooseChildInOrder(index);
+        });
+
     }
 
     private void showIcon() {
@@ -109,6 +152,14 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void initListener() {
         start.setOnClickListener(view -> showAnimotion());
+        findViewById(R.id.ll_name).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null!=mPopupWindow){
+                    mPopupWindow.showAsDropDown(findViewById(R.id.show_name));
+                }
+            }
+        });
     }
 
     private void initData() {
@@ -130,59 +181,28 @@ public class FlipCoinActivity extends AppCompatActivity {
         setUpToolBar(toolbar);
     }
 
-    private void showMain() {
-        childCurrent=childrenList.get(0);
-        arrayAdapter = new ArrayAdapter<Child>(this, android.R.layout.simple_spinner_item, childrenList);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        show_name.setAdapter(arrayAdapter);
-        show_name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                if (childrenList.get(index).getName().equals("nobody")){
-                    Glide.with(FlipCoinActivity.this).load(R.mipmap.default_head).into(childPhoto);
-                }else {
-                    if (TextUtils.isEmpty(childrenList.get(index).getPhotoUrl())){
-                        Glide.with(FlipCoinActivity.this).load(R.mipmap.default_head).into(childPhoto);
-                    }else {
-                        if (childrenList.get(index).getPhotoUrl().equals("photo.jpg")){
-                            Glide.with(FlipCoinActivity.this).load(R.mipmap.default_head).into(childPhoto);
-                        }else {
-                            Glide.with(FlipCoinActivity.this).load(childrenList.get(index).getPhotoUrl()).into(childPhoto);
-                        }
 
-                    }
 
-                }
-                childCurrent=childrenList.get(index);
-                //chooseChildInOrder(index);
+    private void chooseChildInOrder(int position) {
+        if (position == 0||childrenList.get(position).getName().equals("nobody")){
+            return;
+        }
+        List<Child> strNew = new ArrayList<>();
+
+        for (int i = 0; i < childrenList.size(); i++) {
+            if (i!=position&&!childrenList.get(i).getName().equals("nobody")){
+                strNew.add(childrenList.get(i));
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-        });
+        }
+        strNew.add(childrenList.get(position));
+        Child child = new Child("nobody", "");
+        strNew.add(child);
+        childrenList.clear();
+        childrenList.addAll(strNew);
+        myListAdapter.setListItems(childrenList);
+        myListAdapter.notifyDataSetChanged();
 
     }
-
-//    private void chooseChildInOrder(int position) {
-//        if (position == 0||childrenList.get(position).getName().equals("nobody")){
-//            return;
-//        }
-//        List<Child> strNew = new ArrayList<>();
-//
-//        for (int i = 0; i < childrenList.size(); i++) {
-//            if (i!=position){
-//                strNew.add(childrenList.get(i));
-//            }
-//        }
-//        strNew.add(childrenList.get(position));
-//        childrenList.clear();
-//        childrenList.addAll(strNew);
-//        arrayAdapter.notifyDataSetChanged();
-//        show_name.setSelection(0);
-//    }
 
     private void showAnimotion() {
         result = new Random().nextInt(2);

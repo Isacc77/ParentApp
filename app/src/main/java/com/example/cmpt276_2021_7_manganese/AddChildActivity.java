@@ -14,6 +14,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +40,7 @@ import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -81,6 +83,8 @@ public class AddChildActivity extends AppCompatActivity {
             }
         }
     };
+    private Child child;
+    private int pos=-1;
 
 
     @Override
@@ -110,6 +114,14 @@ public class AddChildActivity extends AppCompatActivity {
 
         SkipPhoto = findViewById(R.id.bt_skip_photo);
         SkipAccess();
+        child = (Child) getIntent().getSerializableExtra("child");
+        if (null!=child){
+            inputName.setText(child.getName());
+            Glide.with(this).load(child.getPhotoUrl()).placeholder(R.mipmap.default_head)
+                    .error(R.mipmap.default_head).into(Photo);
+            pos=getIntent().getIntExtra("Child",-1);
+
+        }
     }
 
     private void TakePhotoAccess() {
@@ -125,18 +137,18 @@ public class AddChildActivity extends AppCompatActivity {
                             PictureSelector.create(AddChildActivity.this)
                                     .openGallery(PictureMimeType.ofImage())
                                     .isCamera(true)
-                                    .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
-                                    .isPreviewImage(true)// 是否可预览图片
-                                    .isCompress(true)// 是否压缩
+                                    .isZoomAnim(true)// Image list click zoom effect defaults to true
+                                    .isPreviewImage(true)// Whether images can be previewed
+                                    .isCompress(true)// Whether the compression
                                     .isEnableCrop(true)
                                     .withAspectRatio(1, 1)
                                     .setLanguage(2)
-                                    .compressQuality(50)// 图片压缩后输出质量 0~ 100
-                                    .synOrAsy(false)//同步true或异步false 压缩 默认同步
+                                    .compressQuality(50)// The output quality of the compressed picture is 0~ 100
+                                    .synOrAsy(false)//Synchronous true or asynchronous false Compression default synchronization
                                     .maxSelectNum(1)
-                                    .showCropFrame(false)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false
-                                    .showCropGrid(false)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false
-                                    .imageEngine(GlideEngine.createGlideEngine()) // 请参考Demo GlideEngine.java
+                                    .showCropFrame(false)// Whether to display clipping rectangle border Circle clipping You are advised to set this parameter to false
+                                    .showCropGrid(false)// Whether to display clipping rectangular mesh circle clipping Set to false is recommended
+                                    .imageEngine(GlideEngine.createGlideEngine()) // See Demo glideengine.java
                                     .forResult(PictureConfig.CHOOSE_REQUEST);
                         })
                         .onDenied(permissions -> {
@@ -156,7 +168,7 @@ public class AddChildActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
-                    // 结果回调
+                    // result callback
                     List<LocalMedia> result = PictureSelector.obtainMultipleResult(data);
                     if (null != result && result.size() > 0) {
                         Glide.with(AddChildActivity.this).load(result.get(0).getCompressPath()).into(Photo);
@@ -248,6 +260,9 @@ public class AddChildActivity extends AppCompatActivity {
     private void editChildInManager() {
         ChildManager manager = ChildManager.getInstance();
         manager.getByIndex(indexForSwitchActivity).setName(name);
+        if (!TextUtils.isEmpty(PhotoUrl)){
+            manager.getByIndex(indexForSwitchActivity).setPhotoUrl(PhotoUrl);
+        }
     }
 
     // a static function to set indexForSwitchActivity in onDestroy()

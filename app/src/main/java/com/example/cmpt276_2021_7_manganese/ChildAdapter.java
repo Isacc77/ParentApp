@@ -1,6 +1,7 @@
 package com.example.cmpt276_2021_7_manganese;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -44,9 +45,19 @@ public class ChildAdapter extends BaseAdapter {
         TextView textView=view.findViewById(R.id.tv_name);
         ImageView img=view.findViewById(R.id.user_header);
         textView.setText(child.getName());
-        Glide.with(this.context).load(child.getPhotoUrl()).placeholder(R.mipmap.default_head)
 
+        Glide.with(this.context).load(child.getPhotoUrl()).placeholder(R.mipmap.default_head)
                 .error(R.mipmap.default_head).into(img);
+        view.findViewById(R.id.ll_item).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context,AddChildActivity.class);
+                intent.putExtra("child",child);
+                intent.putExtra("Child",position);
+                context.startActivity(intent);
+
+            }
+        });
 
         return view;
     }

@@ -1,17 +1,23 @@
 package com.example.cmpt276_2021_7_manganese.model;
 
+import java.io.Serializable;
+
 /**
  * This class is for Child data
  * Child's name
  * @author  Shuai Li
  */
 
-public class Child {
+public class Child  implements Serializable {
     String name;
     String PhotoUrl;
     public Child(String name, String PhotoUrl) {
         this.name = name;
         this.PhotoUrl = PhotoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        PhotoUrl = photoUrl;
     }
 
 

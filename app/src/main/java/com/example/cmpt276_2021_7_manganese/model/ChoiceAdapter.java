@@ -39,7 +39,8 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.CViewHolee
         holder.choice.setText(result.currentChose);
         holder.user.setText(result.user);
         if (!coinResults.get(position).currentChose.equals("--")){
-            Glide.with(context).load(coinResults.get(position).photo).into( holder.user_header);
+            Glide.with(this.context).load(coinResults.get(position).photo).placeholder(R.mipmap.default_head)
+                    .error(R.mipmap.default_head).into(holder.user_header);
         }
     }
 

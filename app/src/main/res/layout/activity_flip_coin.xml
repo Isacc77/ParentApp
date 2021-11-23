@@ -38,15 +38,26 @@
             android:gravity="center"
             android:text="Please chose a child to flip coin"
             android:textSize="20dp" />
+        <LinearLayout
+            android:id="@+id/ll_name"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
 
-        <Spinner
-            android:id="@+id/show_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/show_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp" />
+            <ImageView
+                android:layout_width="20dp"
+                android:src="@mipmap/ic_down"
+                android:layout_marginLeft="@dimen/permission_dp_10"
+                android:layout_height="20dp"></ImageView>
 
-
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="96dp"
