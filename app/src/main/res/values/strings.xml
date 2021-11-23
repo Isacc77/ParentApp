@@ -64,5 +64,8 @@
     <string name="flip_result">Flip result</string>
     <string name="time">Time</string>
     <string name="action_bar_back">action_bar_back</string>
+    <string name="take_choose_photo">Take/Choose Photo</string>
+    <string name="using_default_photo">Using default Photo</string>
+    <string name="photo">Photo:</string>
 
 </resources>
