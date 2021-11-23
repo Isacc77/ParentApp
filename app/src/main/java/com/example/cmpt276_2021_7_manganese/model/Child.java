@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * This class is for Child data
- * Child's name
+ * Child's name and photo
  * @author  Shuai Li
  */
 

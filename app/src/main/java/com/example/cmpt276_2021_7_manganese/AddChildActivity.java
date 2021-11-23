@@ -46,7 +46,6 @@ import java.util.List;
 /**
  * This class is for add child
  * user can use this class to add child, by clicking floating button
- *
  * @author Shuai Li & Yam
  * @author Yam for Iteration2
  */
