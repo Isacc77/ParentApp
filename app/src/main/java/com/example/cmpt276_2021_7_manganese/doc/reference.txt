@@ -45,6 +45,26 @@ more resource taken from: https://codinginflow.com/tutorials/android/countdownti
 https://www.youtube.com/watch?v=sOwqYNdi_x8
 
 
+Iteration two
+
+Image
+
+bg_task
+
+https://cn.depositphotos.com/stock-photos/jedi-star-wars.html
+
+
+bg_add_task
+https://mobwallpapershd.com/baby-yoda-wallpapers/
+
+bg_flip_coin
+https://wallsfly.com/wp-content/uploads/2021/04/Baby-Yoda-Wallpaper.jpg
+
+bg_history_for_coin
+https://wallsfly.com/wp-content/uploads/2021/04/Baby-Yoda-Background.jpg
+
+default_head
+http://616pic.com/sucai/14ni576jz.html
 
 
 
