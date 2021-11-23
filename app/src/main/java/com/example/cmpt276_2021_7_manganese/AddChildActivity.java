@@ -43,7 +43,6 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
-
 /**
  * This class is for add child
  * user can use this class to add child, by clicking floating button
@@ -57,17 +56,12 @@ public class AddChildActivity extends AppCompatActivity {
     private boolean isSaved = false;
     private EditText inputName;
     private String name;
-
     private ChildManager childManager;
-
-
     private static final String DefaultPhoto = "photo.jpg";
     private String PhotoUrl;
-
     private ImageView Photo = null;
     private Button TakePhoto;
     private Button SkipPhoto;
-
 
     //whether user change their photo done.
     private final Handler handler = new Handler(Looper.getMainLooper()) {
@@ -84,42 +78,30 @@ public class AddChildActivity extends AppCompatActivity {
         }
     };
     private Child child;
-    private int pos=-1;
-
+    private int pos = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
-
         Toolbar toolbar = findViewById(R.id.add_child_toolbar);
         setSupportActionBar(toolbar);
-
         childManager = ChildManager.getInstance();
-
         indexForSwitchActivity = getIntent().getIntExtra(EXTRA_MESSAGE, -1);
-
-        // set up for UP bottom
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
 
         inputName = findViewById(R.id.et_name);
         inputName.addTextChangedListener(tw);
-
         Photo = findViewById(R.id.iv_photo);
-
         TakePhoto = findViewById(R.id.bt_take_photo);
         TakePhotoAccess();
-
         SkipPhoto = findViewById(R.id.bt_skip_photo);
         SkipAccess();
         child = (Child) getIntent().getSerializableExtra("child");
-        if (null!=child){
+        if (null != child) {
             inputName.setText(child.getName());
             Glide.with(this).load(child.getPhotoUrl()).placeholder(R.mipmap.default_head)
                     .error(R.mipmap.default_head).into(Photo);
-            pos=getIntent().getIntExtra("Child",-1);
-
+            pos = getIntent().getIntExtra("Child", -1);
         }
     }
 
@@ -154,11 +136,8 @@ public class AddChildActivity extends AppCompatActivity {
                             // Storage permission are not allowed.
                         })
                         .start();
-
             }
         });
-
-
     }
 
     @Override
@@ -171,15 +150,13 @@ public class AddChildActivity extends AppCompatActivity {
                     List<LocalMedia> result = PictureSelector.obtainMultipleResult(data);
                     if (null != result && result.size() > 0) {
                         Glide.with(AddChildActivity.this).load(result.get(0).getCompressPath()).into(Photo);
-                        PhotoUrl=result.get(0).getCompressPath();
+                        PhotoUrl = result.get(0).getCompressPath();
                     }
                     break;
                 default:
                     break;
             }
         }
-
-
     }
 
     public void SkipAccess() {
@@ -191,7 +168,6 @@ public class AddChildActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private TextWatcher tw = new TextWatcher() {
         @Override
@@ -232,7 +208,8 @@ public class AddChildActivity extends AppCompatActivity {
             case R.id.action_delete:
                 childManager.removeChild(indexForSwitchActivity);
                 finish();
-
+            case R.id.action_back:
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -253,14 +230,14 @@ public class AddChildActivity extends AppCompatActivity {
     // add a child to the exist manager object, when indexForSwitchActivity < 0
     private void addChildToManager() {
         ChildManager manager = ChildManager.getInstance();
-        manager.add(new Child(name,PhotoUrl));
+        manager.add(new Child(name, PhotoUrl));
     }
 
     // edit a child, when indexForSwitchActivity >= 0
     private void editChildInManager() {
         ChildManager manager = ChildManager.getInstance();
         manager.getByIndex(indexForSwitchActivity).setName(name);
-        if (!TextUtils.isEmpty(PhotoUrl)){
+        if (!TextUtils.isEmpty(PhotoUrl)) {
             manager.getByIndex(indexForSwitchActivity).setPhotoUrl(PhotoUrl);
         }
     }
@@ -311,6 +288,5 @@ public class AddChildActivity extends AppCompatActivity {
         editor.putString("save", jsonString);
         editor.apply();
     }
-
 
 }
