@@ -7,24 +7,27 @@
     android:background="@drawable/baby_yoda"
     tools:context=".AddChildActivity">
 
-
     <Button
         android:id="@+id/bt_take_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="276dp"
-        android:text="Take Photo now"
+        android:background="@drawable/task_list_boundary"
+        android:padding="5sp"
+        android:text="@string/take_choose_photo"
+        android:textAllCaps="false"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.626"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/bt_skip_photo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_photo"
+        app:layout_constraintVertical_bias="0.288" />
 
     <TextView
         android:id="@+id/tv_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Photo:"
+        android:text="@string/photo"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="italic"
@@ -81,28 +84,26 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-
     <Button
         android:id="@+id/bt_skip_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="172dp"
-        android:text="Skip Choosing Photo"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/using_default_photo"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_take_photo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.63"
+        app:layout_constraintHorizontal_bias="0.869"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_take_photo"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintTop_toTopOf="@+id/bt_take_photo"
+        android:background="@drawable/task_list_boundary"
+        android:textAllCaps="false"
+        android:textSize="15sp"
+        android:padding="5sp"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_photo"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginEnd="128dp"
-
         android:layout_marginBottom="348dp"
         android:src="@mipmap/default_head"
         app:civ_border_color="#FF000000"

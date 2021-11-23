@@ -55,10 +55,8 @@ public class ChildAdapter extends BaseAdapter {
                 intent.putExtra("child",child);
                 intent.putExtra("Child",position);
                 context.startActivity(intent);
-
             }
         });
-
         return view;
     }
 }
