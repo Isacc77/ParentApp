@@ -95,7 +95,7 @@ public class AddChildActivity extends AppCompatActivity {
         TakePhoto = findViewById(R.id.bt_take_photo);
         TakePhotoAccess();
         SkipPhoto = findViewById(R.id.bt_skip_photo);
-        SkipAccess();
+//        SkipAccess();
         child = (Child) getIntent().getSerializableExtra("child");
         if (null != child) {
             inputName.setText(child.getName());
