@@ -6,12 +6,11 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
 public class CoinAnimation extends Animation {
-    private int mCircleCount;
-    private int mXAxisDirection;
-    private int mYAxisDirection;
-    private int mZAxisDirection;
-    private int mResult;
-    private int mTotalAngle;
+    private  int mResult;
+    private final int mXAxisDirection;
+    private final int mYAxisDirection;
+    private final int mZAxisDirection;
+    private final int mTotalAngle;
     private int mCurrentResult = -1;
     private Camera mCamera;
     private int mWidth;
@@ -28,12 +27,11 @@ public class CoinAnimation extends Animation {
     }
 
     public CoinAnimation(int circleCount, int xAxisDirection, int yAxisDirection, int zAxisDirection, int result) {
-        this.mCircleCount = circleCount;
         this.mXAxisDirection = xAxisDirection;
         this.mYAxisDirection = yAxisDirection;
         this.mZAxisDirection = zAxisDirection;
         this.mResult = result;
-        mTotalAngle = 360 * mCircleCount;
+        mTotalAngle = 360 * circleCount;
         mCamera = new Camera();
     }
 
@@ -69,15 +67,12 @@ public class CoinAnimation extends Animation {
                 }
             }
         }
-
         Matrix matrix = t.getMatrix();
         mCamera.save();
         mCamera.rotate(mXAxisDirection * degreeInCircle, mYAxisDirection * degreeInCircle, mZAxisDirection * degreeInCircle);
         mCamera.getMatrix(matrix);
         mCamera.restore();
-
         matrix.preTranslate(-(mWidth >> 1), -(mHeight >> 1));
         matrix.postTranslate(mWidth >> 1, mHeight >> 1);
-
     }
 }

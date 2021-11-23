@@ -4,6 +4,9 @@
     package="com.example.cmpt276_2021_7_manganese">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
 
     <application
         android:name=".TimeoutNotification"
@@ -13,6 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CMPT276_2021_7_manganese">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.cmpt276_2021_7_manganese.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         <activity
             android:name=".EditTaskActivity"
             android:label="@string/task"
@@ -61,8 +73,13 @@
         <activity
             android:name=".FlipCoinActivity"
             android:exported="true"
-            android:label="@string/flip_coin" />
-        <activity android:name=".RecordListActivity" />
+            android:label="@string/flip_coin"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".RecordListActivity"
+            android:exported="true"
+            android:label="@string/title_flip_coin_history"
+            android:parentActivityName=".FlipCoinActivity"/>
 
         <service android:name=".TimerService" />
     </application>

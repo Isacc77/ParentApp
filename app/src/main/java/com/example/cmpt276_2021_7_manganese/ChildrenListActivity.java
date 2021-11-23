@@ -30,7 +30,7 @@ public class ChildrenListActivity extends AppCompatActivity {
     private ChildManager manager;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
-    private ActivityManagingMyChildrenDataBinding binding;
+
     private TextView tv_notice;
     private TextView emptyListInfo;
     private ListView lv_child_data;
@@ -40,9 +40,9 @@ public class ChildrenListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_managing_my_children_data);
+        manager = ChildManager.getInstance();
+        lv_child_data=findViewById(R.id.lv_manage_child);
 
-        binding = ActivityManagingMyChildrenDataBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
         Toolbar toolbar = findViewById(R.id.tb_manage_child);
         setSupportActionBar(toolbar);
@@ -107,11 +107,9 @@ public class ChildrenListActivity extends AppCompatActivity {
     }
 
     private void populateListView() {
-        manager = ChildManager.getInstance();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this,
-                R.layout.lv_child_list,
-                manager.StringChildData());
+
+
+        ChildAdapter adapter=new ChildAdapter(manager.getManager(),this);
 
         lv_child_data.setAdapter(adapter);
         adapter.notifyDataSetChanged();
