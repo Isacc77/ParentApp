@@ -2,8 +2,6 @@ package com.example.cmpt276_2021_7_manganese;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,7 +26,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
@@ -82,7 +79,6 @@ public class FlipCoinActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
     }
 
     @Override
@@ -132,8 +128,6 @@ public class FlipCoinActivity extends AppCompatActivity {
             }
             childCurrent=childrenList.get(index);
             show_name.setText(childCurrent.getName());
-
-
 
             chooseChildInOrder(index);
         });
@@ -189,8 +183,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         setUpToolBar(toolbar);
     }
 
-
-
     private void chooseChildInOrder(int position) {
         if (childrenList.get(position).getName().equals("nobody")){
             return;
@@ -211,7 +203,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         childrenList.addAll(strNew);
         myListAdapter.setListItems(childrenList);
         myListAdapter.notifyDataSetChanged();
-
     }
 
     private void showAnimotion() {
@@ -241,9 +232,9 @@ public class FlipCoinActivity extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 String msg;
                 if (result == 0){
-                    msg = "The result is Head!";
+                    msg = "Heads!";
                 }else {
-                    msg = "The result is Tail!";
+                    msg = "Tails!";
                 }
 
                 showNormalDialog(msg);
@@ -276,8 +267,6 @@ public class FlipCoinActivity extends AppCompatActivity {
                     show_name.setText(childCurrent.getName());
                     Glide.with(FlipCoinActivity.this).load(childCurrent.getPhotoUrl()).placeholder(R.mipmap.default_head)
                             .error(R.mipmap.default_head).into(childPhoto);
-
-
 
                     CoinResult coinresult = new CoinResult(getUUID(), getTime(), coinResultChoose, result == 0 ? "Head" : "Tail", childCurrent.getName(), childCurrent.getPhotoUrl());
 
