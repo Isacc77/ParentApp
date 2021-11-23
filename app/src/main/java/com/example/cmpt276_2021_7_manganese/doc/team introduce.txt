@@ -1,10 +1,10 @@
-Scrum Master: 	Shuai Li 
+Scrum Master: 	Lingjie Li
 
-Product Owner: 	Rio Samson 
+Product Owner: 	Shuai Li
 
-Repo Manager:	Yangyang Liu
+Repo Manager:	Rio Samson
 
-Team Member:	Lingjie Li
+Team Member:	Yangyang Liu
 
 
 

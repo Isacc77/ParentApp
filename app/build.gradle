@@ -3,8 +3,8 @@ plugins {
 }
 
 android {
-    compileSdk 31
-
+    compileSdk 30
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.example.cmpt276_2021_7_manganese"
@@ -55,5 +55,10 @@ dependencies {
 
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
+
+
+
+
+
 }
 

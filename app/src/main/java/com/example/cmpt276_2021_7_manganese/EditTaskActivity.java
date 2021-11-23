@@ -24,6 +24,11 @@ import com.example.cmpt276_2021_7_manganese.model.TaskManager;
 
 import java.util.ArrayList;
 
+/**
+ * This activity is for editing the tasks already made. This screen will let you edit,
+ * delete and go to next child for the task. The tasks are saved between app runs.
+ * There is also a cancel button to cancel and delete button to delete the task.
+ */
 public class EditTaskActivity extends AppCompatActivity {
     private TaskManager taskManager;
     private static final String EXTRA_INTENT_MESSAGE = "Task index";
