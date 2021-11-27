@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -76,8 +77,11 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     private void checkRunningStatus() {
         Intent statusIntent = TimerService.makeStatusIntent(TimeoutTimerActivity.this);
         boolean serviceDone = statusIntent.getBooleanExtra(INTENT_IS_FINISHED_KEY, true);
+        SharedPreferences prefs = getSharedPreferences("isReset",
+                MODE_PRIVATE);
+        boolean wasResetLast = prefs.getBoolean("resetStatus", false);
 
-        if (!serviceDone) {
+        if (!serviceDone && (!wasResetLast)) {
             startPauseTimer.setText(R.string.resume);
             isTimerRunning = statusIntent.getBooleanExtra(INTENT_IS_RUNNING_KEY, false);
             timeLeft = statusIntent.getLongExtra(INTENT_TIME_LEFT_KEY, DEFAULT_TIME_LEFT_INTENT);
@@ -159,6 +163,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                     startPauseTimer.setText(R.string.pause);
                     isResetLastPressed = false;
                     isTimerRunning = true;
+                    updateIsLastResetStatus(false);
                 }
             }
         });
@@ -171,18 +176,22 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                 }
                 timeLeft = timerStartTime;
                 isResetLastPressed = true;
-                if(isTimerRunning) {
-                    stopService(serviceIntent);
-                } else {
-                    stopService(serviceIntent);
-                    startService(serviceIntent);
-                    stopService(serviceIntent);
+                if(!isTimerRunning) {
+                    updateIsLastResetStatus(true);
                 }
+                stopService(serviceIntent);
                 updateClock();
                 startPauseTimer.setText(R.string.start);
                 isTimerRunning = false;
             }
         });
+    }
+
+    private void updateIsLastResetStatus(boolean status) {
+        SharedPreferences prefs = this.getSharedPreferences("isReset", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("resetStatus", status);
+        editor.apply();
     }
 
     private void startTimer() {
