@@ -1,6 +1,7 @@
 /**
  * This class is for main menu
- * @author  Shuai Li & Yam & Samson & Larry
+ *
+ * @author Shuai Li & Yam & Samson & Larry
  */
 
 package com.example.cmpt276_2021_7_manganese;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnChildManager;
     private Button btnWhoseTurn;
     private Button btwHelpScreen;
+    private Button btwTakeBreath;
 
     private ChildManager childManager;
     private TaskManager taskManager;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         btnTimer = findViewById(R.id.btn_timer);
         btnWhoseTurn = findViewById(R.id.btn_whose_turn);
         btwHelpScreen = findViewById(R.id.btn_help);
+        btwTakeBreath = findViewById(R.id.btn_take_breath);
         setListeners();
 
         load();
@@ -54,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
     private void setupFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view -> {
-                Intent addChild = AddChildActivity.makeLaunchIntent(MainActivity.this);
-                startActivity(addChild);
+            Intent addChild = AddChildActivity.makeLaunchIntent(MainActivity.this);
+            startActivity(addChild);
         });
     }
 
@@ -66,10 +69,12 @@ public class MainActivity extends AppCompatActivity {
         btnTimer.setOnClickListener(onClick);
         btnWhoseTurn.setOnClickListener(onClick);
         btwHelpScreen.setOnClickListener(onClick);
+        btwTakeBreath.setOnClickListener(onClick);
     }
 
     private class OnClick implements View.OnClickListener {
         Intent intent = null;
+
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -89,8 +94,13 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn_whose_turn:
                     intent = TasksActivity.makeLaunchIntent(MainActivity.this);
                     break;
+
                 case R.id.btn_help:
                     intent = HelpActivity.makeLaunchIntent(MainActivity.this);
+                    break;
+
+                case R.id.btn_take_breath:
+                    intent = TakeBreathActivity.makeLaunchIntent(MainActivity.this);
                     break;
             }
             startActivity(intent);
@@ -106,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     private void load() {
         SharedPreferences prefs = this.getSharedPreferences("tag", MODE_PRIVATE);
         String jsonString = prefs.getString("save", "");
-        if(!jsonString.equals("")) {
+        if (!jsonString.equals("")) {
             childManager.load(jsonString);
         }
     }
@@ -114,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     private void load_task_info() {
         SharedPreferences prefs = this.getSharedPreferences("tag_task", MODE_PRIVATE);
         String jsonStringTask = prefs.getString("save_task_info", "");
-        if(!jsonStringTask.equals("")) {
+        if (!jsonStringTask.equals("")) {
             taskManager.loadTaskInfo(jsonStringTask);
         }
     }
