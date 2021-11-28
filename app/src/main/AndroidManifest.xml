@@ -4,9 +4,9 @@
     package="com.example.cmpt276_2021_7_manganese">
 
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".TimeoutNotification"
@@ -16,6 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CMPT276_2021_7_manganese">
+        <activity
+            android:name=".TakeBreathActivity"
+            android:exported="false" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.cmpt276_2021_7_manganese.fileprovider"
@@ -25,11 +29,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
         <activity
             android:name=".EditTaskActivity"
+            android:exported="true"
             android:label="@string/task"
-            android:parentActivityName=".TasksActivity"
-            android:exported="true" />
+            android:parentActivityName=".TasksActivity" />
         <activity
             android:name=".HelpActivity"
             android:exported="true"
@@ -74,12 +79,12 @@
             android:name=".FlipCoinActivity"
             android:exported="true"
             android:label="@string/flip_coin"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".RecordListActivity"
             android:exported="true"
             android:label="@string/title_flip_coin_history"
-            android:parentActivityName=".FlipCoinActivity"/>
+            android:parentActivityName=".FlipCoinActivity" />
 
         <service android:name=".TimerService" />
     </application>
