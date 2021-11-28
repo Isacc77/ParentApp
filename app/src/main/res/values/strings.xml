@@ -73,5 +73,7 @@
     <string name="current_turn_of">Current Turn of:</string>
     <string name="textview">TextView</string>
     <string name="delete_task">Delete Task</string>
+    <string name="btn_take_breath">Take Breath</string>
+    <string name="tasks_history">Tasks History</string>
 
 </resources>
