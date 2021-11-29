@@ -42,6 +42,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     private final int ONE_SECOND_IN_MILLI = 1000;
     private final int MILLI_TO_HOUR_FACTOR = 3600000;
     private final int SEC_TO_HOUR_FACTOR = 3600;
+    private double timerSpeed;
 
     static private long timerStartTime;
     private boolean isTimerRunning;
@@ -64,14 +65,23 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 
         timerClock = findViewById(R.id.timerClock);
         startPauseTimer = findViewById(R.id.startBtn);
-        timerStartTime = (long) loadSavedData() * MIN_TO_MS_FACTOR;
+
+//        timerStartTime = (long) loadSavedData() * MIN_TO_MS_FACTOR;
+//        timeLeft = timerStartTime;
+//        timerSpeed = 1;
+        timerSpeed = loadSpeed();
+        Toast.makeText(this, "" + timerSpeed, Toast.LENGTH_SHORT).show();
+        timerStartTime = (long) (((long) loadSavedData() * MIN_TO_MS_FACTOR) / timerSpeed);
         timeLeft = timerStartTime;
+
         serviceIntent = TimerService.makeLaunchIntent(TimeoutTimerActivity.this);
 
         checkRunningStatus();
         setupPreMadeTimerSettings();
         setupTimerClockWithButtons();
         setupCustomTimerSettings();
+        setupSpeedButton();
+//        loadSpeed();
     }
 
     private void checkRunningStatus() {
@@ -129,7 +139,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { //TODO what if clicked while running?
-                    timerStartTime = (long) setting * MIN_TO_MS_FACTOR;
+                    timerSpeed = 1.0;
+                    timerStartTime = (long) ((long) setting * MIN_TO_MS_FACTOR / timerSpeed);
                     timeLeft = timerStartTime;
                     updateClock();
                     saveTimeSettings(setting);
@@ -171,6 +182,10 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         resetTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (timerSpeed != 1) {
+                    timerStartTime = (long) (timerStartTime * timerSpeed);
+                }
+                timerSpeed = 1.0;
                 if (countDownTimer != null) {
                     countDownTimer.cancel();
                 }
@@ -195,7 +210,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        countDownTimer = new CountDownTimer(timeLeft, ONE_SECOND_IN_MILLI) {
+        countDownTimer = new CountDownTimer(timeLeft, (long)(ONE_SECOND_IN_MILLI / timerSpeed)) {
             @Override
             public void onTick(long mSecondsToFinish) {
                 timeLeft = mSecondsToFinish;
@@ -203,8 +218,14 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
+                timerSpeed = 1.0;
                 timeLeft = timerStartTime;
                 updateClock();
+//                if ( timerSpeedIndicator == false ) {
+//                    timerSpeedIndicator = true;
+//                } else {
+//                    timerSpeedIndicator = false;
+//                }
                 startPauseTimer.setText(R.string.start);
                 isTimerRunning = false;
             }
@@ -213,11 +234,40 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     }
 
     private void updateClock() {
-        int hour = (int) (timeLeft / MILLI_TO_HOUR_FACTOR);
-        int min = (int) (((timeLeft / ONE_SECOND_IN_MILLI) % SEC_TO_HOUR_FACTOR) / MIN_TO_S_FACTOR);
-        int sec = (int) ((timeLeft / ONE_SECOND_IN_MILLI) % MIN_TO_S_FACTOR);
+        int hour;
+        int min;
+        int sec;
+//        if ( timerSpeedIndicator == false) {
+            hour = (int) ((timeLeft * timerSpeed) / MILLI_TO_HOUR_FACTOR);
+            min = (int) ((((timeLeft * timerSpeed) / ONE_SECOND_IN_MILLI) % SEC_TO_HOUR_FACTOR) / MIN_TO_S_FACTOR);
+            sec = (int) (((timeLeft * timerSpeed) / ONE_SECOND_IN_MILLI) % MIN_TO_S_FACTOR);
+//        hour = (int) ((timeLeft ) / MILLI_TO_HOUR_FACTOR);
+//        min = (int) ((((timeLeft ) / ONE_SECOND_IN_MILLI) % SEC_TO_HOUR_FACTOR) / MIN_TO_S_FACTOR);
+//        sec = (int) (((timeLeft ) / ONE_SECOND_IN_MILLI) % MIN_TO_S_FACTOR);
+//        } else {
+//            hour = (int) (((timeLeft * timerSpeed) - ONE_SECOND_IN_MILLI) / MILLI_TO_HOUR_FACTOR);
+//            min = (int) (((((timeLeft * timerSpeed) - ONE_SECOND_IN_MILLI) / ONE_SECOND_IN_MILLI) % SEC_TO_HOUR_FACTOR) / MIN_TO_S_FACTOR);
+//            sec = (int) ((((timeLeft * timerSpeed) - ONE_SECOND_IN_MILLI) / ONE_SECOND_IN_MILLI) % MIN_TO_S_FACTOR);
+//        }
         String display = String.format(Locale.getDefault(), "%d:%02d:%02d", hour, min, sec);
         timerClock.setText(display);
+    }
+
+    private void setupSpeedButton() {
+        Button test = findViewById(R.id.button);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timerSpeed = 2.0;
+                timerStartTime = (long) (timerStartTime / timerSpeed);
+                timeLeft = (long) (timeLeft/timerSpeed);
+                countDownTimer.cancel();
+                stopService(serviceIntent);
+                startTimer();
+                serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
+                startService(serviceIntent);
+            }
+        });
     }
 
     private void stopTimer() {
@@ -230,6 +280,21 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences(PREFS_TAG,
                 MODE_PRIVATE);
         return prefs.getInt(SAVE_TIMER_KEY, getResources().getInteger(R.integer.default_timer));
+    }
+
+    private void saveSpeed() {
+        SharedPreferences prefs = this.getSharedPreferences("speedTag",
+                MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        Toast.makeText(this, "saved as " + timerSpeed, Toast.LENGTH_SHORT).show();
+        editor.putLong("timerSpeed", Double.doubleToRawLongBits(timerSpeed));
+        editor.apply();
+    }
+
+    private double loadSpeed() {
+        SharedPreferences prefs = this.getSharedPreferences("speedTag",
+                MODE_PRIVATE);
+        return Double.longBitsToDouble(prefs.getLong("timerSpeed", Double.doubleToLongBits(1)));
     }
 
     private void saveTimeSettings(int timerSettings) {
@@ -256,6 +321,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        saveSpeed();
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
