@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private Button btnWhoseTurn;
     private Button btwHelpScreen;
     private Button btwTakeBreath;
-    private Button btwTaskHistory;
 
     private ChildManager childManager;
     private TaskManager taskManager;
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         btnWhoseTurn = findViewById(R.id.btn_whose_turn);
         btwHelpScreen = findViewById(R.id.btn_help);
         btwTakeBreath = findViewById(R.id.btn_take_breath);
-        btwTaskHistory = findViewById(R.id.btn_task_history);
         setListeners();
 
         load();
@@ -72,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         btnWhoseTurn.setOnClickListener(onClick);
         btwHelpScreen.setOnClickListener(onClick);
         btwTakeBreath.setOnClickListener(onClick);
-        btwTaskHistory.setOnClickListener(onClick);
     }
 
     private class OnClick implements View.OnClickListener {
@@ -106,9 +103,6 @@ public class MainActivity extends AppCompatActivity {
                     intent = TakeBreathActivity.makeLaunchIntent(MainActivity.this);
                     break;
 
-                case R.id.btn_task_history:
-                    intent = TaskHistoryActivity.makeLaunchIntent(MainActivity.this);
-                    break;
             }
             startActivity(intent);
         }

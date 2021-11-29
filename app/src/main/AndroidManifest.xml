@@ -17,9 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CMPT276_2021_7_manganese">
         <activity
-            android:name=".TaskHistoryActivity"
-            android:exported="false" />
-        <activity
             android:name=".TakeBreathActivity"
             android:exported="false" />
 
