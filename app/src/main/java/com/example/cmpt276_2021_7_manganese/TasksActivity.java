@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * child for the task. The tasks are saved between app runs.
  * @author Shuai Li
  */
+
 public class TasksActivity extends AppCompatActivity {
     private TaskManager taskManager;
     private ChildManager childManager;
