@@ -73,7 +73,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 //        timerSpeed = 1;
         timerSpeed = loadSpeed();
         Toast.makeText(this, "" + timerSpeed, Toast.LENGTH_SHORT).show();
-        timerStartTime = (long) (((long) loadSavedData() * MIN_TO_MS_FACTOR) / timerSpeed);
+//        timerStartTime = (long) (((long) loadSavedData() * MIN_TO_MS_FACTOR) / timerSpeed);
+        timerStartTime = (long) (((long) loadSavedData() * MIN_TO_MS_FACTOR));
         timeLeft = timerStartTime;
 
         serviceIntent = TimerService.makeLaunchIntent(TimeoutTimerActivity.this);
@@ -100,6 +101,11 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                 startTimer();
                 isTimerRunning = true;
                 startPauseTimer.setText(R.string.pause);
+            }
+        } else {
+            if (timerSpeed != 1 || curSpeedIndex != 3) {
+                timerSpeed = 1;
+                curSpeedIndex = 3;
             }
         }
     }
@@ -141,7 +147,9 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) { //TODO what if clicked while running?
                     timerSpeed = 1.0;
-                    timerStartTime = (long) ((long) setting * MIN_TO_MS_FACTOR / timerSpeed);
+                    curSpeedIndex = 3;
+//                    timerStartTime = (long) ((long) setting * MIN_TO_MS_FACTOR / timerSpeed);
+                    timerStartTime = (long) setting * MIN_TO_MS_FACTOR;
                     timeLeft = timerStartTime;
                     updateClock();
                     saveTimeSettings(setting);
@@ -221,6 +229,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 timerSpeed = 1.0;
+                curSpeedIndex = 3;
                 timeLeft = timerStartTime;
                 updateClock();
 //                if ( timerSpeedIndicator == false ) {
