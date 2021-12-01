@@ -43,6 +43,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     private final int MILLI_TO_HOUR_FACTOR = 3600000;
     private final int SEC_TO_HOUR_FACTOR = 3600;
     private double timerSpeed;
+    private double[] speeds = {0.25, 0.5, 0.75, 1, 2, 3, 4};
+    int curSpeedIndex = 3;
 
     static private long timerStartTime;
     private boolean isTimerRunning;
@@ -81,7 +83,6 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         setupTimerClockWithButtons();
         setupCustomTimerSettings();
         setupSpeedButton();
-//        loadSpeed();
     }
 
     private void checkRunningStatus() {
@@ -182,9 +183,9 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         resetTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (timerSpeed != 1) {
-                    timerStartTime = (long) (timerStartTime * timerSpeed);
-                }
+//                if (timerSpeed != 1) {
+//                    timerStartTime = (long) (timerStartTime * timerSpeed);
+//                }
                 timerSpeed = 1.0;
                 if (countDownTimer != null) {
                     countDownTimer.cancel();
@@ -198,6 +199,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                 updateClock();
                 startPauseTimer.setText(R.string.start);
                 isTimerRunning = false;
+                curSpeedIndex = 3;
             }
         });
     }
@@ -258,14 +260,20 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                timerSpeed = 2.0;
-                timerStartTime = (long) (timerStartTime / timerSpeed);
-                timeLeft = (long) (timeLeft/timerSpeed);
-                countDownTimer.cancel();
-                stopService(serviceIntent);
-                startTimer();
-                serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
-                startService(serviceIntent);
+                if (isTimerRunning) {
+                    if (curSpeedIndex < 6) {
+                        curSpeedIndex++;
+                        countDownTimer.cancel();
+                        stopService(serviceIntent);
+                        timeLeft = (long) (timeLeft * timerSpeed);
+                        timerSpeed = speeds[curSpeedIndex];
+//                        timerStartTime = (long) (timerStartTime / timerSpeed);
+                        timeLeft = (long) (timeLeft/timerSpeed);
+                        startTimer();
+                        serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
+                        startService(serviceIntent);
+                    }
+                }
             }
         });
     }
