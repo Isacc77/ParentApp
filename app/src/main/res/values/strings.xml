@@ -75,5 +75,6 @@
     <string name="delete_task">Delete Task</string>
     <string name="btn_take_breath">Take Breath</string>
     <string name="tasks_history">Tasks History</string>
+    <string name="title_task_history_activity">Task History</string>
 
 </resources>
