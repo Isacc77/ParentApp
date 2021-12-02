@@ -3,6 +3,7 @@
 //https://www.youtube.com/watch?v=sOwqYNdi_x8
 package com.example.cmpt276_2021_7_manganese;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,7 +13,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -45,6 +49,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     private double timerSpeed;
     private double[] speeds = {0.25, 0.5, 0.75, 1, 2, 3, 4};
     int curSpeedIndex = 3;
+    private TextView speedText;
 
     static private long timerStartTime;
     private boolean isTimerRunning;
@@ -65,6 +70,9 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
+        //keep the screen on
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         timerClock = findViewById(R.id.timerClock);
         startPauseTimer = findViewById(R.id.startBtn);
 
@@ -72,18 +80,22 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 //        timeLeft = timerStartTime;
 //        timerSpeed = 1;
         timerSpeed = loadSpeed();
-        Toast.makeText(this, "" + timerSpeed, Toast.LENGTH_SHORT).show();
 //        timerStartTime = (long) (((long) loadSavedData() * MIN_TO_MS_FACTOR) / timerSpeed);
         timerStartTime = (long) (((long) loadSavedData() * MIN_TO_MS_FACTOR));
         timeLeft = timerStartTime;
 
         serviceIntent = TimerService.makeLaunchIntent(TimeoutTimerActivity.this);
 
+        speedText = findViewById(R.id.speed_text);
+
         checkRunningStatus();
+        Toast.makeText(this, "" + timerSpeed, Toast.LENGTH_SHORT).show();
+        speedText.setText("Time @" + (int)(timerSpeed*100) + "%");
         setupPreMadeTimerSettings();
         setupTimerClockWithButtons();
         setupCustomTimerSettings();
-        setupSpeedButton();
+//        setupSpeedButton();
+//        setupSlowButton();
     }
 
     private void checkRunningStatus() {
@@ -208,6 +220,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                 startPauseTimer.setText(R.string.start);
                 isTimerRunning = false;
                 curSpeedIndex = 3;
+                speedText.setText("Time @" + (int)(timerSpeed*100) + "%");
             }
         });
     }
@@ -239,6 +252,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 //                }
                 startPauseTimer.setText(R.string.start);
                 isTimerRunning = false;
+                speedText.setText("Time @" + (int)(timerSpeed*100) + "%");
             }
         }.start();
         isTimerRunning = true;
@@ -263,29 +277,51 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         String display = String.format(Locale.getDefault(), "%d:%02d:%02d", hour, min, sec);
         timerClock.setText(display);
     }
-
-    private void setupSpeedButton() {
-        Button test = findViewById(R.id.button);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isTimerRunning) {
-                    if (curSpeedIndex < 6) {
-                        curSpeedIndex++;
-                        countDownTimer.cancel();
-                        stopService(serviceIntent);
-                        timeLeft = (long) (timeLeft * timerSpeed);
-                        timerSpeed = speeds[curSpeedIndex];
-//                        timerStartTime = (long) (timerStartTime / timerSpeed);
-                        timeLeft = (long) (timeLeft/timerSpeed);
-                        startTimer();
-                        serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
-                        startService(serviceIntent);
-                    }
-                }
-            }
-        });
-    }
+//    private void setupSpeedButton() {
+//        Button test = findViewById(R.id.button);
+//        test.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (isTimerRunning) {
+//                    if (curSpeedIndex < 6) {
+//                        curSpeedIndex++;
+//                        countDownTimer.cancel();
+//                        stopService(serviceIntent);
+//                        timeLeft = (long) (timeLeft * timerSpeed);
+//                        timerSpeed = speeds[curSpeedIndex];
+////                        timerStartTime = (long) (timerStartTime / timerSpeed);
+//                        timeLeft = (long) (timeLeft/timerSpeed);
+//                        startTimer();
+//                        serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
+//                        startService(serviceIntent);
+//                    }
+//                }
+//            }
+//        });
+//    }
+//
+//    private void setupSlowButton() {
+//        Button test = findViewById(R.id.slowbtn);
+//        test.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (isTimerRunning) {
+//                    if (curSpeedIndex > 0) {
+//                        curSpeedIndex--;
+//                        countDownTimer.cancel();
+//                        stopService(serviceIntent);
+//                        timeLeft = (long) (timeLeft * timerSpeed);
+//                        timerSpeed = speeds[curSpeedIndex];
+////                        timerStartTime = (long) (timerStartTime / timerSpeed);
+//                        timeLeft = (long) (timeLeft/timerSpeed);
+//                        startTimer();
+//                        serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
+//                        startService(serviceIntent);
+//                    }
+//                }
+//            }
+//        });
+//    }
 
     private void stopTimer() {
         if (countDownTimer != null) {
@@ -341,6 +377,71 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         saveSpeed();
         if (countDownTimer != null) {
             countDownTimer.cancel();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        getMenuInflater().inflate(R.menu.timeout_timer, menu);
+//        return super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    private void restartTimerWithNewSpeed() {
+        countDownTimer.cancel();
+        stopService(serviceIntent);
+        timeLeft = (long) (timeLeft * timerSpeed);
+        timerSpeed = speeds[curSpeedIndex];
+//      timerStartTime = (long) (timerStartTime / timerSpeed);
+        timeLeft = (long) (timeLeft/timerSpeed);
+        startTimer();
+        serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
+        startService(serviceIntent);
+        speedText.setText("Time @" + (int)(timerSpeed*100) + "%");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_faster:
+                if (isTimerRunning) {
+                    if (curSpeedIndex < 6) {
+                        curSpeedIndex++;
+                        restartTimerWithNewSpeed();
+//                        countDownTimer.cancel();
+//                        stopService(serviceIntent);
+//                        timeLeft = (long) (timeLeft * timerSpeed);
+//                        timerSpeed = speeds[curSpeedIndex];
+////                        timerStartTime = (long) (timerStartTime / timerSpeed);
+//                        timeLeft = (long) (timeLeft/timerSpeed);
+//                        startTimer();
+//                        serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
+//                        startService(serviceIntent);
+//                        speedText.setText("Time @" + (int)(timerSpeed*100) + "%");
+                    }
+                }
+                return true;
+            case R.id.action_slower:
+                if (isTimerRunning) {
+                    if (curSpeedIndex > 0) {
+                        curSpeedIndex--;
+                        restartTimerWithNewSpeed();
+//                        countDownTimer.cancel();
+//                        stopService(serviceIntent);
+//                        timeLeft = (long) (timeLeft * timerSpeed);
+//                        timerSpeed = speeds[curSpeedIndex];
+////                        timerStartTime = (long) (timerStartTime / timerSpeed);
+//                        timeLeft = (long) (timeLeft/timerSpeed);
+//                        startTimer();
+//                        serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
+//                        startService(serviceIntent);
+//                        speedText.setText("Time @" + (int)(timerSpeed*100) + "%");
+                    }
+                }
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
