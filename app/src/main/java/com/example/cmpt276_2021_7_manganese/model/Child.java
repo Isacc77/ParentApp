@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class Child  implements Serializable {
     String name;
     String PhotoUrl;
+
     public Child(String name, String PhotoUrl) {
         this.name = name;
         this.PhotoUrl = PhotoUrl;
@@ -19,7 +20,6 @@ public class Child  implements Serializable {
     public void setPhotoUrl(String photoUrl) {
         PhotoUrl = photoUrl;
     }
-
 
     public Child(String name) {
         this.name = name;

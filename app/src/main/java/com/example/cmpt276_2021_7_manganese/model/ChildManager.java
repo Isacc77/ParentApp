@@ -104,6 +104,12 @@ public class ChildManager implements Iterable<Child> {
         return jsonString;
     }
 
+//    public boolean findEqual(Child findChild) {
+//        for (Child child : childArrayList) {
+//            if
+//        }
+//    }
+
     public void load(String jsonString){
         Gson gson = new Gson();
         ChildManager loaded = gson.fromJson(jsonString, ChildManager.class);
