@@ -85,6 +85,8 @@ public class Task {
         int childrenNumber = childManager.getSize();
         if (childrenNumber == 0) {
             childIndex = -1;
+        } else if (childIndex >= childrenNumber){
+            childIndex = childrenNumber - 1;
         } else if (childIndex == -1) {
             childIndex = 0;
         }
