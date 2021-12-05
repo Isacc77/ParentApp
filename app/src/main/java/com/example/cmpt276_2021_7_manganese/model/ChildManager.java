@@ -104,6 +104,15 @@ public class ChildManager implements Iterable<Child> {
         return jsonString;
     }
 
+    public Child findById(int id) {
+        for(Child child : childArrayList) {
+            if(child.getId() == id) {
+                return child;
+            }
+        }
+        return null;
+    }
+
 //    public boolean findEqual(Child findChild) {
 //        for (Child child : childArrayList) {
 //            if

@@ -171,7 +171,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         manager = ChildManager.getInstance();
         ArrayList<Child> manager = this.manager.getManager();
         childrenList.addAll(manager);
-        Child child = new Child("nobody", "");
+        Child child = new Child("nobody", "", -1);
         childrenList.add(child);
     }
 
@@ -198,7 +198,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         }
         strNew.add(childrenList.get(position));
 
-        Child child = new Child("nobody", "");
+        Child child = new Child("nobody", "", -1);
         strNew.add(child);
 
         childrenList.clear();

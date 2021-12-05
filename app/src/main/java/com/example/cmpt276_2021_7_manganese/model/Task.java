@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Task {
     private ArrayList<Child> history = new ArrayList<>();
-    private ArrayList<LocalDateTime> times = new ArrayList<>();
+    private ArrayList<TaskHistory> taskHistories = new ArrayList<>();
     String taskInfo;
     private final String TASK_CONTENT = "Task:";
     private Child curChildForTask;
@@ -45,9 +45,14 @@ public class Task {
     }
 
     private void addChildToHistory() {
-        history.add(childManager.getByIndex(childIndex));
+//        history.add(childManager.getByIndex(childIndex));
         LocalDateTime timeNow = LocalDateTime.now();
-        times.add(timeNow);
+//        times.add(timeNow);
+        TaskHistory taskUpdate = new TaskHistory(childManager.getByIndex(childIndex),
+                timeNow, childManager.getByIndex(childIndex).getPhotoUrl(),
+                childManager.getByIndex(childIndex).getName(),
+                childManager.getByIndex(childIndex).getId());
+        taskHistories.add(taskUpdate);
     }
 
     public String getTaskInfo() {
@@ -86,15 +91,15 @@ public class Task {
     }
 
     public int historySize() {
-        return history.size();
+        return taskHistories.size();
     }
 
     public int size() {
-        return times.size();
+        return taskHistories.size();
     }
 
-    public Child getHistoryChild(int index) {
-        return history.get(index);
+    public TaskHistory getHistoryInfo(int index) {
+        return taskHistories.get(index);
     }
 
     @Override

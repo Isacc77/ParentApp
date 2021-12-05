@@ -12,7 +12,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.cmpt276_2021_7_manganese.model.Child;
+import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.example.cmpt276_2021_7_manganese.model.Task;
+import com.example.cmpt276_2021_7_manganese.model.TaskHistory;
 import com.example.cmpt276_2021_7_manganese.model.TaskManager;
 
 public class TaskHistoryActivity extends AppCompatActivity {
@@ -21,6 +23,7 @@ public class TaskHistoryActivity extends AppCompatActivity {
     private int taskListIndex;
     private int defaultIndex = -1;
     private Task curTask;
+    private ChildManager childManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +32,10 @@ public class TaskHistoryActivity extends AppCompatActivity {
 
         setupToolBar();
 
+        childManager = ChildManager.getInstance();
         taskListIndex = getIntent().getIntExtra(EXTRA_INTENT_MESSAGE, defaultIndex);
         curTask = taskManager.getTask(taskListIndex);
-        curTask.updateHistoryInfo();
+//        curTask.updateHistoryInfo();
         Toast.makeText(this, "" + taskListIndex, Toast.LENGTH_SHORT).show();
 
         populateListView();
@@ -40,8 +44,19 @@ public class TaskHistoryActivity extends AppCompatActivity {
     private void populateListView() {
         String[] myHistory = new String[curTask.historySize()];
         for (int i = 0; i < curTask.historySize(); i++) {
-//            if (curTask.getHistoryChild(i) == )
-            myHistory[i] = curTask.getHistoryChild(i).getName();
+            Child curChild = curTask.getHistoryInfo(i).getChild();
+            TaskHistory curHistory = curTask.getHistoryInfo(i);
+            Child ogChild = childManager.findById(curHistory.getId());
+            if (ogChild != null) {
+                if (ogChild.getName() != curChild.getName()) {
+                    curHistory.setName(ogChild.getName());
+                    curHistory.setChild(ogChild);
+                }
+            } else {
+                curHistory.setName("Deleted");
+            }
+            String name = curTask.getHistoryInfo(i).getName();
+            myHistory[i] = name;
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,

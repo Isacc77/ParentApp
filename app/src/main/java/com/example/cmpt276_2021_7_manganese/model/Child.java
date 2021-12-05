@@ -11,10 +11,15 @@ import java.io.Serializable;
 public class Child  implements Serializable {
     String name;
     String PhotoUrl;
-
-    public Child(String name, String PhotoUrl) {
+    private int id;
+    public Child(String name, String PhotoUrl, int id) {
         this.name = name;
         this.PhotoUrl = PhotoUrl;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setPhotoUrl(String photoUrl) {
