@@ -2,6 +2,7 @@ package com.example.cmpt276_2021_7_manganese;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
