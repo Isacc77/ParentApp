@@ -1,54 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@mipmap/ic_bg_breath"
-    android:paddingTop="@dimen/permission_dp_20"
     tools:context=".StartTakeBreathActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp">
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="@dimen/permission_dp_30"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_baseline_arrow_back_24"
-            android:layout_marginLeft="@dimen/permission_dp_10"
-            android:layout_marginRight="@dimen/permission_dp_10"
-            android:layout_height="@dimen/permission_dp_30"></ImageView>
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:layout_height="match_parent"></TextView>
-        <ImageView
-            android:layout_width="@dimen/permission_dp_30"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/permission_dp_10"
-            android:layout_marginRight="@dimen/permission_dp_10"
-            android:layout_height="@dimen/permission_dp_30"></ImageView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        ></LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/breathe"
+        android:layout_width="280dp"
+        android:layout_height="190dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="232dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="237dp"
+        app:srcCompat="@drawable/breathe" />
+
+
     <TextView
-        android:id="@+id/tv_operation"
-        android:layout_width="100dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/side_nav_bar"
-        android:text="IN"
+        android:id="@+id/breathsTaken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginBottom="574dp"
+        android:text="7 Breaths"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="-3dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="65dp"
+        android:background="@color/blue"
+        android:text="Begin"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/guideText"
+        android:layout_width="163dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="123dp"
+        android:layout_marginEnd="125dp"
+        android:layout_marginBottom="152dp"
         android:gravity="center"
-        android:layout_marginBottom="@dimen/permission_dp_30"
-        android:layout_height="100dp"></TextView>
-</LinearLayout>
+        android:text="Breathe"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+</RelativeLayout>
