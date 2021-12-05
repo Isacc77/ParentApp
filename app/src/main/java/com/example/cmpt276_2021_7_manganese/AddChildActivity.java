@@ -62,6 +62,7 @@ public class AddChildActivity extends AppCompatActivity {
     private ImageView Photo = null;
     private Button TakePhoto;
     private Button SkipPhoto;
+    private int idForChild;
 
     //whether user change their photo done.
     private final Handler handler = new Handler(Looper.getMainLooper()) {
@@ -89,6 +90,7 @@ public class AddChildActivity extends AppCompatActivity {
         childManager = ChildManager.getInstance();
         indexForSwitchActivity = getIntent().getIntExtra(EXTRA_MESSAGE, -1);
 
+        idForChild = loadID();
         inputName = findViewById(R.id.et_name);
         inputName.addTextChangedListener(tw);
         Photo = findViewById(R.id.iv_photo);
@@ -230,7 +232,8 @@ public class AddChildActivity extends AppCompatActivity {
     // add a child to the exist manager object, when indexForSwitchActivity < 0
     private void addChildToManager() {
         ChildManager manager = ChildManager.getInstance();
-        manager.add(new Child(name, PhotoUrl));
+        manager.add(new Child(name, PhotoUrl, idForChild));
+        idForChild++;
     }
 
     // edit a child, when indexForSwitchActivity >= 0
@@ -253,6 +256,7 @@ public class AddChildActivity extends AppCompatActivity {
         setResult(Activity.RESULT_CANCELED, returnIntent);
         super.onDestroy();
         jsonSave();
+        saveID();
         setIndex(-1);
         this.finish();
     }
@@ -287,6 +291,21 @@ public class AddChildActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("save", jsonString);
         editor.apply();
+    }
+
+    private void saveID() {
+//        String jsonString = childManager.getGsonString();
+        SharedPreferences prefs = this.getSharedPreferences("child tag", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+//        editor.putString("save", jsonString);
+        editor.putInt("childID", idForChild);
+        editor.apply();
+    }
+
+    private int loadID() {
+        SharedPreferences prefs = this.getSharedPreferences("child tag", MODE_PRIVATE);
+        int id = prefs.getInt("childID", 1);
+        return id;
     }
 
 }
