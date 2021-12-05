@@ -1,6 +1,7 @@
 //Resource used: https://www.youtube.com/watch?v=MDuGwI6P-X8
 //more resource taken from: https://codinginflow.com/tutorials/android/countdowntimer/part-2-configuration-changes
 //https://www.youtube.com/watch?v=sOwqYNdi_x8
+//https://www.youtube.com/watch?v=YsHHXg1vbcc
 package com.example.cmpt276_2021_7_manganese;
 
 import androidx.annotation.NonNull;
@@ -19,10 +20,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -50,6 +51,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     private double[] speeds = {0.25, 0.5, 0.75, 1, 2, 3, 4};
     int curSpeedIndex = 3;
     private TextView speedText;
+    private int animationPro = 0;
+    private ProgressBar progressBar;
 
     static private long timerStartTime;
     private boolean isTimerRunning;
@@ -88,8 +91,9 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 
         speedText = findViewById(R.id.speed_text);
 
+        progressBar = findViewById(R.id.progress_circle);
+
         checkRunningStatus();
-        Toast.makeText(this, "" + timerSpeed, Toast.LENGTH_SHORT).show();
         speedText.setText("Time @" + (int)(timerSpeed*100) + "%");
         setupPreMadeTimerSettings();
         setupTimerClockWithButtons();
@@ -262,66 +266,13 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         int hour;
         int min;
         int sec;
-//        if ( timerSpeedIndicator == false) {
             hour = (int) ((timeLeft * timerSpeed) / MILLI_TO_HOUR_FACTOR);
             min = (int) ((((timeLeft * timerSpeed) / ONE_SECOND_IN_MILLI) % SEC_TO_HOUR_FACTOR) / MIN_TO_S_FACTOR);
             sec = (int) (((timeLeft * timerSpeed) / ONE_SECOND_IN_MILLI) % MIN_TO_S_FACTOR);
-//        hour = (int) ((timeLeft ) / MILLI_TO_HOUR_FACTOR);
-//        min = (int) ((((timeLeft ) / ONE_SECOND_IN_MILLI) % SEC_TO_HOUR_FACTOR) / MIN_TO_S_FACTOR);
-//        sec = (int) (((timeLeft ) / ONE_SECOND_IN_MILLI) % MIN_TO_S_FACTOR);
-//        } else {
-//            hour = (int) (((timeLeft * timerSpeed) - ONE_SECOND_IN_MILLI) / MILLI_TO_HOUR_FACTOR);
-//            min = (int) (((((timeLeft * timerSpeed) - ONE_SECOND_IN_MILLI) / ONE_SECOND_IN_MILLI) % SEC_TO_HOUR_FACTOR) / MIN_TO_S_FACTOR);
-//            sec = (int) ((((timeLeft * timerSpeed) - ONE_SECOND_IN_MILLI) / ONE_SECOND_IN_MILLI) % MIN_TO_S_FACTOR);
-//        }
+        progressBar.setProgress(100 - ((int) (100.0 * ( (double )((double)(timeLeft * timerSpeed)/(double)timerStartTime)))));
         String display = String.format(Locale.getDefault(), "%d:%02d:%02d", hour, min, sec);
         timerClock.setText(display);
     }
-//    private void setupSpeedButton() {
-//        Button test = findViewById(R.id.button);
-//        test.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (isTimerRunning) {
-//                    if (curSpeedIndex < 6) {
-//                        curSpeedIndex++;
-//                        countDownTimer.cancel();
-//                        stopService(serviceIntent);
-//                        timeLeft = (long) (timeLeft * timerSpeed);
-//                        timerSpeed = speeds[curSpeedIndex];
-////                        timerStartTime = (long) (timerStartTime / timerSpeed);
-//                        timeLeft = (long) (timeLeft/timerSpeed);
-//                        startTimer();
-//                        serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
-//                        startService(serviceIntent);
-//                    }
-//                }
-//            }
-//        });
-//    }
-//
-//    private void setupSlowButton() {
-//        Button test = findViewById(R.id.slowbtn);
-//        test.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (isTimerRunning) {
-//                    if (curSpeedIndex > 0) {
-//                        curSpeedIndex--;
-//                        countDownTimer.cancel();
-//                        stopService(serviceIntent);
-//                        timeLeft = (long) (timeLeft * timerSpeed);
-//                        timerSpeed = speeds[curSpeedIndex];
-////                        timerStartTime = (long) (timerStartTime / timerSpeed);
-//                        timeLeft = (long) (timeLeft/timerSpeed);
-//                        startTimer();
-//                        serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
-//                        startService(serviceIntent);
-//                    }
-//                }
-//            }
-//        });
-//    }
 
     private void stopTimer() {
         if (countDownTimer != null) {
@@ -339,7 +290,6 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences("speedTag",
                 MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        Toast.makeText(this, "saved as " + timerSpeed, Toast.LENGTH_SHORT).show();
         editor.putLong("timerSpeed", Double.doubleToRawLongBits(timerSpeed));
         editor.apply();
     }
@@ -383,7 +333,6 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.timeout_timer, menu);
-//        return super.onCreateOptionsMenu(menu);
         return true;
     }
 
@@ -392,7 +341,6 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         stopService(serviceIntent);
         timeLeft = (long) (timeLeft * timerSpeed);
         timerSpeed = speeds[curSpeedIndex];
-//      timerStartTime = (long) (timerStartTime / timerSpeed);
         timeLeft = (long) (timeLeft/timerSpeed);
         startTimer();
         serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
@@ -408,16 +356,6 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                     if (curSpeedIndex < 6) {
                         curSpeedIndex++;
                         restartTimerWithNewSpeed();
-//                        countDownTimer.cancel();
-//                        stopService(serviceIntent);
-//                        timeLeft = (long) (timeLeft * timerSpeed);
-//                        timerSpeed = speeds[curSpeedIndex];
-////                        timerStartTime = (long) (timerStartTime / timerSpeed);
-//                        timeLeft = (long) (timeLeft/timerSpeed);
-//                        startTimer();
-//                        serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
-//                        startService(serviceIntent);
-//                        speedText.setText("Time @" + (int)(timerSpeed*100) + "%");
                     }
                 }
                 return true;
@@ -426,16 +364,6 @@ public class TimeoutTimerActivity extends AppCompatActivity {
                     if (curSpeedIndex > 0) {
                         curSpeedIndex--;
                         restartTimerWithNewSpeed();
-//                        countDownTimer.cancel();
-//                        stopService(serviceIntent);
-//                        timeLeft = (long) (timeLeft * timerSpeed);
-//                        timerSpeed = speeds[curSpeedIndex];
-////                        timerStartTime = (long) (timerStartTime / timerSpeed);
-//                        timeLeft = (long) (timeLeft/timerSpeed);
-//                        startTimer();
-//                        serviceIntent.putExtra(INTENT_TIME_LEFT_KEY, timeLeft);
-//                        startService(serviceIntent);
-//                        speedText.setText("Time @" + (int)(timerSpeed*100) + "%");
                     }
                 }
                 return true;
