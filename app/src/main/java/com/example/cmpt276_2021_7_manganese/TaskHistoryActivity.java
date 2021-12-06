@@ -1,5 +1,6 @@
 package com.example.cmpt276_2021_7_manganese;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -7,7 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -16,8 +17,6 @@ import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.example.cmpt276_2021_7_manganese.model.Task;
 import com.example.cmpt276_2021_7_manganese.model.TaskHistory;
 import com.example.cmpt276_2021_7_manganese.model.TaskManager;
-
-import java.time.LocalDateTime;
 
 public class TaskHistoryActivity extends AppCompatActivity {
     TaskManager taskManager = TaskManager.getInstance();
@@ -110,7 +109,7 @@ public class TaskHistoryActivity extends AppCompatActivity {
     private void populateListView() {
         updateEverything();
 //        TaskHistory curHistory = curTask.getHistoryInfo(i);
-        testTaskHistoryAdapter adapter = new testTaskHistoryAdapter(curTask.getManager(), this);
+        TaskHistoryAdapter adapter = new TaskHistoryAdapter(curTask.getManager(), this);
         ListView list = (ListView) findViewById(R.id.history_list_view);
         list.setAdapter(adapter);
 //        adapter.notifyDataSetChanged();
@@ -127,7 +126,17 @@ public class TaskHistoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+    }
 
-//        ab.
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+         switch (item.getItemId()) {
+             case android.R.id.home:
+                 finish();
+                 return true;
+
+             default:
+                 return super.onOptionsItemSelected(item);
+         }
     }
 }

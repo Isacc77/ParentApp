@@ -15,12 +15,12 @@ import com.example.cmpt276_2021_7_manganese.model.TaskHistory;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class testTaskHistoryAdapter extends BaseAdapter {
+public class TaskHistoryAdapter extends BaseAdapter {
     private final Context context;
     private List<Child> childList;
     private List<TaskHistory> taskHistories;
 
-    public testTaskHistoryAdapter(List<TaskHistory> taskHistories, Context context) {
+    public TaskHistoryAdapter(List<TaskHistory> taskHistories, Context context) {
         this.childList = childList;
         this.context=context;
         this.taskHistories = taskHistories;
