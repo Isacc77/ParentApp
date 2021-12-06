@@ -1,6 +1,7 @@
 package com.example.cmpt276_2021_7_manganese;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,11 +43,10 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                     player.stop();
                     handler.removeMessages(200);
                 }
-                if (time>3){
+                if (time > 3) {
                     mTvOperation.setText("OUT");
                     mTvTip.setText("Now release button and exhale");
                 }
-
             } else if (msg.what == 300) {
 
                 if (time > 0) {
@@ -61,23 +61,28 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                     player.stop();
                     if (countNow == Integer.parseInt(count)) {
                         mTvOperation.setText("GOOD Job");
+                        mTvOperation.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(StartTakeBreathActivity.this, TakeBreathActivity.class);
+                                startActivity(intent);
+
+                            }
+                        });
                     }
                 }
-
             } else {
                 handler.removeMessages(200);
                 if (time < 3) {
                     mTvOperation.setText("IN");
                     time = 0;
                     player.stop();
-                    mIvIcIamge.clearAnimation();
-
+                    mIvIcImage.clearAnimation();
                 } else if (3 <= time && time <= 10) {
                     player.start();
                     mTvOperation.setText("OUT");
                     beginScale(R.anim.zoom_out, 3000);
                     handler.sendEmptyMessage(300);
-
                 } else {
                     time = 10;
                     player.stop();
@@ -86,25 +91,21 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                     beginScale(R.anim.zoom_out, 3000);
                     handler.sendEmptyMessage(300);
                 }
-
             }
-
 
         }
 
         ;
     };
-    private ImageView mIvIcIamge;
+    private ImageView mIvIcImage;
     private MediaPlayer player;
     private Animation an;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ImmersionBar.with(this).init();
         setContentView(R.layout.activity_start_take_breath);
-
 
         initView();
         initData();
@@ -140,7 +141,7 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                         isDown = true;
 
                         player.start();
-                        mIvIcIamge.clearAnimation();
+                        mIvIcImage.clearAnimation();
 
                         beginScale(R.anim.zoom_in, 5000);
 
@@ -160,22 +161,18 @@ public class StartTakeBreathActivity extends AppCompatActivity {
         an = AnimationUtils.loadAnimation(StartTakeBreathActivity.this, animation);
         an.setDuration(time);
         an.setFillAfter(true);
-        mIvIcIamge.startAnimation(an);
+        mIvIcImage.startAnimation(an);
     }
 
     public void runReduce() {
-
         Message obtain = Message.obtain();
-
         time = time - 1;
         obtain.what = 300;
         handler.sendMessageDelayed(obtain, 1000);
     }
 
     public void runCount() {
-
         Message obtain = Message.obtain();
-
         time = time + 1;
         obtain.what = 200;
         handler.sendMessageDelayed(obtain, 1000);
@@ -187,7 +184,7 @@ public class StartTakeBreathActivity extends AppCompatActivity {
         if (player == null) {
             player = MediaPlayer.create(this, R.raw.breath_sound);
         }
-        mTvTitleBreath.setText("Let's  take " + count + " breaths together！");
+        mTvTitleBreath.setText("Let's  take " + count + " breath(s) together！");
     }
 
     private void initView() {
@@ -196,7 +193,7 @@ public class StartTakeBreathActivity extends AppCompatActivity {
         mTvOperation = (TextView) findViewById(R.id.tv_operation);
         mTvTitleBreath = (TextView) findViewById(R.id.tv_title_breath);
         mTvTip = (TextView) findViewById(R.id.tv_tip);
-        mIvIcIamge = (ImageView) findViewById(R.id.iv_ic_iamge);
+        mIvIcImage = (ImageView) findViewById(R.id.iv_ic_iamge);
     }
 
     @Override

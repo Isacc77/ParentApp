@@ -19,15 +19,16 @@ import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
-
+/**
+ * This class and StartBreathActivity class is used to take breath, first user should choose the times they
+ * want to take breath and then after they inhale for at least 3 seconds, they can turn to exhale, the animation
+ * changes with the press of button. Hope you can enjoy you spare time.
+ * @author Lingjie Li(Larry) Yangyang Liu
+ */
 public class TakeBreathActivity extends AppCompatActivity {
-
-
     private Spinner mSpCount;
     private Button mBtStart;
-
     private ArrayList<String> countList = new ArrayList<>();
-
     private ArrayAdapter<String> mSpCoountadapter;
     private int countIndex;
     private ImageView mIvBack;
@@ -58,7 +59,6 @@ public class TakeBreathActivity extends AppCompatActivity {
     }
 
     private void initData() {
-
         for (int i = 1; i < 11; i++) {
             countList.add(String.valueOf(i));
         }
