@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.TaskHistory;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class testTaskHistoryAdapter extends BaseAdapter {
@@ -50,7 +51,12 @@ public class testTaskHistoryAdapter extends BaseAdapter {
         TaskHistory history = taskHistories.get(position);
         TextView textView=view.findViewById(R.id.tv_name);
         ImageView img=view.findViewById(R.id.user_header);
-        textView.setText(history.getName());
+        String name = history.getName();
+            LocalDateTime date =  history.getDate();
+            String fullInfo = name + "    (" + date.getMonthValue() + "/" +
+                    date.getDayOfMonth() + "/" + date.getYear() + ")    ";
+//        textView.setText(history.getName());
+        textView.setText(fullInfo);
 
         Glide.with(this.context).load(history.getUrl()).placeholder(R.mipmap.default_head)
                 .error(R.mipmap.default_head).into(img);

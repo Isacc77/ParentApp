@@ -86,7 +86,29 @@ public class TaskHistoryActivity extends AppCompatActivity {
 //        list.setAdapter(adapter);
 //    }
 
+    private void updateEverything() {
+        for (int i = 0; i < curTask.historySize(); i++) {
+            Child curChild = curTask.getHistoryInfo(i).getChild();
+            TaskHistory curHistory = curTask.getHistoryInfo(i);
+            Child ogChild = childManager.findById(curHistory.getId());
+            //IMPORTANT!! update if child deleted or changed name and photo
+            if (ogChild != null) {
+                if (!ogChild.getName().equals(curChild.getName())) {
+                    curHistory.setName(ogChild.getName());
+                    curHistory.setChild(ogChild);
+                }
+                if (!ogChild.getPhotoUrl().equals(curChild.getPhotoUrl())) {
+                    curHistory.setUrl(ogChild.getPhotoUrl());
+                    curHistory.setChild(ogChild);
+                }
+            } else {
+                curHistory.setName("Deleted");
+            }
+        }
+    }
+
     private void populateListView() {
+        updateEverything();
 //        TaskHistory curHistory = curTask.getHistoryInfo(i);
         testTaskHistoryAdapter adapter = new testTaskHistoryAdapter(curTask.getManager(), this);
         ListView list = (ListView) findViewById(R.id.history_list_view);
