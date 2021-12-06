@@ -51,6 +51,18 @@ public class EditTaskActivity extends AppCompatActivity {
         setupTaskNamePanel();
         setupChildNamePanel();
         setupPicture();
+        setupHistoryBtn();
+    }
+
+    private void setupHistoryBtn() {
+        Button historyButton = findViewById(R.id.historyBtn);
+        historyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = TaskHistoryActivity.makeLaunchIntent(EditTaskActivity.this, taskListIndex);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupPicture() {

@@ -83,8 +83,7 @@ public class AddTasksActivity extends AppCompatActivity {
                 if (checkValidInput) {
                     taskInfo = inputTask.getText().toString();
                     taskManager.add(new Task(taskInfo));
-                    Intent intent = TasksActivity.makeLaunchIntent(AddTasksActivity.this);
-                    startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(this, INVALID_INPUT, Toast.LENGTH_SHORT).show();
                 }
@@ -95,7 +94,7 @@ public class AddTasksActivity extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.backup_on_action_bar, menu);
+        getMenuInflater().inflate(R.menu.save_action_bar, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

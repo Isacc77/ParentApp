@@ -16,6 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CMPT276_2021_7_manganese">
+        <activity
+            android:name=".TaskHistoryActivity"
+            android:label="@string/task_history"
+            android:exported="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
