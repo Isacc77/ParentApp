@@ -20,9 +20,6 @@
             android:name=".TaskHistoryActivity"
             android:label="@string/task_history"
             android:exported="true" />
-        <activity
-            android:name=".TakeBreathActivity"
-            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -91,6 +88,25 @@
             android:parentActivityName=".FlipCoinActivity" />
 
         <service android:name=".TimerService" />
+        <activity
+            android:name=".StartTakeBreathActivity"
+            android:exported="false"
+            android:label="@string/start_breath"
+            android:parentActivityName=".TakeBreathActivity" />
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true" />
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" />
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.4" />
+        <activity
+            android:name=".TakeBreathActivity"
+            android:exported="false"
+            android:label="@string/start_breath"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
