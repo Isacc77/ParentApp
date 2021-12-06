@@ -3,6 +3,7 @@ package com.example.cmpt276_2021_7_manganese;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -13,32 +14,31 @@ import android.widget.TextView;
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
 
-import java.text.MessageFormat;
-
 import com.example.cmpt276_2021_7_manganese.model.Prefs;
 
 public class StartTakeBreathActivity extends AppCompatActivity {
     private Prefs prefs;
     private ImageView breatheImage;
-    private TextView breathsText, guideText;
+    private ImageView mIvBack;
+    private TextView mTvTitle;
+    private TextView mTvOperation;
+    private TextView guideText;
     private Button startButton;
-
-
-
+    private String count;
+    private MediaPlayer MediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_take_breath);
+        initView();
+        initListener();
+        initialData();
         prefs = new Prefs(this);
         breatheImage = findViewById(R.id.breathe);
-        breathsText = findViewById(R.id.breathsTaken);
         guideText = findViewById(R.id.guideText);
 
-
-
-        breathsText.setText(MessageFormat.format("{0} Breaths", prefs.getBreaths()));
         startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +50,26 @@ public class StartTakeBreathActivity extends AppCompatActivity {
         startIntroAnimation();
 
 
+    }
+
+    private void initView() {
+        mIvBack = (ImageView) findViewById(R.id.iv_back);
+        mTvTitle = (TextView) findViewById(R.id.tv_title);
+        mTvOperation = (TextView) findViewById(R.id.tv_operation);
+    }
+
+    private void initialData(){
+        count = getIntent().getStringExtra("count");
+        mTvTitle.setText("Let's take "+ count +" breaths");
+    }
+
+    private void initListener() {
+        mIvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void startIntroAnimation() {
@@ -90,9 +110,7 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                         guideText.setText("Good Job!");
                         breatheImage.setScaleX(1.0f);
                         breatheImage.setScaleY(1.0f);
-                        prefs.setSessions(prefs.getSessions() + 1);
                         prefs.setBreaths(prefs.getBreaths() + 1);
-                        prefs.setDate(System.currentTimeMillis());
 
                         new CountDownTimer(2000, 1000) {
                             @Override

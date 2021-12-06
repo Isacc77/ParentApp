@@ -6,7 +6,32 @@
     android:layout_height="match_parent"
     android:background="@mipmap/ic_bg_breath"
     tools:context=".StartTakeBreathActivity">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/permission_dp_30"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:layout_marginLeft="@dimen/permission_dp_10"
+            android:layout_marginRight="@dimen/permission_dp_10"
+            android:layout_height="@dimen/permission_dp_30"></ImageView>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_height="match_parent"></TextView>
+        <ImageView
+            android:layout_width="@dimen/permission_dp_30"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/permission_dp_10"
+            android:layout_marginRight="@dimen/permission_dp_10"
+            android:layout_height="@dimen/permission_dp_30"></ImageView>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/breathe"
@@ -23,18 +48,6 @@
         android:layout_marginBottom="237dp"
         app:srcCompat="@drawable/breathe" />
 
-
-    <TextView
-        android:id="@+id/breathsTaken"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="9dp"
-        android:layout_marginBottom="574dp"
-        android:text="7 Breaths"
-        android:textColor="@color/colorAccent"
-        android:textSize="18sp" />
 
     <Button
         android:id="@+id/startButton"
@@ -67,4 +80,24 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:layout_weight="1"
+android:orientation="vertical"
+    ></LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_operation"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="433dp"
+        android:background="@drawable/side_nav_bar"
+        android:gravity="center"
+        android:text="IN"
+        android:textColor="@color/white"
+        android:textSize="30sp"></TextView>
 </RelativeLayout>
+

@@ -12,6 +12,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cmpt276_2021_7_manganese.R;
 import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.gyf.immersionbar.ImmersionBar;
