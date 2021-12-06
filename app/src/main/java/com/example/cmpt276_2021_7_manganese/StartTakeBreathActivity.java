@@ -73,14 +73,14 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                 } else if (3 <= time && time <= 10) {
                     player.start();
                     mTvOperation.setText("OUT");
-                    beginScale(R.anim.zoom_out, 5000);
+                    beginScale(R.anim.zoom_out, 7000);
                     handler.sendEmptyMessage(300);
                 } else {
                     time = 10;
                     player.stop();
                     mTvOperation.setText("OUT");
                     player.start();
-                    beginScale(R.anim.zoom_out, 5000);
+                    beginScale(R.anim.zoom_out, 7000);
                     handler.sendEmptyMessage(300);
                 }
             }
@@ -141,7 +141,7 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                             }
                             mIvIcImage.clearAnimation();
 
-                            beginScale(R.anim.zoom_in, 5000);
+                            beginScale(R.anim.zoom_in, 7000);
 
                         }
                         if (event.getAction() == MotionEvent.ACTION_UP) {
