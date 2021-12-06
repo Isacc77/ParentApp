@@ -46,10 +46,7 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                 startAnimation();
             }
         });
-
         startIntroAnimation();
-
-
     }
 
     private void initView() {
