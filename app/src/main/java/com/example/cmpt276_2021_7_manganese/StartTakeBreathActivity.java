@@ -60,15 +60,7 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                     countNow++;
                     player.stop();
                     if (countNow == Integer.parseInt(count)) {
-                        mTvOperation.setText("GOOD Job");
-                        mTvOperation.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(StartTakeBreathActivity.this, TakeBreathActivity.class);
-                                startActivity(intent);
-
-                            }
-                        });
+                        mTvOperation.setText("GOOD JOB");
                     }
                 }
             } else {
@@ -81,14 +73,14 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                 } else if (3 <= time && time <= 10) {
                     player.start();
                     mTvOperation.setText("OUT");
-                    beginScale(R.anim.zoom_out, 3000);
+                    beginScale(R.anim.zoom_out, 5000);
                     handler.sendEmptyMessage(300);
                 } else {
                     time = 10;
                     player.stop();
                     mTvOperation.setText("OUT");
                     player.start();
-                    beginScale(R.anim.zoom_out, 3000);
+                    beginScale(R.anim.zoom_out, 5000);
                     handler.sendEmptyMessage(300);
                 }
             }
@@ -120,36 +112,45 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                 finish();
             }
         });
-        mTvOperation.setOnLongClickListener(new View.OnLongClickListener() {
+        mTvOperation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
-
-                return true;
+            public void onClick(View view) {
+                if (mTvOperation.getText().toString().equals("GOOD JOB")){
+                    finish();
+                }
             }
-
         });
 
         mTvOperation.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 if (v.getId() == R.id.tv_operation) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        runCount();
-                        mTvOperation.setText("IN");
-                        isDown = true;
+                    if (!mTvOperation.getText().toString().equals("GOOD JOB")){
+                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                            runCount();
+                            mTvOperation.setText("IN");
+                            mTvTip.setText("Hold the button and inhale");
+                            isDown = true;
 
-                        player.start();
-                        mIvIcImage.clearAnimation();
+                            if(player.isPlaying()) {
+                                player.stop();
+                                player.prepareAsync();
 
-                        beginScale(R.anim.zoom_in, 5000);
+                            } else {
+                                player.start();
+                            }
+                            mIvIcImage.clearAnimation();
+
+                            beginScale(R.anim.zoom_in, 5000);
+
+                        }
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                            isDown = false;
+                            handler.sendEmptyMessage(100);
+                        }
 
                     }
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        isDown = false;
-                        handler.sendEmptyMessage(100);
-                    }
+
                 }
                 return false;
             }
