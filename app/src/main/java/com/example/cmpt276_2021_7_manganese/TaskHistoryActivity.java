@@ -42,6 +42,7 @@ public class TaskHistoryActivity extends AppCompatActivity {
         populateListView();
     }
 
+
     /**
      * Note, if you want to get the name, photoURL and date of each child, do this
      * TaskHistory curHistory = curTask.getHistoryInfo(i); the i is index of history
@@ -50,39 +51,69 @@ public class TaskHistoryActivity extends AppCompatActivity {
      * to get the information from it.
      */
 
-    private void populateListView() {
-        //make the string array to put into the list view adapter
-        String[] myHistory = new String[curTask.historySize()];
+//    private void populateListView() {
+//        //make the string array to put into the list view adapter
+//        String[] myHistory = new String[curTask.historySize()];
+//        for (int i = 0; i < curTask.historySize(); i++) {
+//            Child curChild = curTask.getHistoryInfo(i).getChild();
+//            TaskHistory curHistory = curTask.getHistoryInfo(i);
+//            Child ogChild = childManager.findById(curHistory.getId());
+//            //IMPORTANT!! update if child deleted or changed name and photo
+//            if (ogChild != null) {
+//                if (ogChild.getName() != curChild.getName()) {
+//                    curHistory.setName(ogChild.getName());
+//                    curHistory.setChild(ogChild);
+//                }
+//                if (ogChild.getPhotoUrl() != curChild.getPhotoUrl()) {
+//                    curHistory.setUrl(ogChild.getPhotoUrl());
+//                    curHistory.setChild(ogChild);
+//                }
+//            } else {
+//                curHistory.setName("Deleted");
+//            }
+//            String name = curTask.getHistoryInfo(i).getName();
+//            LocalDateTime date =  curHistory.getDate();
+//            String fullInfo = name + "              (" + date.getMonthValue() + "/" +
+//                    date.getDayOfMonth() + "/" + date.getYear() + ")";
+//            myHistory[i] = fullInfo;
+//        }
+//        //put the string of names into the listview
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+//                this,
+//                R.layout.items_for_listview,
+//                myHistory);
+//        ListView list = (ListView) findViewById(R.id.history_list_view);
+//        list.setAdapter(adapter);
+//    }
+
+    private void updateEverything() {
         for (int i = 0; i < curTask.historySize(); i++) {
             Child curChild = curTask.getHistoryInfo(i).getChild();
             TaskHistory curHistory = curTask.getHistoryInfo(i);
             Child ogChild = childManager.findById(curHistory.getId());
             //IMPORTANT!! update if child deleted or changed name and photo
             if (ogChild != null) {
-                if (ogChild.getName() != curChild.getName()) {
+                if (!ogChild.getName().equals(curChild.getName())) {
                     curHistory.setName(ogChild.getName());
                     curHistory.setChild(ogChild);
                 }
-                if (ogChild.getPhotoUrl() != curChild.getPhotoUrl()) {
+                if (!ogChild.getPhotoUrl().equals(curChild.getPhotoUrl())) {
                     curHistory.setUrl(ogChild.getPhotoUrl());
                     curHistory.setChild(ogChild);
                 }
             } else {
                 curHistory.setName("Deleted");
             }
-            String name = curTask.getHistoryInfo(i).getName();
-            LocalDateTime date =  curHistory.getDate();
-            String fullInfo = name + "              (" + date.getMonthValue() + "/" +
-                    date.getDayOfMonth() + "/" + date.getYear() + ")";
-            myHistory[i] = fullInfo;
         }
-        //put the string of names into the listview
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this,
-                R.layout.items_for_listview,
-                myHistory);
+    }
+
+    private void populateListView() {
+        updateEverything();
+//        TaskHistory curHistory = curTask.getHistoryInfo(i);
+        testTaskHistoryAdapter adapter = new testTaskHistoryAdapter(curTask.getManager(), this);
         ListView list = (ListView) findViewById(R.id.history_list_view);
         list.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
     }
 
     public static Intent makeLaunchIntent(Context c, int taskIndex) {
@@ -96,5 +127,7 @@ public class TaskHistoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+
+//        ab.
     }
 }

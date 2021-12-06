@@ -32,6 +32,10 @@ public class Task {
 //        }
 //    }
 
+    public ArrayList<TaskHistory> getManager() {
+        return taskHistories;
+    }
+
     public void childDoneTask() {
         updateInformation();
         if (childIndex != -1) {
