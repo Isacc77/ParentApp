@@ -7,7 +7,7 @@ import java.util.Iterator;
  * This class is for TaskManager
  * There are some basic operations for controlling taskManager
  * It uses singleton model
- * @author Shuai Li for Iteration2
+ * @author Rio Samson + Shuai Li
  */
 public class TaskManager implements Iterable<Task> {
     private ArrayList<Task> tasksList = new ArrayList<>();
