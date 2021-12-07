@@ -6,10 +6,9 @@ import java.util.ArrayList;
 /**
  * This class is for Task
  * There are some basic operations for controlling each task
- * @author Shuai Li for Iteration2
+ * @author Rio Samson
  */
 public class Task {
-    private ArrayList<Child> history = new ArrayList<>();
     private ArrayList<TaskHistory> taskHistories = new ArrayList<>();
     String taskInfo;
     private final String TASK_CONTENT = "Task:";
@@ -21,16 +20,7 @@ public class Task {
         childManager = ChildManager.getInstance();
         this.taskInfo = taskInfo;
         childIndex = 0;
-//        history = new ArrayList<>();
-//        times = new ArrayList<>();
     }
-
-//    public void updateHistoryInfo() {
-//        for (int i = 0; i < history.size(); i++) {
-//            Child child = history.get(i);
-//            if (child == childManager.getByIndex())
-//        }
-//    }
 
     public ArrayList<TaskHistory> getManager() {
         return taskHistories;
@@ -49,9 +39,7 @@ public class Task {
     }
 
     private void addChildToHistory() {
-//        history.add(childManager.getByIndex(childIndex));
         LocalDateTime timeNow = LocalDateTime.now();
-//        times.add(timeNow);
         TaskHistory taskUpdate = new TaskHistory(childManager.getByIndex(childIndex),
                 timeNow, childManager.getByIndex(childIndex).getPhotoUrl(),
                 childManager.getByIndex(childIndex).getName(),
@@ -85,6 +73,7 @@ public class Task {
         updateIndex();
     }
 
+    //negative index for no child
     private void updateIndex() {
         int childrenNumber = childManager.getSize();
         if (childrenNumber == 0) {

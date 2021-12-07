@@ -2,6 +2,12 @@ package com.example.cmpt276_2021_7_manganese.model;
 
 import java.time.LocalDateTime;
 
+/**
+ * This is a class that encompasses all the information that is needed
+ * to show the user information about task history.
+ * Records the child's name, picture and date the task was done on.
+ * @author Rio Samson
+ */
 public class TaskHistory {
     private Child child;
     private LocalDateTime date;
@@ -15,9 +21,6 @@ public class TaskHistory {
         this.url = url;
         this.name = name;
         this.id = id;
-    }
-
-    public TaskHistory() {
     }
 
     public Child getChild() {
@@ -42,10 +45,6 @@ public class TaskHistory {
 
     public void setChild(Child child) {
         this.child = child;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
     }
 
     public void setUrl(String url) {
