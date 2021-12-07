@@ -14,5 +14,11 @@ Product Owner: 	Shuai Li
 Repo Manager:	Rio Samson
 Team Member:	Yangyang Liu
 
+iteration2
+
+Scrum Master: 	Rio Samsonn
+Product Owner: 	Yangyang Liu
+Repo Manager:	Shuai Li
+Team Member:	Lingjie Li
 
 
