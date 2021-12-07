@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.cmpt276_2021_7_manganese.model.Child;
 import com.example.cmpt276_2021_7_manganese.model.ChildManager;
@@ -43,7 +42,6 @@ public class TaskHistoryActivity extends AppCompatActivity {
         childManager = ChildManager.getInstance();
         taskListIndex = getIntent().getIntExtra(EXTRA_INTENT_MESSAGE, defaultIndex);
         curTask = taskManager.getTask(taskListIndex);
-        Toast.makeText(this, "" + taskListIndex, Toast.LENGTH_SHORT).show();
 
         populateListView();
     }
