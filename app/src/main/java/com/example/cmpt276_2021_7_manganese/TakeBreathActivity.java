@@ -19,18 +19,17 @@ import com.example.cmpt276_2021_7_manganese.model.ChildManager;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
-
+/**
+ * This class and StartBreathActivity class is used to take breath, first user should choose the times they
+ * want to take breath and then after they inhale for at least 3 seconds, they can turn to exhale, the animation
+ * changes with the press of button. Hope you can enjoy you spare time.
+ * @author Lingjie Li(Larry) Yangyang Liu
+ */
 public class TakeBreathActivity extends AppCompatActivity {
-
-    private Spinner mSpContent;
     private Spinner mSpCount;
     private Button mBtStart;
-    private ArrayAdapter<String> mSpContentadapter;
-    private ArrayList<String> childNameList = new ArrayList<>();
     private ArrayList<String> countList = new ArrayList<>();
-    private ChildManager manager;
     private ArrayAdapter<String> mSpCoountadapter;
-    private int childIndex;
     private int countIndex;
     private ImageView mIvBack;
     private TextView mTvTitle;
@@ -48,7 +47,6 @@ public class TakeBreathActivity extends AppCompatActivity {
     private void initListener() {
         mBtStart.setOnClickListener(view -> {
             Intent intent = new Intent(TakeBreathActivity.this, StartTakeBreathActivity.class);
-            intent.putExtra("childName", childNameList.get(childIndex));
             intent.putExtra("count", countList.get(countIndex));
             startActivity(intent);
         });
@@ -61,25 +59,6 @@ public class TakeBreathActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        manager = ChildManager.getInstance();
-        ArrayList<Child> childArrayList = this.manager.getManager();
-        for (int i = 0; i < childArrayList.size(); i++) {
-            childNameList.add(childArrayList.get(i).getName());
-        }
-        mSpContentadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, childNameList);
-        mSpContentadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpContent.setAdapter(mSpContentadapter);
-        mSpContent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                childIndex = i;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
         for (int i = 1; i < 11; i++) {
             countList.add(String.valueOf(i));
         }
@@ -104,7 +83,6 @@ public class TakeBreathActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mSpContent = (Spinner) findViewById(R.id.sp_content);
         mSpCount = (Spinner) findViewById(R.id.sp_count);
         mBtStart = (Button) findViewById(R.id.bt_start);
         mIvBack = (ImageView) findViewById(R.id.iv_back);

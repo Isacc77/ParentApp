@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@mipmap/ic_bg_breath"
+    android:paddingTop="@dimen/permission_dp_20"
     tools:context=".StartTakeBreathActivity">
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,72 +34,47 @@
             android:layout_marginRight="@dimen/permission_dp_10"
             android:layout_height="@dimen/permission_dp_30"></ImageView>
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/breathe"
-        android:layout_width="280dp"
-        android:layout_height="190dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="232dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginBottom="237dp"
-        app:srcCompat="@drawable/breathe" />
-
-
-    <Button
-        android:id="@+id/startButton"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="-3dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="65dp"
-        android:background="@color/blue"
-        android:text="Begin"
-        android:textColor="@color/white"
-        tools:ignore="TextContrastCheck" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/tv_title_breath"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:textSize="@dimen/permission_sp_16"
 
-    <TextView
-        android:id="@+id/guideText"
-        android:layout_width="163dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="123dp"
-        android:layout_marginEnd="125dp"
-        android:layout_marginBottom="152dp"
-        android:gravity="center"
-        android:text="Breathe"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="0dp"
-android:layout_weight="1"
-android:orientation="vertical"
-    ></LinearLayout>
+            android:layout_height="@dimen/permission_dp_40"></TextView>
 
+        <TextView
+            android:id="@+id/tv_tip"
+            android:layout_width="match_parent"
+            android:layout_height="77dp"
+            android:gravity="center"
+            android:text="Hold the button and breath in"
+            android:textColor="@color/black"
+            android:textSize="20sp"></TextView>
+
+        <ImageView
+            android:id="@+id/iv_ic_iamge"
+            android:layout_width="222dp"
+            android:layout_height="181dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/breath"></ImageView>
+    </LinearLayout>
     <TextView
         android:id="@+id/tv_operation"
         android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="433dp"
         android:background="@drawable/side_nav_bar"
-        android:gravity="center"
-        android:text="IN"
+        android:text="BEGIN"
         android:textColor="@color/white"
-        android:textSize="30sp"></TextView>
-</RelativeLayout>
-
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/permission_dp_30"
+        android:layout_height="100dp"></TextView>
+</LinearLayout>
