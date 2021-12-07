@@ -16,7 +16,7 @@ Team Member:	Yangyang Liu
 
 iteration2
 
-Scrum Master: 	Rio Samson
+Scrum Master: 	Rio Samsonn
 Product Owner: 	Yangyang Liu
 Repo Manager:	Shuai Li
 Team Member:	Lingjie Li
