@@ -84,7 +84,8 @@ public class TimeoutTimerActivity extends AppCompatActivity {
 //        timerSpeed = 1;
         timerSpeed = loadSpeed();
 //        timerStartTime = (long) (((long) loadSavedData() * MIN_TO_MS_FACTOR) / timerSpeed);
-        timerStartTime = (long) (((long) loadSavedData() * MIN_TO_MS_FACTOR));
+//        timerStartTime = (long) (((long) loadSavedData() * MIN_TO_MS_FACTOR));
+        timerStartTime = (long) (loadSavedTimeStart());
         timeLeft = timerStartTime;
 
         serviceIntent = TimerService.makeLaunchIntent(TimeoutTimerActivity.this);
@@ -100,6 +101,19 @@ public class TimeoutTimerActivity extends AppCompatActivity {
         setupCustomTimerSettings();
 //        setupSpeedButton();
 //        setupSlowButton();
+    }
+
+    private void saveTimeStartSettings() {
+        SharedPreferences prefs = this.getSharedPreferences("prefs tag for time", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("timer start time", timerStartTime);
+        editor.apply();
+    }
+
+    private long loadSavedTimeStart() {
+        SharedPreferences prefs = this.getSharedPreferences("prefs tag for time",
+                MODE_PRIVATE);
+        return prefs.getLong("timer start time", (long) (getResources().getInteger(R.integer.default_timer) * MIN_TO_MS_FACTOR));
     }
 
     private void checkRunningStatus() {
@@ -269,7 +283,10 @@ public class TimeoutTimerActivity extends AppCompatActivity {
             hour = (int) ((timeLeft * timerSpeed) / MILLI_TO_HOUR_FACTOR);
             min = (int) ((((timeLeft * timerSpeed) / ONE_SECOND_IN_MILLI) % SEC_TO_HOUR_FACTOR) / MIN_TO_S_FACTOR);
             sec = (int) (((timeLeft * timerSpeed) / ONE_SECOND_IN_MILLI) % MIN_TO_S_FACTOR);
-        progressBar.setProgress(100 - ((int) (100.0 * ( (double )((double)(timeLeft * timerSpeed)/(double)timerStartTime)))));
+            int intStart = (int) (timerStartTime);
+            progressBar.setMax(intStart);
+//        progressBar.setProgress(100 - ((int) (100.0 * ( (double )((double)(timeLeft * timerSpeed)/(double)timerStartTime)))));
+        progressBar.setProgress(intStart - ((int) (intStart * ( (double )((double)(timeLeft * timerSpeed)/(double)timerStartTime)))));
         String display = String.format(Locale.getDefault(), "%d:%02d:%02d", hour, min, sec);
         timerClock.setText(display);
     }
@@ -325,6 +342,7 @@ public class TimeoutTimerActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         saveSpeed();
+        saveTimeStartSettings();
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
