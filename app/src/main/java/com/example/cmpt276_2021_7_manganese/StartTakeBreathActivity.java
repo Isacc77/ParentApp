@@ -41,6 +41,7 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                     time = 10;
                     mTvOperation.setText("OUT");
                     player.stop();
+                    player.prepareAsync();
                     handler.removeMessages(200);
                 }
                 if (time > 3) {
@@ -59,6 +60,7 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                     time = 0;
                     countNow++;
                     player.stop();
+                    player.prepareAsync();
                     if (countNow == Integer.parseInt(count)) {
                         mTvOperation.setText("GOOD JOB");
                     }
@@ -69,6 +71,7 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                     mTvOperation.setText("IN");
                     time = 0;
                     player.stop();
+                    player.prepareAsync();
                     mIvIcImage.clearAnimation();
                 } else if (3 <= time && time <= 10) {
                     player.start();
@@ -78,6 +81,7 @@ public class StartTakeBreathActivity extends AppCompatActivity {
                 } else {
                     time = 10;
                     player.stop();
+                    player.prepareAsync();
                     mTvOperation.setText("OUT");
                     player.start();
                     beginScale(R.anim.zoom_out, 7000);
@@ -157,7 +161,6 @@ public class StartTakeBreathActivity extends AppCompatActivity {
         });
     }
 
-
     private synchronized void beginScale(int animation, long time) {
         an = AnimationUtils.loadAnimation(StartTakeBreathActivity.this, animation);
         an.setDuration(time);
@@ -202,6 +205,7 @@ public class StartTakeBreathActivity extends AppCompatActivity {
         super.onDestroy();
         if (null != player) {
             player.stop();
+            player.prepareAsync();
         }
     }
 }
